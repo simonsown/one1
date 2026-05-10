@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Trophy, Download, Share2, ShieldCheck, ExternalLink, QrCode } from 'lucide-react'
+import { Trophy, Download, Share2, ShieldCheck, ExternalLink, QrCode, Zap } from 'lucide-react'
 import QRCode from 'qrcode'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
