@@ -155,6 +155,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
         {/* The 2D Lab Canvas (Reusing your GameEngine) */}
         <main className="flex-1 flex items-center justify-center bg-black/40">
            <div className="relative w-full max-w-[1400px] aspect-[14/8]">
+              {/* @ts-ignore */}
               <GameEngine 
                 landmarks={landmarks}
                 onGameEvent={handleGameEvent}

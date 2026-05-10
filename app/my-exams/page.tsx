@@ -10,7 +10,7 @@ import {
 import { 
   Trophy, Target, Zap, BookOpen, 
   ChevronRight, Download, Filter, 
-  AlertTriangle, ArrowUpRight
+  AlertTriangle, ArrowUpRight, Sparkles
 } from 'lucide-react'
 import Link from 'next/link'
 
