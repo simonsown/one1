@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, Loader2, Mail, Lock, User, Check, ChevronRight, GraduationCap, Building, Image as ImageIcon, MapPin, Calendar, ShieldCheck } from 'lucide-react'
@@ -8,7 +8,7 @@ import { register, completeOAuthRegistration } from '@/lib/auth-actions'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const isOauth = searchParams.get('oauth') === 'true'
@@ -424,5 +424,17 @@ export default function RegisterPage() {
 
       </div>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center">
+        <Loader2 className="animate-spin text-[#00d2a0]" size={48} />
+      </div>
+    }>
+      <RegisterForm />
+    </Suspense>
   )
 }
