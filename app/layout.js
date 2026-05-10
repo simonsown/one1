@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/react';
 import Script from "next/script";
 import { Plus_Jakarta_Sans, Inter, Playfair_Display } from "next/font/google";
 
@@ -33,6 +34,9 @@ export const metadata = {
   }
 };
 
+import SessionManager from "@/components/SessionManager";
+import AIGuru from "@/components/AIGuru";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${plusJakarta.variable} ${inter.variable} ${playfair.variable}`}>
@@ -40,7 +44,10 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" />
       </head>
       <body className="font-sans">
+        <SessionManager />
+        <AIGuru />
         {children}
+        <Analytics />
         <Script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js" strategy="afterInteractive" />
       </body>
     </html>

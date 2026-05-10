@@ -129,15 +129,14 @@ const BurgerMenu = ({
                             {lang === 'en' ? 'Explore' : 'Khám phá'}
                         </div>
                         
-                        <Link href="/lessons" style={{ textDecoration: 'none', width: '100%' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('course')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('course', appMode === 'course')}
-                            >
-                                <BookOpen style={iconStyle('course', appMode === 'course')} />
-                                {lang === 'en' ? 'Lecture Course' : 'Bài Giảng'}
-                            </button>
-                        </Link>
+                        <button
+                            onMouseEnter={() => setHoveredBtn('course')} onMouseLeave={() => setHoveredBtn(null)}
+                            onClick={() => setAppMode('course')}
+                            style={navItemStyle('course', appMode === 'course')}
+                        >
+                            <BookOpen style={iconStyle('course', appMode === 'course')} />
+                            {lang === 'en' ? 'Lecture Course' : 'Bài Giảng'}
+                        </button>
                         
                         <button
                             onMouseEnter={() => setHoveredBtn('learning')} onMouseLeave={() => setHoveredBtn(null)}
@@ -157,6 +156,15 @@ const BurgerMenu = ({
                             {lang === 'en' ? 'Marketplace' : 'Chợ Máy Tính'}
                         </button>
                         
+                        <button
+                            onMouseEnter={() => setHoveredBtn('exams')} onMouseLeave={() => setHoveredBtn(null)}
+                            onClick={() => setAppMode('exams')}
+                            style={navItemStyle('exams', appMode === 'exams')}
+                        >
+                            <Award style={iconStyle('exams', appMode === 'exams')} />
+                            {lang === 'en' ? 'Exams' : 'Kỳ Thi'}
+                        </button>
+
                         <button
                             onMouseEnter={() => setHoveredBtn('multiplayer')} onMouseLeave={() => setHoveredBtn(null)}
                             onClick={() => setAppMode('multiplayer')}

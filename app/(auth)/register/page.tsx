@@ -3,7 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ArrowLeft, Loader2, Mail, Lock, User, Check, ChevronRight, GraduationCap, Building, Image as ImageIcon, MapPin, Calendar, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, Loader2, Mail, Lock, User, Check, ChevronRight, GraduationCap, Building, Image as ImageIcon, MapPin, Calendar, ShieldCheck, Users } from 'lucide-react'
 import { register, completeOAuthRegistration } from '@/lib/auth-actions'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
@@ -34,6 +34,7 @@ function RegisterForm() {
     role: 'student', // 'student' | 'teacher'
     classCode: '',
     schoolCode: '',
+    schoolName: '',
     teacherCode: '',
     dob: '',
     province: '',
@@ -108,9 +109,10 @@ function RegisterForm() {
       submitData.append('email', formData.email)
       submitData.append('password', formData.password)
     }
-    submitData.append('role', formData.role)
+    if (formData.role === 'teacher' && formData.teacherCode) submitData.append('teacher_code', formData.teacherCode)
     if (formData.classCode) submitData.append('class_code', formData.classCode)
     if (formData.schoolCode) submitData.append('school_code', formData.schoolCode)
+    if (formData.schoolName) submitData.append('school_name', formData.schoolName)
     
     // Note: dob, province, teacherCode có thể lưu vào DB sau nếu server action hỗ trợ,
     // hiện tại auth-actions.ts chưa hỗ trợ nhận hết các trường phụ này.
@@ -315,7 +317,11 @@ function RegisterForm() {
                     <motion.div key="student-fields" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col gap-4 mt-2">
                       <div className="relative">
                         <Building size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="classCode" placeholder="Mã lớp (Tùy chọn)" value={formData.classCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white" />
+                        <input type="text" name="schoolName" placeholder="Tên trường học của bạn *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white" />
+                      </div>
+                      <div className="relative">
+                        <Users size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                        <input type="text" name="classCode" placeholder="Mã lớp (Nếu có)" value={formData.classCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white" />
                       </div>
                     </motion.div>
                   ) : (

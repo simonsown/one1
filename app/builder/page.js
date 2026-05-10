@@ -17,6 +17,7 @@ import Marketplace from '../../components/Marketplace';
 import LectureCourse from '../../components/LectureCourse';
 import VirtualAssistant from '../../components/VirtualAssistant';
 import LoadingScreen from '../../components/LoadingScreen';
+import ExamsList from '../../components/ExamsList';
 import { GURU_MESSAGES } from '../../utils/i18nData';
 
 // Hoist camera state outside component or use persistent Context to ensure "only turn on once" stays on even if rerendered
@@ -42,9 +43,20 @@ export default function Home() {
   const [isAIOpen, setIsAIOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
 
+  const [isDemo, setIsDemo] = useState(false);
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('demo') === 'true') {
+        setIsDemo(true);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     setPlacedItemsList([]);
@@ -162,13 +174,32 @@ export default function Home() {
         case 'market': return lang === 'en' ? 'Marketplace' : 'Chợ Máy Tính';
         case 'mission_assembly': return lang === 'en' ? `Lab: ${missionData?.missionId}` : `Phòng Lab: ${missionData?.missionId}`;
         case 'multiplayer': return lang === 'en' ? '2-Player Versus' : '2 Người Chơi';
+        case 'exams': return lang === 'en' ? 'Exams' : 'Kỳ Thi';
         default: return 'PC Master Builder';
     }
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-base)' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-base)', position: 'relative' }}>
       {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
+      
+      {isDemo && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999,
+          background: 'linear-gradient(90deg, #6366f1, #00d2a0)',
+          color: 'white', padding: '8px 16px', textAlign: 'center',
+          fontSize: '14px', fontWeight: 600, display: 'flex', 
+          alignItems: 'center', justifyCenter: 'center', gap: '12px'
+        }}>
+          <span>Bạn đang ở Chế độ Demo (Khách). Tiến độ học tập sẽ không được lưu lại.</span>
+          <Link href="/register" style={{ 
+            background: 'white', color: '#6366f1', padding: '2px 12px', 
+            borderRadius: '4px', textDecoration: 'none', fontSize: '12px'
+          }}>
+            Đăng ký ngay
+          </Link>
+        </div>
+      )}
       <BurgerMenu
         lang={lang}
         toggleLang={toggleLang}
@@ -431,6 +462,8 @@ export default function Home() {
                                     trackingSensitivity={trackingSensitivity}
                                 />
                             </div>
+                        ) : appMode === 'exams' ? (
+                            <ExamsList lang={lang} onBack={() => setAppMode('menu')} />
                         ) : null}
                     </div>
 

@@ -169,30 +169,28 @@ export default function LoginPage() {
           </div>
 
           {/* Tab Switcher */}
-          <div className="relative flex w-full bg-[#0f0f1a] rounded-lg p-1 mb-8 border border-[#1e293b]">
-            <div className="absolute inset-0 flex p-1">
-               <motion.div 
-                 className="w-1/2 bg-[#16213e] rounded-md border border-[#2a3655] shadow-sm"
-                 layoutId="activeTab"
-                 initial={false}
-                 animate={{ x: isLogin ? 0 : "100%" }}
-                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
-               />
-            </div>
+          <div className="relative flex w-full bg-[#0f0f1a] rounded-xl p-1 mb-8 border border-[#1e293b]">
             <button 
               type="button"
               onClick={() => setIsLogin(true)}
               className={`relative z-10 flex-1 py-2.5 text-sm font-medium transition-colors ${isLogin ? 'text-white' : 'text-slate-400 hover:text-white'}`}
             >
               Đăng Nhập
+              {isLogin && <motion.div layoutId="tab" className="absolute inset-0 bg-[#16213e] rounded-lg border border-[#2a3655] -z-10" />}
             </button>
             <button 
               type="button"
-              onClick={() => setIsLogin(false)}
-              className={`relative z-10 flex-1 py-2.5 text-sm font-medium transition-colors ${!isLogin ? 'text-white' : 'text-slate-400 hover:text-white'}`}
+              onClick={() => router.push('/register')}
+              className={`relative z-10 flex-1 py-2.5 text-sm font-medium transition-colors text-slate-400 hover:text-white`}
             >
               Đăng Ký
             </button>
+            <Link 
+              href="/login/qr"
+              className={`relative z-10 flex-1 py-2.5 text-sm font-medium transition-colors text-slate-400 hover:text-white text-center`}
+            >
+              QR Login
+            </Link>
           </div>
 
           {/* OAuth Buttons */}
@@ -210,12 +208,25 @@ export default function LoginPage() {
               </svg>
               Tiếp tục với Google
             </button>
+            <button 
+              type="button" 
+              className="w-full flex items-center justify-center gap-3 bg-[#0068FF] text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-[#0058d8] transition-colors shadow-sm"
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Zalo_logo.svg/2048px-Zalo_logo.svg.png" className="w-5 h-5 object-contain invert" alt="Zalo" />
+              Tiếp tục với Zalo
+            </button>
           </div>
 
           <div className="flex items-center gap-4 mb-6">
             <div className="h-[1px] flex-1 bg-[#1e293b]"></div>
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Hoặc qua email</span>
             <div className="h-[1px] flex-1 bg-[#1e293b]"></div>
+          </div>
+
+          <div className="mb-6">
+            <Link href="/builder?demo=true" className="w-full flex items-center justify-center gap-2 py-3 border border-dashed border-[#00d2a0]/50 text-[#00d2a0] rounded-xl hover:bg-[#00d2a0]/5 transition-all font-semibold">
+              <Globe size={18} /> Thử ngay không cần tài khoản
+            </Link>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">

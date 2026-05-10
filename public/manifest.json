@@ -1,0 +1,21 @@
+{
+  "name": "PC Master Builder LMS",
+  "short_name": "PC Master",
+  "description": "Nền tảng học tập lắp ráp máy tính 3D thông minh",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#00d2a0",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

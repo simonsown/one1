@@ -31,22 +31,22 @@ export default function MiniQuizPage({ params }: { params: Promise<{ quizId: str
   async function initQuiz() {
     try {
       setLoading(true)
-      // 1. Fetch Lesson Content
-      const { data: lesson } = await supabase
-        .from('lessons')
-        .select('*')
+      // 1. Fetch Lesson Section first
+      const { data: section } = await supabase
+        .from('lesson_sections')
+        .select('*, lessons(*)')
         .eq('id', quizId)
         .single()
 
-      if (!lesson) throw new Error('Không tìm thấy bài học')
+      if (!section) throw new Error('Không tìm thấy bài trắc nghiệm')
 
       // 2. Call AI to generate Quiz (Real-time AI generation!)
       const res = await fetch('/api/ai/generate-quiz', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          lessonTitle: lesson.title,
-          lessonContent: lesson.content,
+          lessonTitle: section.lessons.title,
+          lessonContent: section.content_body || section.lessons.description,
           count: 5
         })
       })
@@ -55,7 +55,7 @@ export default function MiniQuizPage({ params }: { params: Promise<{ quizId: str
       setLoading(false)
       setCurrentIdx(0)
     } catch (err) {
-      console.error(err)
+      console.error('Quiz init error:', err)
       setLoading(false)
     }
   }

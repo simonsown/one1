@@ -18,10 +18,22 @@ export default function TeacherDashboard() {
     lessons: 0
   });
   const [classes, setClasses] = useState([]);
+  const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStats();
+
+    // REAL-TIME SUBSCRIPTION
+    const channel = supabase
+      .channel('teacher_realtime')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'class_members' }, () => fetchStats())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'assignments' }, () => fetchStats())
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   async function fetchStats() {
@@ -48,16 +60,24 @@ export default function TeacherDashboard() {
         studentsCount = count || 0;
       }
 
-      // 3. Fetch assignments count
-      const { count: asgCount } = await supabase
+      // 3. Fetch assignments
+      const { data: asgData, count: asgCount } = await supabase
         .from('assignments')
-        .select('*', { count: 'exact', head: true })
-        .eq('teacher_id', user.id);
+        .select(`
+          *,
+          lessons (title)
+        `)
+        .eq('teacher_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+      
+      setAssignments(asgData || []);
 
       // 4. Fetch lessons count
       const { count: lessonCount } = await supabase
         .from('lessons')
-        .select('*', { count: 'exact', head: true });
+        .select('*', { count: 'exact', head: true })
+        .eq('teacher_id', user.id);
 
       setStats({
         classes: classesCount || 0,
@@ -149,7 +169,9 @@ export default function TeacherDashboard() {
           <motion.div variants={itemVariants} className="bg-[#16213e] p-8 rounded-[32px] border border-[#1e293b]">
              <div className="flex justify-between items-center mb-8">
                 <h2 className="text-2xl font-bold text-white">Lớp học hiện tại</h2>
-                <Link href="/teacher/classes" className="text-sm font-bold text-[#00d2a0] hover:underline">Tất cả lớp</Link>
+                <div className="flex gap-4">
+                   <Link href="/teacher/classes" className="text-sm font-bold text-[#00d2a0] hover:underline">Tất cả lớp</Link>
+                </div>
              </div>
              
              {loading ? (
@@ -157,14 +179,19 @@ export default function TeacherDashboard() {
              ) : classes.length > 0 ? (
                 <div className="space-y-4">
                   {classes.map((cls: any) => (
-                    <div key={cls.id} className="flex items-center justify-between p-6 rounded-2xl bg-[#0f0f1a] border border-[#1e293b]">
+                    <div key={cls.id} className="flex items-center justify-between p-6 rounded-2xl bg-[#0f0f1a] border border-[#1e293b] hover:border-[#00d2a0]/30 transition-all">
                       <div>
                         <h4 className="text-lg font-bold text-white">{cls.name}</h4>
                         <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{cls.subject} • Khối {cls.grade}</p>
                       </div>
-                      <div className="text-right">
-                        <div className="text-[10px] text-[#00d2a0] font-black uppercase tracking-tighter mb-1">Mã lớp</div>
-                        <div className="text-xl font-black text-white font-mono bg-[#16213e] px-4 py-1 rounded-lg border border-white/5">{cls.code}</div>
+                      <div className="flex items-center gap-6">
+                        <div className="text-right">
+                          <div className="text-[10px] text-[#00d2a0] font-black uppercase tracking-tighter mb-1">Mã lớp</div>
+                          <div className="text-xl font-black text-white font-mono bg-[#16213e] px-4 py-1 rounded-lg border border-white/5">{cls.code}</div>
+                        </div>
+                        <Link href={`/teacher/classes/${cls.id}`} className="p-2 text-slate-400 hover:text-white transition-colors">
+                          <ArrowRight size={20} />
+                        </Link>
                       </div>
                     </div>
                   ))}
@@ -175,22 +202,71 @@ export default function TeacherDashboard() {
                 </div>
              )}
           </motion.div>
+
+          {/* Giao Nhiệm Vụ Section */}
+          <motion.div variants={itemVariants} className="bg-[#16213e] p-8 rounded-[32px] border border-[#1e293b]">
+             <div className="flex justify-between items-center mb-8">
+                <div className="flex items-center gap-3">
+                   <h2 className="text-2xl font-bold text-white">Giao nhiệm vụ</h2>
+                   <Link href="/teacher/settings" className="p-2 bg-[#1e293b] rounded-lg text-slate-400 hover:text-white transition-all">
+                      <Settings size={18} />
+                   </Link>
+                </div>
+                <Link href="/teacher/assignments/new" className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-xl border border-white/10 transition-all">
+                   Giao bài mới
+                </Link>
+             </div>
+
+             {loading ? (
+                <div className="flex justify-center py-12"><Loader2 className="animate-spin text-[#00d2a0]" /></div>
+             ) : assignments.length > 0 ? (
+                <div className="space-y-4">
+                  {assignments.map((asg: any) => (
+                    <div key={asg.id} className="flex items-center justify-between p-5 rounded-2xl bg-[#0f0f1a] border border-[#1e293b]">
+                       <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-[#f59e0b]/10 text-[#f59e0b] flex items-center justify-center">
+                             <ClipboardCheck size={20} />
+                          </div>
+                          <div>
+                             <h4 className="font-bold text-white">{asg.title}</h4>
+                             <p className="text-xs text-slate-500">Bài giảng: {asg.lessons?.title || 'Video/PDF tổng hợp'}</p>
+                          </div>
+                       </div>
+                       <div className="text-right">
+                          <p className="text-xs text-slate-500 mb-1">Hạn chót</p>
+                          <p className="text-sm font-bold text-white">{asg.due_date ? new Date(asg.due_date).toLocaleDateString('vi-VN') : 'Không có'}</p>
+                       </div>
+                    </div>
+                  ))}
+                </div>
+             ) : (
+                <div className="text-center py-12 bg-[#0f0f1a] rounded-2xl border border-[#1e293b] border-dashed">
+                   <p className="text-slate-500 text-sm">Chưa có nhiệm vụ nào được giao.</p>
+                </div>
+             )}
+          </motion.div>
         </div>
 
         {/* Real-time Tracking / Insights Sidebar */}
         <div className="space-y-8">
-           <motion.div variants={itemVariants} className="bg-gradient-to-br from-[#00d2a0] to-[#00b4d8] p-8 rounded-[32px] text-black">
-              <div className="flex items-center gap-2 mb-4">
-                <TrendingUp size={20} />
-                <h3 className="text-xl font-black">Xu hướng học tập</h3>
-              </div>
-              <p className="font-bold text-sm opacity-80 mb-8 leading-relaxed">
-                Tỷ lệ hoàn thành bài tập tuần này tăng <span className="text-white text-lg">12%</span>. Hãy tiếp tục khích lệ học sinh nhé!
-              </p>
-              <div className="h-2 w-full bg-black/10 rounded-full overflow-hidden">
-                <div className="h-full bg-white w-2/3"></div>
-              </div>
-           </motion.div>
+            <motion.div variants={itemVariants} className="bg-gradient-to-br from-[#00d2a0] to-[#00b4d8] p-8 rounded-[32px] text-black">
+               <div className="flex items-center gap-2 mb-4">
+                 <TrendingUp size={20} />
+                 <h3 className="text-xl font-black">Xu hướng học tập</h3>
+               </div>
+               <p className="font-bold text-sm opacity-80 mb-8 leading-relaxed">
+                 {stats.students > 0 
+                   ? `Có ${stats.students} học sinh đang tham gia. Tỷ lệ hoàn thành bài tập đạt ${Math.min(100, Math.round((stats.assignments / (stats.classes || 1)) * 10))}%`
+                   : "Hãy tạo lớp học và mời học sinh để bắt đầu theo dõi xu hướng."}
+               </p>
+               <div className="h-2 w-full bg-black/10 rounded-full overflow-hidden">
+                 <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: stats.students > 0 ? '66%' : '0%' }}
+                    className="h-full bg-white"
+                 ></motion.div>
+               </div>
+            </motion.div>
 
            <motion.div variants={itemVariants} className="bg-[#16213e] p-8 rounded-[32px] border border-[#1e293b]">
               <h3 className="text-lg font-bold text-white mb-6">Trạng thái hệ thống</h3>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Home, BookOpen, Trophy, FileText, LayoutDashboard, Users, BarChart3, Bell, Menu, X, Settings, LogOut, User as UserIcon } from 'lucide-react'
+import { Home, BookOpen, Trophy, FileText, LayoutDashboard, Users, BarChart3, Bell, Menu, X, Settings, LogOut, User as UserIcon, HelpCircle } from 'lucide-react'
 import { getProfile, logout } from '@/lib/auth-actions'
 
 export default function Navbar() {
@@ -48,16 +48,18 @@ export default function Navbar() {
   const role = userProfile?.role || 'student'
   
   const studentMenu = [
-    { name: 'Trang chủ', path: '/builder', icon: <Home size={18} /> },
+    { name: 'Trang chủ', path: '/student', icon: <Home size={18} /> },
     { name: 'Bài học', path: '/courses', icon: <BookOpen size={18} /> },
     { name: 'Kỳ thi', path: '/exams', icon: <FileText size={18} /> },
+    { name: 'Trắc nghiệm', path: '/quiz', icon: <HelpCircle size={18} /> },
     { name: 'Xếp hạng', path: '/leaderboard', icon: <Trophy size={18} /> },
+    { name: 'Lộ trình', path: '/roadmap', icon: <LayoutDashboard size={18} /> },
   ]
 
   const teacherMenu = [
     { name: 'Dashboard', path: '/teacher', icon: <LayoutDashboard size={18} /> },
     { name: 'Bài học', path: '/teacher/lessons', icon: <BookOpen size={18} /> },
-    { name: 'Đề thi', path: '/teacher/exams', icon: <FileText size={18} /> },
+    { name: 'Ngân hàng', path: '/teacher/questions', icon: <FileText size={18} /> },
     { name: 'Lớp học', path: '/teacher/classes', icon: <Users size={18} /> },
     { name: 'Báo cáo', path: '/teacher/reports', icon: <BarChart3 size={18} /> },
   ]

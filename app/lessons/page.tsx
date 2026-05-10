@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase-ssr-server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Book, Play, CheckCircle, Clock, Star, ArrowRight, Layers } from 'lucide-react'
+import { Book, Play, CheckCircle, Clock, Star, ArrowRight, Layers, ArrowLeft } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export default async function LessonsListPage() {
@@ -32,9 +32,14 @@ export default async function LessonsListPage() {
     <div className="min-h-screen bg-[#0f0f1a] text-white p-6 md:p-12 lg:p-20">
       <header className="max-w-7xl mx-auto mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4">
-            Khám phá <span className="text-[#00d2a0]">Kiến thức</span>
-          </h1>
+          <div className="flex items-center gap-4 mb-4">
+            <Link href="/student" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all">
+              <ArrowLeft size={20} />
+            </Link>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tight">
+              Khám phá <span className="text-[#00d2a0]">Kiến thức</span>
+            </h1>
+          </div>
           <p className="text-slate-400 text-lg max-w-2xl">
             Học tập từ những chuyên gia hàng đầu về phần cứng máy tính. Hệ thống bài giảng được thiết kế trực quan, sinh động.
           </p>

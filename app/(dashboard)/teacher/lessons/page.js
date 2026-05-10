@@ -27,6 +27,7 @@ export default function TeacherLessonsPage() {
         const { data } = await supabase
             .from('lessons')
             .select('*, lesson_sections(count)')
+            .eq('teacher_id', user.id)
             .order('created_at', { ascending: false });
         
         setLessons(data || []);
@@ -34,19 +35,37 @@ export default function TeacherLessonsPage() {
     };
 
     const createNewLesson = async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        const { data, error } = await supabase
-            .from('lessons')
-            .insert({
-                teacher_id: user.id,
-                title: 'Bài giảng mới chưa đặt tên',
-                description: 'Mô tả bài giảng của bạn...',
-                is_published: false
-            })
-            .select()
-            .single();
+        try {
+            setLoading(true);
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                window.location.href = '/login';
+                return;
+            }
 
-        if (data) window.location.href = `/teacher/lessons/${data.id}`;
+            const { data, error } = await supabase
+                .from('lessons')
+                .insert({
+                    teacher_id: user.id,
+                    title: 'Bài giảng mới chưa đặt tên',
+                    description: 'Mô tả bài giảng của bạn...',
+                    is_published: false
+                })
+                .select()
+                .single();
+
+            if (error) {
+                console.error('Error creating lesson:', error);
+                alert('Có lỗi khi tạo bài giảng: ' + error.message);
+                return;
+            }
+
+            if (data) window.location.href = `/teacher/lessons/${data.id}`;
+        } catch (err) {
+            console.error('Unexpected error:', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const deleteLesson = async (id) => {

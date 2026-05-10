@@ -63,6 +63,7 @@ export async function register(formData: FormData) {
   const fullName = formData.get('full_name') as string
   const role = formData.get('role') as string || 'student'
   const schoolCode = formData.get('school_code') as string
+  const schoolName = formData.get('school_name') as string
   const classCode = formData.get('class_code') as string
 
   if (!email || !password || !fullName) {
@@ -106,6 +107,7 @@ export async function register(formData: FormData) {
       full_name: fullName,
       role: role,
       school_id: schoolId,
+      school_name: schoolName,
       updated_at: new Date().toISOString()
     });
 
@@ -162,6 +164,7 @@ export async function completeOAuthRegistration(formData: FormData) {
 
   const role = formData.get('role') as string || 'student'
   const schoolCode = formData.get('school_code') as string
+  const schoolName = formData.get('school_name') as string
   
   let schoolId = null;
   if (schoolCode) {
@@ -181,6 +184,7 @@ export async function completeOAuthRegistration(formData: FormData) {
     full_name: user.user_metadata?.full_name || '',
     role: role,
     school_id: schoolId,
+    school_name: schoolName,
     updated_at: new Date().toISOString()
   });
 
