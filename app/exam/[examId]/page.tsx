@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/lib/supabase-ssr-server'
 import { redirect } from 'next/navigation'
 import ExamPlayer from './ExamPlayer'
 import { startExamAttempt } from '@/lib/exam-actions'

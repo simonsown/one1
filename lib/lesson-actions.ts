@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/lib/supabase-ssr-server'
 import { revalidatePath } from 'next/cache'
 
 export async function saveLessonProgress(lessonId: string, score: number, isCompleted: boolean) {
