@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { 
   Users, FileText, ClipboardCheck, Plus, 
   ArrowRight, BookOpen, GraduationCap, TrendingUp,
-  LayoutDashboard, Settings, LogOut, BarChart3, Layers
+  LayoutDashboard, Settings, LogOut, BarChart3, Layers, Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
