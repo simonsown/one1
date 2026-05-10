@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useEffect, use } from 'react'
 import { useRouter } from 'next/navigation'
-import GameEngine from '@/components/GameEngine'
+import RawGameEngine from '@/components/GameEngine'
+const GameEngine = RawGameEngine as any;
 import HandTracker from '@/components/HandTracker'
 import AIGuru from '@/components/AIGuru'
 import VirtualAssistant from '@/components/VirtualAssistant'
@@ -155,7 +156,6 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
         {/* The 2D Lab Canvas (Reusing your GameEngine) */}
         <main className="flex-1 flex items-center justify-center bg-black/40">
            <div className="relative w-full max-w-[1400px] aspect-[14/8]">
-              {/* @ts-ignore */}
               <GameEngine 
                 landmarks={landmarks}
                 onGameEvent={handleGameEvent}
