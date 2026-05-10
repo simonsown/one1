@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { getProfile } from '@/lib/auth-actions'
 import { BookOpen, Clock, Trophy, Award, Camera, Settings, Activity, FileText, ChevronRight, Edit3, ShieldCheck } from 'lucide-react'
 import Navbar from '@/components/Navbar'
