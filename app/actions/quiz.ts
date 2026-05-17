@@ -2,193 +2,183 @@
 
 import { createClient } from '@/lib/supabase-ssr-server';
 import { revalidatePath } from 'next/cache';
-import { QuizAttempt, AttemptStatus } from '@/types/quiz';
+import { z } from 'zod';
+import { shuffleArray, scoreQuestion, StudentAnswer } from '@/lib/quiz-engine';
+import { checkAndAwardAchievements } from '@/lib/achievements';
 
-/**
- * Bắt đầu một bài kiểm tra mới
- * Chế độ chuyên nghiệp: Lấy câu hỏi từ ngân hàng đề thi liên kết
- */
-export async function startQuiz(quizId: string) {
-  const supabase = await createClient();
+export async function getAuthUser(supabase: any) {
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('Unauthorized');
+  return user;
+}
 
-  if (!user) throw new Error('Vui lòng đăng nhập để bắt đầu.');
+export async function startQuizAttempt(quizId: string) {
+  const supabase = await createClient();
+  const user = await getAuthUser(supabase);
 
-  // 1. Lấy thông tin Quiz và kiểm tra số lần làm bài
   const { data: quiz, error: quizErr } = await supabase
     .from('quizzes')
-    .select('id, title, max_attempts, randomize, bank_id')
+    .select('*')
     .eq('id', quizId)
     .single();
 
   if (quizErr || !quiz) throw new Error('Không tìm thấy bài kiểm tra.');
+  if (quiz.is_published === false) throw new Error('Bài kiểm tra chưa được mở.');
 
-  const { count } = await supabase
+  const now = new Date();
+  if (quiz.available_from && new Date(quiz.available_from) > now) throw new Error('Chưa đến giờ làm bài.');
+  if (quiz.available_until && new Date(quiz.available_until) < now) throw new Error('Đã hết hạn làm bài.');
+
+  // Check attempts
+  if (quiz.max_attempts) {
+    const { count } = await supabase
+      .from('quiz_attempts')
+      .select('*', { count: 'exact', head: true })
+      .eq('quiz_id', quizId)
+      .eq('student_id', user.id)
+      .not('status', 'eq', 'in_progress');
+
+    if (count !== null && count >= quiz.max_attempts) {
+      throw new Error(`Bạn đã hết lượt làm bài. Tối đa: ${quiz.max_attempts} lần.`);
+    }
+  }
+
+  // Find if already in progress
+  const { data: existingAttempt } = await supabase
     .from('quiz_attempts')
-    .select('id', { count: 'exact', head: true })
+    .select('id')
     .eq('quiz_id', quizId)
     .eq('student_id', user.id)
-    .eq('status', 'submitted');
-
-  if (count !== null && count >= quiz.max_attempts) {
-    throw new Error(`Bạn đã hết lượt làm bài. Số lượt tối đa: ${quiz.max_attempts}`);
-  }
-
-  // 2. Tạo attempt mới (Nếu có attempt cũ 'in_progress' thì dùng lại hoặc tạo mới tùy logic)
-  // Ở đây tôi tạo mới để đảm bảo tính minh bạch
-  const { data: attempt, error: attemptError } = await supabase
-    .from('quiz_attempts')
-    .insert({
-      quiz_id: quizId,
-      student_id: user.id,
-      status: 'in_progress',
-      started_at: new Date().toISOString()
-    })
-    .select()
+    .eq('status', 'in_progress')
     .single();
 
-  if (attemptError) throw attemptError;
+  let attemptId = existingAttempt?.id;
 
-  // 3. Lấy danh sách câu hỏi từ ngân hàng đề thi
-  let query = supabase
-    .from('questions')
-    .select(`
-      id,
-      content,
-      type,
-      points,
-      order,
-      options:question_options (
-        id,
-        content
-      )
-    `)
-    .eq('bank_id', quiz.bank_id);
+  if (!attemptId) {
+    const { data: newAttempt, error: attemptError } = await supabase
+      .from('quiz_attempts')
+      .insert({
+        quiz_id: quizId,
+        student_id: user.id,
+        status: 'in_progress',
+        started_at: new Date().toISOString()
+      })
+      .select('id')
+      .single();
 
-  const { data: questions, error: questionsError } = await query;
-
-  if (questionsError) throw questionsError;
-
-  // 4. Xáo trộn câu hỏi nếu Quiz có yêu cầu
-  let finalQuestions = questions || [];
-  if (quiz.randomize) {
-    finalQuestions = [...finalQuestions].sort(() => Math.random() - 0.5);
+    if (attemptError) throw attemptError;
+    attemptId = newAttempt.id;
   }
 
-  return { attempt, questions: finalQuestions };
+  // Get safe questions using the view
+  const { data: questions, error: qErr } = await supabase
+    .from('quiz_questions_for_student')
+    .select('*')
+    .eq('quiz_id', quizId)
+    .order('order', { ascending: true });
+
+  if (qErr) throw qErr;
+
+  let finalQuestions = questions || [];
+  if (quiz.randomize_questions) {
+    finalQuestions = shuffleArray(finalQuestions);
+  }
+
+  if (quiz.randomize_options) {
+    finalQuestions = finalQuestions.map((q: any) => ({
+      ...q,
+      options: shuffleArray(q.options || [])
+    }));
+  }
+
+  return { attemptId, questions: finalQuestions, timeLimit: quiz.time_limit_minutes };
 }
 
-/**
- * Nộp bài và chấm điểm phía Server (Bảo mật 100%)
- */
-export async function submitQuiz(attemptId: string, answers: any[]) {
+export async function submitQuizAttempt(attemptId: string, answers: StudentAnswer[]) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser(supabase);
 
-  if (!user) throw new Error('Unauthorized');
-
-  // 1. Kiểm tra attempt và lấy quiz_id
   const { data: attempt, error: attErr } = await supabase
     .from('quiz_attempts')
-    .select('*, quizzes(id, bank_id)')
+    .select('*, quizzes(id, max_attempts)')
     .eq('id', attemptId)
     .eq('student_id', user.id)
     .single();
 
-  if (attErr || !attempt || attempt.status !== 'in_progress') {
-    throw new Error('Lần làm bài không hợp lệ hoặc đã kết thúc.');
-  }
+  if (attErr || !attempt) throw new Error('Attempt không tồn tại.');
+  if (attempt.status !== 'in_progress') throw new Error('Bài làm này đã được nộp.');
 
-  // 2. Lấy đáp án đúng từ Database (Không tin tưởng data từ client)
-  const questionIds = answers.map(a => a.question_id);
-  
-  const { data: correctOptions } = await supabase
-    .from('question_options')
-    .select('id, question_id, is_correct, content')
-    .in('question_id', questionIds)
-    .eq('is_correct', true);
-
-  const { data: dbQuestions } = await supabase
+  // Fetch full questions to grade
+  const questionIds = answers.map(a => a.questionId);
+  const { data: questions } = await supabase
     .from('questions')
-    .select('id, points, type')
+    .select('id, type, points, question_options(id, is_correct, content, "order")')
     .in('id', questionIds);
 
   let totalScore = 0;
+  let totalMaxScore = 0;
   const answerRecords = [];
 
-  for (const answer of answers) {
-    const question = dbQuestions?.find(q => q.id === answer.question_id);
-    const correctOption = correctOptions?.find(o => o.question_id === answer.question_id);
-    
-    let isCorrect = false;
-    let pointsEarned = 0;
+  for (const dbQ of (questions || [])) {
+    totalMaxScore += dbQ.points || 0;
+    const studentAns = answers.find(a => a.questionId === dbQ.id);
+    if (!studentAns) continue;
 
-    if (question?.type === 'multiple_choice' || question?.type === 'true_false') {
-      isCorrect = answer.selected_option_id === correctOption?.id;
-    } else if (question?.type === 'fill_blank') {
-      isCorrect = answer.text_answer?.trim().toLowerCase() === correctOption?.content.trim().toLowerCase();
-    }
-
-    if (isCorrect) {
-      pointsEarned = question?.points || 0;
-      totalScore += pointsEarned;
-    }
+    const pointsEarned = scoreQuestion(dbQ.type as any, studentAns, dbQ.question_options as any, dbQ.points || 0);
+    totalScore += pointsEarned;
+    const isCorrect = pointsEarned > 0;
 
     answerRecords.push({
       attempt_id: attemptId,
-      question_id: answer.question_id,
-      selected_option_id: answer.selected_option_id,
-      text_answer: answer.text_answer,
+      question_id: dbQ.id,
+      selected_option_ids: studentAns.selectedOptionIds || null,
+      text_answer: studentAns.textAnswer || null,
+      ordering_answer: studentAns.orderingAnswer || null,
+      time_spent_seconds: studentAns.timeSpentSeconds || 0,
       is_correct: isCorrect,
       points_earned: pointsEarned
     });
   }
 
-  // 3. Ghi kết quả vào Database
-  const { error: answersErr } = await supabase.from('quiz_answers').insert(answerRecords);
-  if (answersErr) throw answersErr;
-  
-  const { data: updatedAttempt, error: updateErr } = await supabase
+  // Insert answers
+  if (answerRecords.length > 0) {
+    await supabase.from('quiz_answers').insert(answerRecords);
+  }
+
+  // Calculate final score
+  const finalScore = totalMaxScore > 0 ? (totalScore / totalMaxScore) * 100 : 0;
+
+  await supabase
     .from('quiz_attempts')
     .update({
-      score: totalScore,
+      score: finalScore,
+      max_score: totalMaxScore,
       status: 'submitted',
       submitted_at: new Date().toISOString()
     })
-    .eq('id', attemptId)
-    .select()
-    .single();
+    .eq('id', attemptId);
 
-  if (updateErr) throw updateErr;
+  // Gửi thông báo trực tiếp vào DB để kích hoạt Realtime
+  await supabase.from('notifications').insert({
+    user_id: user.id,
+    type: 'quiz_graded',
+    title: 'Bài thi đã được chấm điểm!',
+    body: `Bạn đạt ${finalScore.toFixed(1)}% điểm. Click để xem chi tiết kết quả.`,
+    action_url: `/student/quiz/${attemptId}/results`,
+    data: { quizId: attempt.quizzes.id, attemptId, score: finalScore }
+  });
 
-  revalidatePath(`/student/quiz/${attempt.quiz_id}`);
-  
-  return updatedAttempt;
+  // Evaluate and award achievements
+  await checkAndAwardAchievements(supabase, user.id, 'quiz_submitted');
+
+  revalidatePath(`/student/quiz/${attempt.quizzes.id}`);
+  return { attemptId, score: finalScore, redirect: `/student/quiz/${attemptId}/results` };
 }
 
-/**
- * Lấy kết quả bài thi chi tiết (bao gồm cả đáp án đúng để so sánh)
- */
-export async function getQuizResult(attemptId: string) {
+export async function expireQuizAttempt(attemptId: string, answers: StudentAnswer[]) {
+  // Similar to submit but sets status to expired
+  const res = await submitQuizAttempt(attemptId, answers);
   const supabase = await createClient();
-  
-  const { data: attempt, error: attErr } = await supabase
-    .from('quiz_attempts')
-    .select(`
-      *,
-      quiz:quizzes (*),
-      answers:quiz_answers (
-        *,
-        question:questions (
-          *,
-          options:question_options (*)
-        )
-      )
-    `)
-    .eq('id', attemptId)
-    .single();
-
-  if (attErr) throw attErr;
-  return attempt;
+  await supabase.from('quiz_attempts').update({ status: 'expired' }).eq('id', attemptId);
+  return res;
 }
-

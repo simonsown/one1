@@ -78,8 +78,8 @@ function RegisterForm() {
         return
       }
     } else if (step === 2) {
-      if (formData.role === 'teacher' && !formData.teacherCode) {
-        setError('Giáo viên cần nhập mã xác thực.')
+      if (formData.role === 'parent' && (!formData.schoolName || !formData.classCode)) {
+        setError('Vui lòng nhập đầy đủ thông tin liên kết tài khoản con.')
         return
       }
     }
@@ -288,26 +288,40 @@ function RegisterForm() {
                 transition={{ duration: 0.2 }}
                 className="flex flex-col gap-5"
               >
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {/* Student option */}
                   <label className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'student' ? 'border-[#00d2a0] bg-[#00d2a0]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}>
                     <input type="radio" name="role" value="student" checked={formData.role === 'student'} onChange={handleInputChange} className="hidden" />
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${formData.role === 'student' ? 'bg-[#00d2a0] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
-                      <GraduationCap size={24} />
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'student' ? 'bg-[#00d2a0] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
+                      <GraduationCap size={20} />
                     </div>
                     <div className="text-center">
-                      <div className="font-bold mb-1">Học sinh</div>
-                      <div className="text-xs text-slate-400">Tôi muốn học & thực hành</div>
+                      <div className="font-bold text-xs mb-1">Học sinh</div>
+                      <div className="text-[10px] text-slate-400 leading-tight">Học & thực hành</div>
                     </div>
                   </label>
 
+                  {/* Teacher option */}
                   <label className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'teacher' ? 'border-[#00b4d8] bg-[#00b4d8]/10 shadow-[0_0_15px_rgba(0,180,216,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}>
                     <input type="radio" name="role" value="teacher" checked={formData.role === 'teacher'} onChange={handleInputChange} className="hidden" />
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${formData.role === 'teacher' ? 'bg-[#00b4d8] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
-                      <User size={24} />
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'teacher' ? 'bg-[#00b4d8] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
+                      <User size={20} />
                     </div>
                     <div className="text-center">
-                      <div className="font-bold mb-1">Giáo viên</div>
-                      <div className="text-xs text-slate-400">Tôi muốn dạy & quản lý</div>
+                      <div className="font-bold text-xs mb-1">Giáo viên</div>
+                      <div className="text-[10px] text-slate-400 leading-tight">Dạy & quản lý</div>
+                    </div>
+                  </label>
+
+                  {/* Parent option */}
+                  <label className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'parent' ? 'border-purple-500 bg-purple-500/10 shadow-[0_0_15px_rgba(168,85,247,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}>
+                    <input type="radio" name="role" value="parent" checked={formData.role === 'parent'} onChange={handleInputChange} className="hidden" />
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'parent' ? 'bg-purple-500 text-black' : 'bg-[#1e293b] text-slate-400'}`}>
+                      <Users size={20} />
+                    </div>
+                    <div className="text-center">
+                      <div className="font-bold text-xs mb-1">Phụ huynh</div>
+                      <div className="text-[10px] text-slate-400 leading-tight">Theo dõi con học</div>
                     </div>
                   </label>
                 </div>
@@ -317,22 +331,33 @@ function RegisterForm() {
                     <motion.div key="student-fields" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col gap-4 mt-2">
                       <div className="relative">
                         <Building size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="schoolName" placeholder="Tên trường học của bạn *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white" />
+                        <input type="text" name="schoolName" placeholder="Tên trường học của bạn *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white text-sm" />
                       </div>
                       <div className="relative">
                         <Users size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="classCode" placeholder="Mã lớp (Nếu có)" value={formData.classCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white" />
+                        <input type="text" name="classCode" placeholder="Mã lớp (Nếu có)" value={formData.classCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white text-sm" />
                       </div>
                     </motion.div>
-                  ) : (
+                  ) : formData.role === 'teacher' ? (
                     <motion.div key="teacher-fields" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col gap-4 mt-2">
                       <div className="relative">
                         <Building size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="schoolCode" placeholder="Mã trường / Tổ chức" value={formData.schoolCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00b4d8] text-white" />
+                        <input type="text" name="schoolCode" placeholder="Mã trường / Tổ chức (Tùy chọn)" value={formData.schoolCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00b4d8] text-white text-sm" />
                       </div>
                       <div className="relative">
                         <ShieldCheck size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="teacherCode" placeholder="Mã xác thực giáo viên *" value={formData.teacherCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00b4d8] text-white" />
+                        <input type="text" name="teacherCode" placeholder="Mã xác thực giáo viên (Tùy chọn)" value={formData.teacherCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00b4d8] text-white text-sm" />
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div key="parent-fields" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col gap-4 mt-2">
+                      <div className="relative">
+                        <Building size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                        <input type="text" name="schoolName" placeholder="Tên trường học của con *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-purple-500 text-white text-sm" />
+                      </div>
+                      <div className="relative">
+                        <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                        <input type="text" name="classCode" placeholder="Mã học sinh của con (Để liên kết tài khoản) *" value={formData.classCode} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-purple-500 text-white text-sm" />
                       </div>
                     </motion.div>
                   )}

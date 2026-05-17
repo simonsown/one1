@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Home, BookOpen, Trophy, FileText, LayoutDashboard, Users, BarChart3, Bell, Menu, X, Settings, LogOut, User as UserIcon, HelpCircle } from 'lucide-react'
 import { getProfile, logout } from '@/lib/auth-actions'
+import { NotificationBell } from '@/components/notifications/NotificationBell'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -122,10 +123,7 @@ export default function Navbar() {
             <div className="flex flex-row items-center gap-2 sm:gap-4">
               
               {/* Notifications */}
-              <button className="relative p-2 text-slate-400 hover:text-white hover:bg-[#16213e] rounded-full transition-colors">
-                <Bell size={20} />
-                <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0f0f1a]"></span>
-              </button>
+              {userProfile && <NotificationBell userId={userProfile.id} />}
 
               {/* User Avatar & Dropdown (Desktop) */}
               <div className="hidden md:block relative">

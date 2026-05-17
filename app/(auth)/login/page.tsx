@@ -252,11 +252,7 @@ export default function LoginPage() {
             <div className="h-[1px] flex-1 bg-[#1e293b]"></div>
           </div>
 
-          <div className="mb-6">
-            <Link href="/builder?demo=true" className="w-full flex items-center justify-center gap-2 py-3 border border-dashed border-[#00d2a0]/50 text-[#00d2a0] rounded-xl hover:bg-[#00d2a0]/5 transition-all font-semibold">
-              <Globe size={18} /> Thử ngay không cần tài khoản
-            </Link>
-          </div>
+
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             {/* Input Email với Floating Label */}

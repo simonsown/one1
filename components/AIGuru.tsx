@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageSquare, X, Send, Sparkles, User, Bot, Loader2 } from 'lucide-react'
+import { MessageSquare, X, Send, Sparkles, User, Bot, Loader2, Cpu } from 'lucide-react'
 
 export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: string, trigger?: number, lang?: string }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -49,11 +49,21 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 right-8 w-16 h-16 bg-[#00d2a0] text-black rounded-full shadow-[0_0_30px_rgba(0,210,160,0.4)] flex items-center justify-center z-[1000] hover:scale-110 transition-transform group"
+        className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-tr from-[#00d2a0] to-[#00b4d8] text-black shadow-[0_0_30px_rgba(0,210,160,0.5)] flex items-center justify-center z-[1000] hover:scale-110 hover:rotate-6 transition-all duration-300 group"
+        style={{
+          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+          border: '1px solid rgba(255, 255, 255, 0.2)'
+        }}
       >
-        <MessageSquare size={28} />
-        <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-md animate-bounce">
-          <Sparkles size={12} className="text-[#00d2a0]" />
+        {/* Glowing aura */}
+        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
+        {/* Microchip/Bot icon */}
+        <Cpu size={24} className="animate-pulse text-black" />
+
+        {/* Floating tech badge */}
+        <div className="absolute -top-1 -right-1 w-5 h-5 bg-black border border-[#00d2a0] rounded-full flex items-center justify-center shadow-md animate-bounce">
+          <Sparkles size={10} className="text-[#00d2a0] animate-spin" />
         </div>
       </button>
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { completeLessonAction } from '@/lib/learning-actions'
+import DiscussionPanel from '@/components/discussion/DiscussionPanel'
 
 export default async function LessonPage({ params }: { params: { lessonId: string } }) {
   const cookieStore = await cookies()
@@ -17,7 +18,12 @@ export default async function LessonPage({ params }: { params: { lessonId: strin
 
   const { data: { user } } = await supabase.auth.getUser()
 
+  let userRole = 'student'
   if (user) {
+    // Fetch profile to get role
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (profile) userRole = profile.role
+
     await supabase.from('lesson_progress').upsert({
       student_id: user.id,
       lesson_id: params.lessonId,
@@ -60,11 +66,14 @@ export default async function LessonPage({ params }: { params: { lessonId: strin
       </div>
 
       {/* Right Sidebar (Discussion) */}
-      <div className="w-80 bg-[#1a1c25] border-l border-gray-800 p-4 hidden lg:flex flex-col">
-        <h3 className="font-bold text-[#00d4aa] mb-4">Thảo luận</h3>
-        <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
-          Chưa có bình luận nào
-        </div>
+      <div className="w-80 bg-[#1a1c25] border-l border-gray-800 p-0 hidden lg:flex flex-col">
+        {user && (
+          <DiscussionPanel 
+            lessonId={params.lessonId} 
+            currentUserId={user.id} 
+            userRole={userRole as any} 
+          />
+        )}
       </div>
     </div>
   )

@@ -29,13 +29,24 @@ export async function login(formData: FormData) {
     }
   }
 
+  // 1. Check if email exists in profiles first
+  const { data: profileCheck, error: checkError } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('email', email)
+    .maybeSingle()
+
+  if (checkError || !profileCheck) {
+    return { error: 'Tài khoản chưa được đăng ký hoặc thông tin đăng nhập không chính xác.' }
+  }
+
   const { data: { user }, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   })
 
   if (error) {
-    return { error: error.message }
+    return { error: 'Tài khoản chưa được đăng ký hoặc thông tin đăng nhập không chính xác.' }
   }
 
   // Lấy role để redirect đúng
