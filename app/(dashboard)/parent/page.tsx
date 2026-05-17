@@ -98,22 +98,68 @@ export default function ParentDashboard() {
         }
         setParentName(profile.full_name || 'Phụ huynh')
         
-        // If child profile is registered in DB, let's load dynamic data
-        if (profile.class_code) {
+        // Fetch linked student
+        const { data: linkData } = await supabase
+          .from('parent_student_links')
+          .select('student_id')
+          .eq('parent_id', user.id)
+          .maybeSingle();
+
+        if (linkData?.student_id) {
           const { data: childProfile } = await supabase
             .from('profiles')
             .select('*')
-            .eq('id', profile.class_code)
+            .eq('id', linkData.student_id)
             .maybeSingle()
           
           if (childProfile) {
             setChild({
-              full_name: childProfile.full_name || 'Nguyễn Tiến Minh',
-              email: childProfile.email || 'tienminh.student@gmail.com',
-              school_name: childProfile.school_name || 'Trường THPT Amsterdam',
-              grade: childProfile.grade || '10 Tin 1',
+              full_name: childProfile.full_name || 'Chưa cập nhật tên',
+              email: childProfile.email || 'N/A',
+              school_name: childProfile.school_name || 'Đang cập nhật...',
+              grade: childProfile.grade || 'Đang cập nhật...',
               avatar_url: childProfile.avatar_url || '🎯'
             })
+
+            // Fetch Real Activities (Lessons)
+            const { data: realLessons } = await supabase
+              .from('lesson_progress')
+              .select('lesson_id, status, updated_at')
+              .eq('user_id', childProfile.id)
+              .order('updated_at', { ascending: false })
+              .limit(5);
+
+            if (realLessons && realLessons.length > 0) {
+              const mappedActivities = realLessons.map(l => ({
+                id: l.lesson_id,
+                type: 'lesson' as const,
+                title: `Bài học ${l.lesson_id}`,
+                detail: l.status === 'completed' ? 'Đã hoàn thành xuất sắc' : 'Đang trong quá trình học',
+                time: new Date(l.updated_at).toLocaleDateString('vi-VN'),
+                status: l.status === 'completed' ? 'completed' as const : 'ongoing' as const
+              }));
+              setActivities(mappedActivities);
+            }
+
+            // Fetch Real Quizzes
+            const { data: realQuizzes } = await supabase
+              .from('quiz_attempts')
+              .select('*')
+              .eq('user_id', childProfile.id)
+              .order('created_at', { ascending: false })
+              .limit(5);
+            
+            if (realQuizzes && realQuizzes.length > 0) {
+              const mappedQuizzes = realQuizzes.map(q => ({
+                id: q.id,
+                quiz_title: q.quiz_id === 'cpu_basics' ? 'Cấu trúc & Nguyên lý CPU' : `Bài kiểm tra ${q.quiz_id}`,
+                score: q.score,
+                correct_count: q.correct_answers,
+                total_questions: q.total_questions,
+                date: new Date(q.created_at).toLocaleDateString('vi-VN')
+              }));
+              setQuizzes(mappedQuizzes);
+            }
           }
         }
       }

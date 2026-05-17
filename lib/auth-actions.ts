@@ -87,6 +87,8 @@ export async function login(formData: FormData) {
   
   if (userRole === 'student') {
     return { success: true, redirectUrl: '/builder' }
+  } else if (userRole === 'parent') {
+    return { success: true, redirectUrl: '/parent' }
   } else {
     return { success: true, redirectUrl: `/${userRole}/dashboard` }
   }
@@ -148,6 +150,25 @@ export async function register(formData: FormData) {
     });
 
     if (profileError) console.error('Profile Creation Error:', profileError);
+
+    // 5. Nếu là phụ huynh, tạo liên kết với học sinh dựa trên classCode (Mã học sinh/Email)
+    if (role === 'parent' && classCode) {
+      // Tìm học sinh dựa trên email hoặc id
+      const { data: student } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('role', 'student')
+        .or(`email.eq.${classCode},id.eq.${classCode}`)
+        .maybeSingle();
+      
+      if (student) {
+        await supabase.from('parent_student_links').insert({
+          parent_id: data.user.id,
+          student_id: student.id,
+          relationship: 'parent'
+        });
+      }
+    }
   }
 
   return { success: true }

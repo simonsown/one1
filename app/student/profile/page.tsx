@@ -167,6 +167,15 @@ export default function StudentProfilePage() {
               Học sinh · Lớp {profile.grade || 'Mới'}
             </p>
           </div>
+
+          {/* Parent Connection Code Card */}
+          <div className="w-full bg-[#181926]/80 border border-[#1e293b] rounded-2xl p-3.5 text-left space-y-1.5 relative">
+            <div className="text-[9px] text-[#00d4aa] font-bold uppercase tracking-widest">MÃ LIÊN KẾT PHỤ HUYNH</div>
+            <div className="text-xs font-mono font-bold text-slate-200 select-all bg-black/40 px-2 py-1.5 rounded border border-white/5 flex justify-between items-center break-all">
+              <span>{profile.email}</span>
+            </div>
+            <p className="text-[9px] text-gray-400 leading-relaxed">Đưa email này cho Phụ huynh nhập khi đăng ký để theo dõi kết quả học tập.</p>
+          </div>
           
           <div className="w-full pt-4 border-t border-white/5 space-y-1">
             {/* Tabs Trigger Buttons */}
