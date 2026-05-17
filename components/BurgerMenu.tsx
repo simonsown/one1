@@ -2,10 +2,44 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BookOpen, Cpu, ShoppingCart, Users, BrainCircuit, Award, Globe, Sparkles, Menu, Webcam, X, Sun, Moon } from 'lucide-react';
+import { BookOpen, Cpu, ShoppingCart, Users, BrainCircuit, Award, Globe, Sparkles, Menu, Webcam, X, Sun, Moon, BarChart2, Map, FileText, Trophy, Bell, MessageSquare, User } from 'lucide-react';
 import JoinClassModal from './JoinClassModal';
 
-const BurgerMenu = ({ 
+export interface NavItem {
+  id: string;
+  labelEn: string;
+  labelVn: string;
+  icon: React.ElementType;
+  href?: string;
+  mode?: string;
+  onClick?: () => void;
+  badge?: number;
+}
+
+export interface NavGroup {
+  id: string;
+  titleEn: string;
+  titleVn: string;
+  items: NavItem[];
+}
+
+interface BurgerMenuProps {
+  lang: 'en' | 'vn';
+  toggleLang: () => void;
+  onStartQuiz: () => void;
+  appMode: string;
+  setAppMode: (mode: string) => void;
+  webcamMouseEnabled: boolean;
+  setWebcamMouseEnabled: (enabled: boolean) => void;
+  trackingSensitivity: number;
+  setTrackingSensitivity: (sensitivity: number) => void;
+  onToggleAI: () => void;
+  isAIOpen: boolean;
+  theme: string;
+  setTheme: (theme: string) => void;
+}
+
+const BurgerMenu: React.FC<BurgerMenuProps> = ({ 
   lang, 
   toggleLang,
   onStartQuiz, 
@@ -21,16 +55,17 @@ const BurgerMenu = ({
   setTheme
 }) => {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
-    const [hoveredBtn, setHoveredBtn] = useState(null);
+    const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
     const [showCredits, setShowCredits] = useState(false);
     const [showJoinClass, setShowJoinClass] = useState(false);
+    const unreadCount = 0;
     
     // Close mobile menu when mode changes
     useEffect(() => {
         setIsMobileOpen(false);
     }, [appMode]);
 
-    const navItemStyle = (id, isActive) => ({
+    const navItemStyle = (id: string, isActive: boolean): React.CSSProperties => ({
         padding: '8px 12px',
         borderRadius: '8px',
         display: 'flex',
@@ -49,7 +84,7 @@ const BurgerMenu = ({
         textAlign: 'left'
     });
 
-    const iconStyle = (id, isActive) => ({
+    const iconStyle = (id: string, isActive: boolean): React.CSSProperties => ({
         color: isActive ? 'var(--brand-light)' : hoveredBtn === id ? 'var(--text-primary)' : 'var(--text-muted)',
         width: '16px',
         height: '16px',
@@ -138,6 +173,26 @@ const BurgerMenu = ({
                             {lang === 'en' ? 'Lecture Course' : 'Bài Giảng'}
                         </button>
                         
+                        <Link href="/student/progress" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('progress')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('progress', false)}
+                            >
+                                <BarChart2 style={iconStyle('progress', false)} />
+                                {lang === 'en' ? 'Progress' : 'Tiến Độ Học Tập'}
+                            </button>
+                        </Link>
+                        
+                        <Link href="/student/learning-path" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('learning_path')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('learning_path', false)}
+                            >
+                                <Map style={iconStyle('learning_path', false)} />
+                                {lang === 'en' ? 'Learning Path' : 'Lộ Trình Học'}
+                            </button>
+                        </Link>
+                        
                         <button
                             onMouseEnter={() => setHoveredBtn('learning')} onMouseLeave={() => setHoveredBtn(null)}
                             onClick={() => setAppMode('learning')}
@@ -173,6 +228,46 @@ const BurgerMenu = ({
                             <Users style={iconStyle('multiplayer', appMode === 'multiplayer')} />
                             {lang === 'en' ? '2-Player Versus' : '2 Người Chơi'}
                         </button>
+                    </div>
+
+                    {/* NHÓM ĐÁNH GIÁ */}
+                    <div style={{ padding: '12px 0', display: 'flex', flexDirection: 'column', gap: '4px', margin: '0 16px' }}>
+                        <div style={{
+                            fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
+                            color: 'var(--text-muted)', padding: '12px 0 6px 0'
+                        }}>
+                            {lang === 'en' ? 'Assessment' : 'Đánh giá'}
+                        </div>
+                        
+                        <Link href="/student/quiz" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('quiz_bank')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('quiz_bank', false)}
+                            >
+                                <FileText style={iconStyle('quiz_bank', false)} />
+                                {lang === 'en' ? 'Quiz Bank' : 'Ngân Hàng Đề Thi'}
+                            </button>
+                        </Link>
+                        
+                        <Link href="/student/achievements" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('achievements')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('achievements', false)}
+                            >
+                                <Trophy style={iconStyle('achievements', false)} />
+                                {lang === 'en' ? 'Achievements' : 'Thành Tích'}
+                            </button>
+                        </Link>
+                        
+                        <Link href="/student/certificates" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('certificates')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('certificates', false)}
+                            >
+                                <Award style={iconStyle('certificates', false)} />
+                                {lang === 'en' ? 'Certificates' : 'Chứng Chỉ'}
+                            </button>
+                        </Link>
                     </div>
 
                     {/* [4] WEBCAM SECTION */}
@@ -239,6 +334,48 @@ const BurgerMenu = ({
                             {lang === 'en' ? 'Join Class' : 'Tham gia lớp học'}
                         </button>
                         
+                        <Link href="/notifications" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('notifications')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('notifications', false)}
+                            >
+                                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                    <Bell style={iconStyle('notifications', false)} />
+                                    {unreadCount > 0 && (
+                                        <span style={{
+                                            position: 'absolute', top: '-4px', right: '-4px',
+                                            background: '#ef4444', color: 'white', fontSize: '10px',
+                                            fontWeight: 'bold', width: '14px', height: '14px',
+                                            borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                        }}>
+                                            {unreadCount}
+                                        </span>
+                                    )}
+                                </div>
+                                <span style={{ marginLeft: '8px' }}>{lang === 'en' ? 'Notifications' : 'Thông Báo'}</span>
+                            </button>
+                        </Link>
+                        
+                        <Link href="/student/discussion" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('discussion')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('discussion', false)}
+                            >
+                                <MessageSquare style={iconStyle('discussion', false)} />
+                                {lang === 'en' ? 'Discussion' : 'Thảo Luận'}
+                            </button>
+                        </Link>
+                        
+                        <Link href="/student/profile" style={{ textDecoration: 'none' }}>
+                            <button
+                                onMouseEnter={() => setHoveredBtn('profile')} onMouseLeave={() => setHoveredBtn(null)}
+                                style={navItemStyle('profile', false)}
+                            >
+                                <User style={iconStyle('profile', false)} />
+                                {lang === 'en' ? 'Profile' : 'Hồ Sơ Cá Nhân'}
+                            </button>
+                        </Link>
+
                         <Link href="/about" style={{ textDecoration: 'none' }}>
                             <button
                                 onMouseEnter={() => setHoveredBtn('about')} onMouseLeave={() => setHoveredBtn(null)}

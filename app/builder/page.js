@@ -19,11 +19,12 @@ import VirtualAssistant from '../../components/VirtualAssistant';
 import LoadingScreen from '../../components/LoadingScreen';
 import ExamsList from '../../components/ExamsList';
 import { GURU_MESSAGES } from '../../utils/i18nData';
+import { withTracking } from '@/lib/tracking';
 
 // Hoist camera state outside component or use persistent Context to ensure "only turn on once" stays on even if rerendered
 let globalCameraState = false;
 
-export default function Home() {
+function Home(props) {
   const [landmarks, setLandmarks] = useState([]);
   const [hoveredComponent, setHoveredComponent] = useState(null);
   const [lang, setLang] = useState('vn'); // 'en' or 'vn'
@@ -481,3 +482,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withTracking(Home);

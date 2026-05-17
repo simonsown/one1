@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Loader2, Mail, Lock, Eye, EyeOff, Cpu, Bot, Globe, ShieldCheck } from 'lucide-react'
 import { login, signInWithGoogle } from '@/lib/auth-actions'
+import { createBrowserClient } from '@supabase/ssr'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function LoginPage() {
@@ -38,6 +39,34 @@ export default function LoginPage() {
     if (res?.error) {
       setError(res.error)
       setLoading(false)
+    } else {
+      try {
+        const supabase = createBrowserClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        )
+        const { data: { user } } = await supabase.auth.getUser()
+        
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single()
+
+          if (profile?.role === 'teacher') {
+            router.push('/teacher/dashboard')
+          } else if (profile?.role === 'student') {
+            router.push('/student/dashboard')
+          } else {
+            router.push('/onboarding')
+          }
+        } else {
+          router.push('/student/dashboard')
+        }
+      } catch (err) {
+        router.push('/student/dashboard')
+      }
     }
   }
 
