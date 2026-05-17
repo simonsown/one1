@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/lib/supabase';
+import { startBuilderSession, endBuilderSession } from '@/lib/learning-actions';
 import HandTracker from '../../components/HandTracker';
 import GameEngine from '../../components/GameEngine';
 import MultiplayerEngine from '../../components/MultiplayerEngine';
@@ -45,6 +46,34 @@ function Home(props) {
   const [theme, setTheme] = useState('dark');
 
   const [isDemo, setIsDemo] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+
+  useEffect(() => {
+    let currentSessionId = null;
+
+    async function initSession() {
+      try {
+        const id = await startBuilderSession();
+        if (id) {
+          setSessionId(id);
+          currentSessionId = id;
+        }
+      } catch (err) {
+        console.error("Failed to start builder session:", err);
+      }
+    }
+    initSession();
+
+    return () => {
+      if (currentSessionId) {
+        endBuilderSession(currentSessionId, {
+          components_used: [],
+          tdp_calculated: 0,
+          compatibility_score: 100
+        });
+      }
+    };
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
