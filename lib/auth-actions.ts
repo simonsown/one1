@@ -150,8 +150,7 @@ export async function register(formData: FormData) {
     if (profileError) console.error('Profile Creation Error:', profileError);
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/login?registered=true')
+  return { success: true }
 }
 
 export async function logout() {
