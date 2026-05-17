@@ -299,7 +299,10 @@ function RegisterForm() {
               >
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {/* Student option */}
-                  <label className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'student' ? 'border-[#00d2a0] bg-[#00d2a0]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}>
+                  <label 
+                    onClick={() => setFormData(prev => ({ ...prev, role: 'student' }))}
+                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'student' ? 'border-[#00d2a0] bg-[#00d2a0]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}
+                  >
                     <input type="radio" name="role" value="student" checked={formData.role === 'student'} onChange={handleInputChange} className="hidden" />
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'student' ? 'bg-[#00d2a0] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
                       <GraduationCap size={20} />
@@ -311,7 +314,10 @@ function RegisterForm() {
                   </label>
 
                   {/* Teacher option */}
-                  <label className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'teacher' ? 'border-[#00b4d8] bg-[#00b4d8]/10 shadow-[0_0_15px_rgba(0,180,216,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}>
+                  <label 
+                    onClick={() => setFormData(prev => ({ ...prev, role: 'teacher' }))}
+                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'teacher' ? 'border-[#00b4d8] bg-[#00b4d8]/10 shadow-[0_0_15px_rgba(0,180,216,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}
+                  >
                     <input type="radio" name="role" value="teacher" checked={formData.role === 'teacher'} onChange={handleInputChange} className="hidden" />
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'teacher' ? 'bg-[#00b4d8] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
                       <User size={20} />
@@ -323,7 +329,10 @@ function RegisterForm() {
                   </label>
 
                   {/* Parent option */}
-                  <label className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'parent' ? 'border-[#00d2a0] bg-[#00d2a0]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}>
+                  <label 
+                    onClick={() => setFormData(prev => ({ ...prev, role: 'parent' }))}
+                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'parent' ? 'border-[#00d2a0] bg-[#00d2a0]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}
+                  >
                     <input type="radio" name="role" value="parent" checked={formData.role === 'parent'} onChange={handleInputChange} className="hidden" />
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'parent' ? 'bg-[#00d2a0] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
                       <Users size={20} />

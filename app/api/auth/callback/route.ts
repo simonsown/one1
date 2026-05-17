@@ -24,8 +24,16 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${origin}/register?step=2&oauth=true`)
       }
       
-      // Đã có role (đăng nhập lần 2 trở đi), vào thẳng app
-      return NextResponse.redirect(`${origin}${next}`)
+      // Đã có role, chuyển hướng theo vai trò thực tế
+      const userRole = profile.role
+      let redirectPath = '/builder'
+      if (userRole === 'teacher') {
+        redirectPath = '/teacher'
+      } else if (userRole === 'parent') {
+        redirectPath = '/parent'
+      }
+      
+      return NextResponse.redirect(`${origin}${redirectPath}`)
     }
   }
 
