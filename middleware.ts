@@ -50,7 +50,7 @@ export async function middleware(request: NextRequest) {
     .single()
 
   if (pathname.startsWith('/teacher') && profile?.role !== 'teacher') {
-    return NextResponse.redirect(new URL('/student/dashboard', request.url))
+    return NextResponse.redirect(new URL('/student', request.url))
   }
 
   return response

@@ -42,7 +42,7 @@ export default function OnboardingPage() {
       alert('Có lỗi xảy ra: ' + error.message)
     } else {
       // Chuyển hướng theo role
-      router.push(role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard')
+      router.push(role === 'teacher' ? '/teacher' : '/student')
     }
   }
 

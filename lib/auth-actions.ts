@@ -90,7 +90,7 @@ export async function login(formData: FormData) {
   } else if (userRole === 'parent') {
     return { success: true, redirectUrl: '/parent' }
   } else {
-    return { success: true, redirectUrl: `/${userRole}/dashboard` }
+    return { success: true, redirectUrl: `/${userRole}` }
   }
 }
 

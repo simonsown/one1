@@ -43,7 +43,7 @@ export default function QuizResultsPage({ params }: { params: { attemptId: strin
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/student/dashboard" className="px-6 py-3 border border-gray-700 hover:border-gray-500 rounded-2xl hover:bg-gray-800/40 transition-all font-bold text-sm text-slate-300 hover:text-white">
+          <Link href="/student" className="px-6 py-3 border border-gray-700 hover:border-gray-500 rounded-2xl hover:bg-gray-800/40 transition-all font-bold text-sm text-slate-300 hover:text-white">
             Về Dashboard
           </Link>
           {passed ? (

@@ -36,7 +36,7 @@ export async function completeLessonAction(lessonId: string) {
   await checkAndAwardAchievements(supabase, user.id, 'lesson_completed')
 
   // Redirect to dashboard or next lesson
-  redirect('/student/dashboard')
+  redirect('/student')
 }
 
 export async function startBuilderSession(lessonId?: string) {

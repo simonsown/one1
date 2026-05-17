@@ -79,7 +79,7 @@ export default function NotificationsPage() {
           </div>
 
           <button 
-            onClick={() => router.push('/student/dashboard')}
+            onClick={() => router.push('/student')}
             className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
           >
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />

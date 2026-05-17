@@ -20,7 +20,7 @@ export async function completeLessonAction(lessonId: string) {
   // Trigger notification "Đã mở khóa bài mới" can be handled here
 
   // For simplicity, redirecting to dashboard. In a real scenario, this could redirect to next lesson or quiz
-  redirect('/student/dashboard')
+  redirect('/student')
 }
 
 export async function startBuilderSession(lessonId?: string) {
