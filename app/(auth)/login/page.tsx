@@ -39,34 +39,10 @@ export default function LoginPage() {
     if (res?.error) {
       setError(res.error)
       setLoading(false)
+    } else if (res?.success && res.redirectUrl) {
+      router.push(res.redirectUrl)
     } else {
-      try {
-        const supabase = createBrowserClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-        )
-        const { data: { user } } = await supabase.auth.getUser()
-        
-        if (user) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', user.id)
-            .single()
-
-          if (profile?.role === 'teacher') {
-            router.push('/teacher/dashboard')
-          } else if (profile?.role === 'student') {
-            router.push('/student/dashboard')
-          } else {
-            router.push('/onboarding')
-          }
-        } else {
-          router.push('/student/dashboard')
-        }
-      } catch (err) {
-        router.push('/student/dashboard')
-      }
+      setLoading(false)
     }
   }
 
@@ -165,6 +141,10 @@ export default function LoginPage() {
               const res = await login(fd)
               if (res?.error) {
                 setError(res.error)
+                setLoading(false)
+              } else if (res?.success && res.redirectUrl) {
+                router.push(res.redirectUrl)
+              } else {
                 setLoading(false)
               }
             }}

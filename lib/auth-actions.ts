@@ -24,8 +24,7 @@ export async function login(formData: FormData) {
       password: password,
     })
     if (!adminError) {
-      revalidatePath('/', 'layout')
-      redirect('/admin')
+      return { success: true, redirectUrl: '/admin' }
     }
   }
 
@@ -86,12 +85,10 @@ export async function login(formData: FormData) {
 
   const userRole = finalProfile?.role || user!.user_metadata?.role || 'student'
   
-  revalidatePath('/', 'layout')
-  
   if (userRole === 'student') {
-    redirect('/builder')
+    return { success: true, redirectUrl: '/builder' }
   } else {
-    redirect(`/${userRole}`)
+    return { success: true, redirectUrl: `/${userRole}/dashboard` }
   }
 }
 
