@@ -58,7 +58,32 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({
     const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
     const [showCredits, setShowCredits] = useState(false);
     const [showJoinClass, setShowJoinClass] = useState(false);
+    const [hasClass, setHasClass] = useState(false);
     const unreadCount = 0;
+    
+    // Check if user has a class
+    useEffect(() => {
+        const checkClass = async () => {
+            try {
+                // Inline import to avoid changing global imports since we use multi_replace earlier
+                const { createBrowserClient } = require('@supabase/ssr');
+                const supabase = createBrowserClient(
+                    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+                );
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    const { data: profile } = await supabase.from('profiles').select('class_id, school_id').eq('id', user.id).single();
+                    if (profile?.class_id || profile?.school_id) {
+                        setHasClass(true);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        checkClass();
+    }, []);
     
     // Close mobile menu when mode changes
     useEffect(() => {
@@ -173,24 +198,24 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({
                             {lang === 'en' ? 'Lecture Course' : 'Bài Giảng'}
                         </button>
                         
-                        <Link href="/student/progress" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('progress')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('progress', false)}
-                            >
-                                <BarChart2 style={iconStyle('progress', false)} />
-                                {lang === 'en' ? 'Progress' : 'Tiến Độ Học Tập'}
-                            </button>
+                        <Link 
+                            href="/student/progress" 
+                            style={{ ...navItemStyle('progress', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('progress')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <BarChart2 style={iconStyle('progress', false)} />
+                            {lang === 'en' ? 'Progress' : 'Tiến Độ Học Tập'}
                         </Link>
                         
-                        <Link href="/student/learning-path" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('learning_path')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('learning_path', false)}
-                            >
-                                <Map style={iconStyle('learning_path', false)} />
-                                {lang === 'en' ? 'Learning Path' : 'Lộ Trình Học'}
-                            </button>
+                        <Link 
+                            href="/student/learning-path" 
+                            style={{ ...navItemStyle('learning_path', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('learning_path')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <Map style={iconStyle('learning_path', false)} />
+                            {lang === 'en' ? 'Learning Path' : 'Lộ Trình Học'}
                         </Link>
                         
                         <button
@@ -239,34 +264,34 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({
                             {lang === 'en' ? 'Assessment' : 'Đánh giá'}
                         </div>
                         
-                        <Link href="/student/quiz" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('quiz_bank')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('quiz_bank', false)}
-                            >
-                                <FileText style={iconStyle('quiz_bank', false)} />
-                                {lang === 'en' ? 'Quiz Bank' : 'Ngân Hàng Đề Thi'}
-                            </button>
+                        <Link 
+                            href="/student/quiz" 
+                            style={{ ...navItemStyle('quiz_bank', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('quiz_bank')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <FileText style={iconStyle('quiz_bank', false)} />
+                            {lang === 'en' ? 'Quiz Bank' : 'Ngân Hàng Đề Thi'}
                         </Link>
                         
-                        <Link href="/student/achievements" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('achievements')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('achievements', false)}
-                            >
-                                <Trophy style={iconStyle('achievements', false)} />
-                                {lang === 'en' ? 'Achievements' : 'Thành Tích'}
-                            </button>
+                        <Link 
+                            href="/student/achievements" 
+                            style={{ ...navItemStyle('achievements', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('achievements')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <Trophy style={iconStyle('achievements', false)} />
+                            {lang === 'en' ? 'Achievements' : 'Thành Tích'}
                         </Link>
                         
-                        <Link href="/student/certificates" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('certificates')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('certificates', false)}
-                            >
-                                <Award style={iconStyle('certificates', false)} />
-                                {lang === 'en' ? 'Certificates' : 'Chứng Chỉ'}
-                            </button>
+                        <Link 
+                            href="/student/certificates" 
+                            style={{ ...navItemStyle('certificates', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('certificates')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <Award style={iconStyle('certificates', false)} />
+                            {lang === 'en' ? 'Certificates' : 'Chứng Chỉ'}
                         </Link>
                     </div>
 
@@ -325,65 +350,77 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({
                             {lang === 'en' ? 'Extras' : 'Tính năng khác'}
                         </div>
 
-                        <button
-                            onMouseEnter={() => setHoveredBtn('join_class')} onMouseLeave={() => setHoveredBtn(null)}
-                            onClick={() => setShowJoinClass(true)}
-                            style={navItemStyle('join_class', false)}
+                        {!hasClass ? (
+                            <button
+                                onMouseEnter={() => setHoveredBtn('join_class')} onMouseLeave={() => setHoveredBtn(null)}
+                                onClick={() => setShowJoinClass(true)}
+                                style={navItemStyle('join_class', false)}
+                            >
+                                <Users style={iconStyle('join_class', false)} />
+                                {lang === 'en' ? 'Join Class' : 'Tham gia lớp học'}
+                            </button>
+                        ) : (
+                            <Link 
+                                href="/student/classes" 
+                                style={{ ...navItemStyle('my_class', false), textDecoration: 'none' }}
+                                onMouseEnter={() => setHoveredBtn('my_class')} 
+                                onMouseLeave={() => setHoveredBtn(null)}
+                            >
+                                <Users style={iconStyle('my_class', false)} />
+                                {lang === 'en' ? 'My Class' : 'Lớp Học Của Tôi'}
+                            </Link>
+                        )}
+                        
+                        <Link 
+                            href="/notifications" 
+                            style={{ ...navItemStyle('notifications', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('notifications')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
                         >
-                            <Users style={iconStyle('join_class', false)} />
-                            {lang === 'en' ? 'Join Class' : 'Tham gia lớp học'}
-                        </button>
-                        
-                        <Link href="/notifications" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('notifications')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('notifications', false)}
-                            >
-                                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                                    <Bell style={iconStyle('notifications', false)} />
-                                    {unreadCount > 0 && (
-                                        <span style={{
-                                            position: 'absolute', top: '-4px', right: '-4px',
-                                            background: '#ef4444', color: 'white', fontSize: '10px',
-                                            fontWeight: 'bold', width: '14px', height: '14px',
-                                            borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                        }}>
-                                            {unreadCount}
-                                        </span>
-                                    )}
-                                </div>
-                                <span style={{ marginLeft: '8px' }}>{lang === 'en' ? 'Notifications' : 'Thông Báo'}</span>
-                            </button>
+                            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                <Bell style={iconStyle('notifications', false)} />
+                                {unreadCount > 0 && (
+                                    <span style={{
+                                        position: 'absolute', top: '-4px', right: '-4px',
+                                        background: '#ef4444', color: 'white', fontSize: '10px',
+                                        fontWeight: 'bold', width: '14px', height: '14px',
+                                        borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                    }}>
+                                        {unreadCount}
+                                    </span>
+                                )}
+                            </div>
+                            <span style={{ marginLeft: '8px' }}>{lang === 'en' ? 'Notifications' : 'Thông Báo'}</span>
                         </Link>
                         
-                        <Link href="/student/discussion" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('discussion')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('discussion', false)}
-                            >
-                                <MessageSquare style={iconStyle('discussion', false)} />
-                                {lang === 'en' ? 'Discussion' : 'Thảo Luận'}
-                            </button>
+                        <Link 
+                            href="/student/discussion" 
+                            style={{ ...navItemStyle('discussion', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('discussion')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <MessageSquare style={iconStyle('discussion', false)} />
+                            {lang === 'en' ? 'Discussion' : 'Thảo Luận'}
                         </Link>
                         
-                        <Link href="/student/profile" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('profile')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('profile', false)}
-                            >
-                                <User style={iconStyle('profile', false)} />
-                                {lang === 'en' ? 'Profile' : 'Hồ Sơ Cá Nhân'}
-                            </button>
+                        <Link 
+                            href="/student/profile" 
+                            style={{ ...navItemStyle('profile', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('profile')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <User style={iconStyle('profile', false)} />
+                            {lang === 'en' ? 'Profile' : 'Hồ Sơ Cá Nhân'}
                         </Link>
 
-                        <Link href="/about" style={{ textDecoration: 'none' }}>
-                            <button
-                                onMouseEnter={() => setHoveredBtn('about')} onMouseLeave={() => setHoveredBtn(null)}
-                                style={navItemStyle('about', false)}
-                            >
-                                <Users style={iconStyle('about', false)} />
-                                {lang === 'en' ? 'About Us' : 'Về chúng tôi'}
-                            </button>
+                        <Link 
+                            href="/about" 
+                            style={{ ...navItemStyle('about', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('about')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <Users style={iconStyle('about', false)} />
+                            {lang === 'en' ? 'About Us' : 'Về chúng tôi'}
                         </Link>
 
                         <button

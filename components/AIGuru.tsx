@@ -49,20 +49,22 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-tr from-[#00d2a0] to-[#00b4d8] text-black shadow-[0_0_30px_rgba(0,210,160,0.5)] flex items-center justify-center z-[1000] hover:scale-110 hover:rotate-6 transition-all duration-300 group"
+        className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-tr from-[#00d2a0] to-[#00b4d8] text-black shadow-[0_0_25px_rgba(0,210,160,0.5)] rounded-full flex items-center justify-center z-[1000] hover:scale-110 transition-all duration-300 group hover:shadow-[0_0_35px_rgba(0,210,160,0.8)]"
         style={{
-          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
           border: '1px solid rgba(255, 255, 255, 0.2)'
         }}
       >
+        {/* Glow pulsing ring */}
+        <div className="absolute -inset-1 bg-gradient-to-tr from-[#00d2a0] to-[#00b4d8] rounded-full blur opacity-40 group-hover:opacity-75 group-hover:duration-200 animate-pulse" />
+        
         {/* Glowing aura */}
-        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300" />
         
         {/* Microchip/Bot icon */}
-        <Cpu size={24} className="animate-pulse text-black" />
+        <Cpu size={22} className="text-black relative z-10 animate-pulse" />
 
         {/* Floating tech badge */}
-        <div className="absolute -top-1 -right-1 w-5 h-5 bg-black border border-[#00d2a0] rounded-full flex items-center justify-center shadow-md animate-bounce">
+        <div className="absolute -top-1 -right-1 w-5 h-5 bg-black border border-[#00d2a0] rounded-full flex items-center justify-center shadow-md animate-bounce relative z-20">
           <Sparkles size={10} className="text-[#00d2a0] animate-spin" />
         </div>
       </button>
@@ -73,10 +75,10 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
-            className="fixed bottom-28 right-8 w-full max-w-[400px] bg-[#16213e] border border-[#1e293b] rounded-3xl shadow-2xl z-[1000] overflow-hidden flex flex-col h-[500px]"
+            className="fixed bottom-24 right-8 w-[calc(100vw-40px)] max-w-[340px] bg-[#161F38] border border-gray-800 rounded-3xl shadow-2xl z-[1000] overflow-hidden flex flex-col h-[420px]"
           >
             {/* Header */}
-            <div className="p-5 bg-[#1e293b] flex items-center justify-between border-b border-[#1e293b]">
+            <div className="p-4 bg-[#1e293b] flex items-center justify-between border-b border-gray-800">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#00d2a0] text-black rounded-xl flex items-center justify-center">
                   <Bot size={24} />

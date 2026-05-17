@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import { motion } from 'framer-motion'
-import { HelpCircle, Zap, Star, Loader2, Search, Award, Flame, Play } from 'lucide-react'
+import { HelpCircle, Zap, Star, Loader2, Search, Award, Flame, Play, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function StudentQuizPage() {
+  const router = useRouter()
   const [quizzes, setQuizzes] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
@@ -85,30 +87,62 @@ export default function StudentQuizPage() {
   )
 
   return (
-    <div className="min-h-screen bg-[#0d0e13] text-white pt-24 pb-16 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-16 px-4 sm:px-6 relative overflow-hidden">
+      
+      {/* High-tech overlays */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <div>
-            <h1 className="text-3xl font-black tracking-tight text-white flex items-center gap-3">
-              <Award className="text-[#00d4aa]" size={36} />
-              Ngân Hàng <span className="text-[#00d4aa]">Đề Thi & Quiz</span>
-            </h1>
-            <p className="text-sm text-gray-400 mt-2">Đánh giá kiến thức phần cứng, tích lũy điểm XP để mở khóa danh hiệu mới</p>
+        {/* Workspace Title & Exit Button */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
+              <Award size={24} />
+            </div>
+            <div>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+                Ngân Hàng <span className="text-[#00d4aa]">Đề Thi & Quiz</span>
+              </h1>
+              <p className="text-xs text-gray-400 mt-0.5">Đánh giá kiến thức phần cứng, tích lũy điểm XP để mở khóa danh hiệu mới</p>
+            </div>
           </div>
 
-          {/* Search bar */}
-          <div className="relative w-full md:w-80">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-            <input 
-              type="text"
-              placeholder="Tìm kiếm bài trắc nghiệm..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#16213e]/50 border border-gray-800 focus:border-[#00d4aa] outline-none pl-11 pr-4 py-2.5 rounded-2xl text-sm transition-all"
-            />
+          <div className="flex items-center gap-3">
+            {/* Search bar */}
+            <div className="relative w-64 hidden sm:block">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+              <input 
+                type="text"
+                placeholder="Tìm kiếm bài trắc nghiệm..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[#16213e]/50 border border-gray-800 focus:border-[#00d4aa] outline-none pl-11 pr-4 py-2.5 rounded-2xl text-xs transition-all text-white placeholder-gray-500"
+              />
+            </div>
+
+            {/* EXIT BUTTON */}
+            <button 
+              onClick={() => router.push('/student/dashboard')}
+              className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+            >
+              <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+              Quay lại Dashboard
+            </button>
           </div>
+        </div>
+
+        {/* Mobile search bar */}
+        <div className="relative w-full sm:hidden mb-6">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+          <input 
+            type="text"
+            placeholder="Tìm kiếm bài trắc nghiệm..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-[#16213e]/50 border border-gray-800 focus:border-[#00d4aa] outline-none pl-11 pr-4 py-2 rounded-2xl text-xs transition-all text-white placeholder-gray-500"
+          />
         </div>
 
         {/* Stats Grid */}

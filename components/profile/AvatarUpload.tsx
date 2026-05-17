@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@supabase/ssr'
 import { User, Camera, Loader } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 
@@ -13,7 +13,10 @@ interface Props {
 
 export function AvatarUpload({ userId, currentAvatarUrl, onUploadSuccess }: Props) {
   const [uploading, setUploading] = useState(false)
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

@@ -129,7 +129,7 @@ export default function ParentDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a14] text-white flex justify-center items-center">
+      <div className="min-h-screen bg-[#161F38] text-white flex justify-center items-center">
         <div className="text-center space-y-3">
           <div className="w-10 h-10 border-4 border-[#00d4aa] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Đang đồng bộ cổng giám sát phụ huynh...</p>
@@ -139,12 +139,16 @@ export default function ParentDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a14] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       
       {/* Neon Cyber Background Elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
+      
+      {/* Cyber corners decorations for the page layout */}
+      <div className="absolute top-24 left-6 w-4.5 h-4.5 border-t-2 border-l-2 border-[#00d4aa]/30 pointer-events-none" />
+      <div className="absolute top-24 right-6 w-4.5 h-4.5 border-t-2 border-r-2 border-[#00d4aa]/30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-8">
         

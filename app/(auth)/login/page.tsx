@@ -237,13 +237,6 @@ export default function LoginPage() {
               </svg>
               Tiếp tục với Google
             </button>
-            <button 
-              type="button" 
-              className="w-full flex items-center justify-center gap-3 bg-[#0068FF] text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-[#0058d8] transition-colors shadow-sm"
-            >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Zalo_logo.svg/2048px-Zalo_logo.svg.png" className="w-5 h-5 object-contain invert" alt="Zalo" />
-              Tiếp tục với Zalo
-            </button>
           </div>
 
           <div className="flex items-center gap-4 mb-6">

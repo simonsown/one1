@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, ReferenceLine, Cell } from 'recharts'
 import { ProgressStats, DailyProgress, LessonProgress, QuizAttempt, BuilderActivity } from '@/lib/progress'
+import { useRouter } from 'next/navigation'
+import { ArrowLeft, BarChart2 } from 'lucide-react'
 
 interface ProgressViewProps {
   data: {
@@ -15,6 +17,7 @@ interface ProgressViewProps {
 }
 
 export default function ProgressView({ data }: ProgressViewProps) {
+  const router = useRouter()
   const { stats, dailyProgress, lessons, quizResults, builderActivity } = data
   const [filter, setFilter] = useState<'all' | 'completed' | 'in_progress' | 'not_started'>('all')
 
@@ -34,10 +37,33 @@ export default function ProgressView({ data }: ProgressViewProps) {
   }
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8 relative z-10">
+      
+      {/* Workspace Title & Exit Button */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
+            <BarChart2 size={24} />
+          </div>
+          <div>
+            <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase">Tiến Độ Học Tập Của Bạn</h1>
+            <p className="text-xs text-gray-400 mt-0.5">Tổng quan kết quả, hoạt động phòng Lab và tiến độ hoàn thành khóa học</p>
+          </div>
+        </div>
+
+        {/* EXIT BUTTON */}
+        <button 
+          onClick={() => router.push('/student/dashboard')}
+          className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+        >
+          <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+          Quay lại Dashboard
+        </button>
+      </div>
+
       {/* Section 1 - Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6 flex items-center justify-between">
+        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
           <div>
             <p className="text-[#6b6e80] text-sm mb-1">Hoàn thành</p>
             <h2 className="text-3xl font-bold text-[#dde0ed]">{stats.completed} <span className="text-[#6b6e80] text-lg">/ {stats.total}</span></h2>
@@ -45,7 +71,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
           <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">✅</div>
         </div>
 
-        <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6 flex items-center justify-between">
+        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
           <div>
             <p className="text-[#6b6e80] text-sm mb-1">Điểm TB Quiz</p>
             <h2 className={`text-3xl font-bold ${stats.avgScore >= 70 ? 'text-[#00d4aa]' : 'text-red-500'}`}>{stats.avgScore}</h2>
@@ -53,7 +79,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
           <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">🎯</div>
         </div>
 
-        <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6 flex items-center justify-between">
+        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
           <div>
             <p className="text-[#6b6e80] text-sm mb-1">Thời gian học</p>
             <h2 className="text-3xl font-bold text-[#dde0ed]">{(stats.totalSeconds / 3600).toFixed(1)}h</h2>
@@ -61,7 +87,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
           <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">⏱️</div>
         </div>
 
-        <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6 flex items-center justify-between">
+        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
           <div>
             <p className="text-[#6b6e80] text-sm mb-1">Streak</p>
             <h2 className="text-3xl font-bold text-[#dde0ed]">{stats.streak} ngày</h2>
@@ -72,7 +98,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Section 2 - Biểu đồ tiến độ */}
-        <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6">
+        <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
           <h3 className="text-lg font-bold text-[#dde0ed] mb-6">Tiến độ 30 ngày</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -98,7 +124,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
         </div>
 
         {/* Section 4 - Phân tích Quiz */}
-        <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6">
+        <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
           <h3 className="text-lg font-bold text-[#dde0ed] mb-6">Phân tích Quiz</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -106,7 +132,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
                 <XAxis dataKey="quiz_title" stroke="#6b6e80" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => val.length > 10 ? val.substring(0,10)+'...' : val} />
                 <YAxis stroke="#6b6e80" fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#1a1c25', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px' }}
+                  contentStyle={{ backgroundColor: '#11121d', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px' }}
                   cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                 />
                 <ReferenceLine y={70} stroke="#6b6e80" strokeDasharray="3 3" label={{ position: 'top', value: 'Ngưỡng đạt', fill: '#6b6e80', fontSize: 10 }} />
@@ -125,7 +151,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
       </div>
 
       {/* Section 5 - Builder Lab Activity */}
-      <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6">
+      <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
         <h3 className="text-lg font-bold text-[#dde0ed] mb-4">Builder Lab Activity (90 ngày)</h3>
         <div className="flex gap-2 overflow-x-auto pb-4">
           <div className="flex flex-col flex-wrap h-32 gap-1 content-start">
@@ -141,7 +167,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
         </div>
         <div className="flex items-center gap-2 mt-2 text-xs text-[#6b6e80] justify-end">
           <span>Ít</span>
-          <div className="w-3 h-3 rounded-sm bg-[#1a1c25] border border-[rgba(255,255,255,0.07)]"></div>
+          <div className="w-3 h-3 rounded-sm bg-[#11121d] border border-gray-800"></div>
           <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-40"></div>
           <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-60"></div>
           <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-80"></div>
@@ -151,7 +177,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
       </div>
 
       {/* Section 3 - Danh sách bài học */}
-      <div className="bg-[#1a1c25] rounded-xl border border-[rgba(255,255,255,0.07)] p-6">
+      <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <h3 className="text-lg font-bold text-[#dde0ed]">Lịch sử học tập</h3>
           <div className="flex gap-2 bg-[#0d0e13] p-1 rounded-lg border border-[rgba(255,255,255,0.07)] overflow-x-auto w-full md:w-auto">

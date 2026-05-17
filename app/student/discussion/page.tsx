@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useRouter } from 'next/navigation'
 import { Thread } from '@/hooks/useDiscussion'
 import { ThreadCard } from '@/components/discussion/ThreadCard'
 import { ThreadDetail } from '@/components/discussion/ThreadDetail'
-import { MessageSquare, RefreshCw, Send, Bot, Sparkles, Globe, School, Loader2, Cpu, User } from 'lucide-react'
+import { MessageSquare, RefreshCw, Send, Bot, Sparkles, Globe, School, Loader2, Cpu, User, ArrowLeft } from 'lucide-react'
 
 interface ChatMessage {
   id: string;
@@ -17,6 +18,7 @@ interface ChatMessage {
 }
 
 export default function DiscussionDashboardPage() {
+  const router = useRouter()
   const [threads, setThreads] = useState<Thread[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedThread, setSelectedThread] = useState<Thread | null>(null)
@@ -24,15 +26,9 @@ export default function DiscussionDashboardPage() {
   
   // Realtime Chat States
   const [chatChannel, setChatChannel] = useState<'global' | 'class'>('global')
-  const [globalMessages, setGlobalMessages] = useState<ChatMessage[]>([
-    { id: 'g1', sender: 'Đức Huy', avatar: '🎯', role: 'student', content: 'Cấu hình i5-12400F đi với RTX 3060 thì dùng nguồn bao nhiêu W vậy mọi người?', time: '14:20' },
-    { id: 'g2', sender: 'Khánh Vy', avatar: '⭐', role: 'student', content: 'Tầm 600W hoặc 650W Plus Bronze là dư xăng nâng cấp sau này rồi bạn ơi.', time: '14:22' },
-    { id: 'g3', sender: 'Thầy Hùng', avatar: '👨‍🏫', role: 'teacher', content: 'Đúng rồi đó Vy, chú ý chọn các hãng uy tín như MSI, Corsair nhé.', time: '14:25' }
-  ])
-  const [classMessages, setClassMessages] = useState<ChatMessage[]>([
-    { id: 'c1', sender: 'Tuấn Nam', avatar: '⚡', role: 'student', content: 'Mọi người đã làm xong bài thực hành lắp ráp bo mạch chủ chưa?', time: '13:05' },
-    { id: 'c2', sender: 'Phương Vy', avatar: '🌸', role: 'student', content: 'Tớ vừa đạt 100 điểm quiz xong nè, được nhận huy hiệu "Xuất sắc" luôn!', time: '13:10' }
-  ])
+  const [globalMessages, setGlobalMessages] = useState<ChatMessage[]>([])
+  const [classMessages, setClassMessages] = useState<ChatMessage[]>([])
+  const [trendingTopic, setTrendingTopic] = useState<string>('Chưa có dữ liệu')
   const [chatInput, setChatInput] = useState('')
   
   // Tiny AI Chatbot States
@@ -78,27 +74,97 @@ export default function DiscussionDashboardPage() {
     loadThreads()
   }, [supabase])
 
+  // Real-time topic analysis algorithm
+  useEffect(() => {
+    if (globalMessages.length === 0) {
+       setTrendingTopic('Chưa có dữ liệu');
+       return;
+    }
+    const words = globalMessages.map(m => m.content).join(' ').toLowerCase().split(/\s+/);
+    const stopWords = ['có','không','là','thì','mà','và','để','của','cho','những','các','một','với','khi','trong','như','đã','sẽ','này','đó','đây','bạn','mình','thầy','ơi','nhé','ạ','vậy','cái','gì','nào'];
+    const counts: Record<string, number> = {};
+    words.forEach(w => {
+      const cw = w.replace(/[^a-z0-9]/gi, '');
+      if (cw.length > 2 && !stopWords.includes(cw)) {
+        counts[cw] = (counts[cw] || 0) + 1;
+      }
+    });
+    const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+    if (sorted.length > 0) {
+      setTrendingTopic(sorted.slice(0, 3).map(x => '#' + x[0].toUpperCase()).join(', '));
+    }
+  }, [globalMessages])
+
+  // Realtime WebSocket broadcast connection for chat channel
+  useEffect(() => {
+    if (!userProfile) return
+
+    const channelName = `discussion_realtime_chat`
+    const channel = supabase.channel(channelName, {
+      config: {
+        broadcast: { self: true },
+      },
+    })
+
+    channel
+      .on('broadcast', { event: 'new-message' }, (response) => {
+        const payload = response.payload
+        const newMsg: ChatMessage = {
+          id: payload.id,
+          sender: payload.sender,
+          avatar: payload.avatar,
+          role: payload.role,
+          content: payload.content,
+          time: payload.time
+        }
+
+        if (payload.channel === 'global') {
+          setGlobalMessages(prev => {
+            if (prev.some(m => m.id === newMsg.id)) return prev
+            return [...prev, newMsg]
+          })
+        } else {
+          setClassMessages(prev => {
+            if (prev.some(m => m.id === newMsg.id)) return prev
+            return [...prev, newMsg]
+          })
+        }
+      })
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [userProfile, supabase])
+
   // Scroll to bottom of chat
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [globalMessages, classMessages])
 
-  // Handle Send Chat
-  const handleSendChat = () => {
-    if (!chatInput.trim()) return
-    const newMsg: ChatMessage = {
-      id: Date.now().toString(),
-      sender: userProfile?.full_name || 'Học viên',
-      avatar: '💻',
-      role: 'student',
+  // Handle Send Chat in Real-time via Supabase WebSockets
+  const handleSendChat = async () => {
+    if (!chatInput.trim() || !userProfile) return
+    const msgId = 'msg-' + Date.now().toString() + '-' + Math.random().toString(36).substring(2, 7)
+
+    const payloadMsg = {
+      id: msgId,
+      sender: userProfile.full_name || 'Học viên',
+      avatar: userProfile.avatar_url || '💻',
+      role: userProfile.role === 'teacher' ? 'teacher' : 'student',
       content: chatInput,
-      time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+      channel: chatChannel
     }
 
-    if (chatChannel === 'global') {
-      setGlobalMessages(prev => [...prev, newMsg])
-    } else {
-      setClassMessages(prev => [...prev, newMsg])
+    try {
+      await supabase.channel(`discussion_realtime_chat`).send({
+        type: 'broadcast',
+        event: 'new-message',
+        payload: payloadMsg
+      })
+    } catch (err) {
+      console.error('Error broadcasting message:', err)
     }
     setChatInput('')
   }
@@ -128,7 +194,7 @@ export default function DiscussionDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a14] text-white pt-24 flex justify-center items-center">
+      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex justify-center items-center">
         <div className="flex flex-col items-center gap-2">
           <Loader2 className="animate-spin text-[#00d4aa]" size={32} />
           <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang kết nối diễn đàn...</span>
@@ -138,25 +204,45 @@ export default function DiscussionDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a14] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       
       {/* Decorative High-Tech Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#00d4aa]/5 rounded-full filter blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#00b4d8]/5 rounded-full filter blur-[120px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Workspace Title */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+        {/* Workspace Title & Exit Button */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10 relative">
+          
           <div className="flex items-center gap-3">
-            <MessageSquare size={32} className="text-[#00d4aa]" />
+            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl shadow-[0_0_15px_rgba(0,212,170,0.1)]">
+              <MessageSquare size={24} />
+            </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-white uppercase">KHÔNG GIAN THẢO LUẬN 3D</h1>
-              <p className="text-xs text-gray-400 mt-1">Nơi trao đổi kiến thức phần cứng máy tính thời gian thực</p>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+                KHÔNG GIAN THẢO LUẬN 3D
+                <span className="text-[9px] bg-[#00d4aa]/15 text-[#00d4aa] font-black border border-[#00d4aa]/25 px-2 py-0.5 rounded-full uppercase">REAL-TIME</span>
+              </h1>
+              <p className="text-xs text-gray-400 mt-0.5">Nơi trao đổi kiến thức phần cứng máy tính thời gian thực giữa thầy và trò</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 bg-[#11121d] border border-gray-800 rounded-full px-4 py-1.5 text-xs text-slate-400 font-medium">
-            <span className="w-2 h-2 rounded-full bg-[#00d4aa] animate-pulse" />
-            Lớp {userProfile?.grade || 'PC Master'}
+
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 bg-black/40 border border-gray-800 rounded-full px-4 py-1.5 text-xs text-slate-400 font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#00d4aa] animate-ping" />
+              Lớp {userProfile?.grade || 'PC Master'}
+            </div>
+
+            {/* EXIT/BACK BUTTON */}
+            <button 
+              onClick={() => router.push('/student/dashboard')}
+              className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+            >
+              <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+              Quay lại Dashboard
+            </button>
           </div>
         </div>
 
@@ -164,7 +250,12 @@ export default function DiscussionDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Column (60%): Forums/Threads */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 relative">
+            
+            {/* Tech decorative corners */}
+            <div className="absolute -top-1 -left-1 w-3.5 h-3.5 border-t-2 border-l-2 border-[#00d4aa]/30 pointer-events-none" />
+            <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-[#00d4aa]/30 pointer-events-none" />
+
             {selectedThread ? (
               <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative min-h-[500px]">
                 <ThreadDetail 
@@ -204,8 +295,12 @@ export default function DiscussionDashboardPage() {
           </div>
 
           {/* Right Column (40%): Realtime Chat Workspace & Lockable Micro AI */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
+          <div className="lg:col-span-5 flex flex-col gap-6 relative">
             
+            {/* Tech decorative corners */}
+            <div className="absolute -top-1 -right-1 w-3.5 h-3.5 border-t-2 border-r-2 border-[#00b4d8]/30 pointer-events-none" />
+            <div className="absolute -bottom-1 -left-1 w-3.5 h-3.5 border-b-2 border-l-2 border-[#00b4d8]/30 pointer-events-none" />
+
             {/* Realtime Chat Card */}
             <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl shadow-xl overflow-hidden flex flex-col h-[400px]">
               
@@ -225,9 +320,9 @@ export default function DiscussionDashboardPage() {
                     <School size={14} /> Kênh Lớp Học
                   </button>
                 </div>
-                <div className="flex items-center gap-1.5 text-[9px] font-bold text-gray-500 uppercase tracking-widest bg-black/30 px-2 py-0.5 rounded border border-white/5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-                  Live Chat
+                <div className="text-[10px] text-gray-400 flex flex-col items-end hidden sm:flex">
+                  <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" /> Trực tuyến</div>
+                  <div className="text-[#00d4aa] font-bold mt-0.5" title="Chủ đề đang hot">Trending: {trendingTopic}</div>
                 </div>
               </div>
 
@@ -345,3 +440,4 @@ export default function DiscussionDashboardPage() {
     </div>
   )
 }
+

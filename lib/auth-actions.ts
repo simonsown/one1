@@ -29,34 +29,62 @@ export async function login(formData: FormData) {
     }
   }
 
-  // 1. Check if email exists in profiles first
-  const { data: profileCheck, error: checkError } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('email', email)
-    .maybeSingle()
-
-  if (checkError || !profileCheck) {
-    return { error: 'Tài khoản chưa được đăng ký hoặc thông tin đăng nhập không chính xác.' }
-  }
-
-  const { data: { user }, error } = await supabase.auth.signInWithPassword({
+  // 1. Thực hiện đăng nhập thẳng bằng Supabase Auth
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   })
 
   if (error) {
-    return { error: 'Tài khoản chưa được đăng ký hoặc thông tin đăng nhập không chính xác.' }
+    let friendlyError = 'Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại!'
+    const errMsg = error.message.toLowerCase()
+    
+    if (errMsg.includes('confirm') || errMsg.includes('email_not_confirmed')) {
+      friendlyError = 'Tài khoản của bạn chưa được xác nhận qua Email. Vui lòng kiểm tra hộp thư đến (Inbox/Spam) để nhấp vào liên kết kích hoạt trước khi đăng nhập!'
+    } else if (errMsg.includes('invalid') || errMsg.includes('credentials')) {
+      friendlyError = 'Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại!'
+    } else {
+      friendlyError = error.message
+    }
+    return { error: friendlyError }
   }
 
-  // Lấy role để redirect đúng
-  const { data: profile } = await supabase
+  const user = data.user
+
+  // 2. Tự động cứu hộ Profile nếu bị thiếu (ví dụ: do RLS hoặc Trigger lúc đăng ký)
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .maybeSingle()
+
+    if (!profile) {
+      const role = user.user_metadata?.role || 'student'
+      const fullName = user.user_metadata?.full_name || email.split('@')[0]
+      
+      const { error: rescueError } = await supabase.from('profiles').upsert({
+        id: user.id,
+        email: email,
+        full_name: fullName,
+        role: role,
+        updated_at: new Date().toISOString()
+      })
+      
+      if (rescueError) {
+        console.error('Profile Rescue Failed:', rescueError)
+      }
+    }
+  }
+
+  // Lấy role cuối cùng
+  const { data: finalProfile } = await supabase
     .from('profiles')
     .select('role')
-    .eq('id', user.id)
+    .eq('id', user!.id)
     .single()
 
-  const userRole = profile?.role || user.user_metadata?.role || 'student'
+  const userRole = finalProfile?.role || user!.user_metadata?.role || 'student'
   
   revalidatePath('/', 'layout')
   

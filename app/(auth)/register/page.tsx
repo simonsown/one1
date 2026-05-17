@@ -104,6 +104,8 @@ function RegisterForm() {
 
     // Tạo FormData object để gửi vào server action
     const submitData = new FormData()
+    submitData.append('role', formData.role) // FIX: Always append role to send to server
+
     if (!isOauth) {
       submitData.append('full_name', formData.fullName)
       submitData.append('email', formData.email)
@@ -125,7 +127,14 @@ function RegisterForm() {
     }
 
     if (res?.error) {
-      setError(res.error)
+      let friendlyError = res.error
+      if (res.error.toLowerCase().includes('already registered') || 
+          res.error.toLowerCase().includes('already_registered') || 
+          res.error.toLowerCase().includes('already exists') ||
+          res.error.toLowerCase().includes('user_already_exists')) {
+        friendlyError = 'Email này đã được đăng ký hoặc liên kết với tài khoản Google từ trước. Vui lòng sử dụng Email khác hoặc quay lại trang Đăng nhập bằng Google!'
+      }
+      setError(friendlyError)
       setLoading(false)
     } else {
       // Thành công

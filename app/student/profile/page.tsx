@@ -1,14 +1,16 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@supabase/ssr'
+import { useRouter } from 'next/navigation'
 import { AvatarUpload } from '@/components/profile/AvatarUpload'
 import { ProfileForm } from '@/components/profile/ProfileForm'
 import { PreferencesForm } from '@/components/profile/PreferencesForm'
 import { SecurityForm } from '@/components/profile/SecurityForm'
-import { User, BarChart2, Settings, ShieldAlert, Trophy, Award, Calendar, Flame, RefreshCw, CheckCircle } from 'lucide-react'
+import { User, BarChart2, Settings, ShieldAlert, Trophy, Award, Calendar, Flame, RefreshCw, CheckCircle, ArrowLeft } from 'lucide-react'
 
 export default function StudentProfilePage() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<'profile' | 'stats' | 'preferences' | 'security'>('profile')
   const [profile, setProfile] = useState<any>(null)
   const [preferences, setPreferences] = useState<any>(null)
@@ -20,7 +22,10 @@ export default function StudentProfilePage() {
     latestCert: null
   })
   const [loading, setLoading] = useState(true)
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   const loadProfileData = async () => {
     setLoading(true)
@@ -99,25 +104,51 @@ export default function StudentProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d0e13] text-white pt-24 flex flex-col items-center justify-center gap-2">
+      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2">
         <RefreshCw size={28} className="animate-spin text-[#00d4aa]" />
-        <span className="text-xs text-gray-500">Đang tải hồ sơ cá nhân...</span>
+        <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang tải hồ sơ cá nhân...</span>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a14] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       
       {/* Decorative High-Tech Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
       <div className="absolute top-1/4 left-1/10 w-[500px] h-[500px] bg-gradient-to-br from-[#00d4aa]/5 to-transparent rounded-full filter blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-gradient-to-br from-[#00b4d8]/5 to-transparent rounded-full filter blur-[100px] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10">
         
-        {/* Left Profile Sidebar Card with Corner Brackets */}
-        <div className="relative bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 flex flex-col items-center text-center h-fit space-y-4 shadow-[0_4px_30px_rgba(0,0,0,0.4)] backdrop-blur-md group">
+        {/* Workspace Title & Exit Button */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
+              <User size={24} />
+            </div>
+            <div>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+                HỒ SƠ CÁ NHÂN
+              </h1>
+              <p className="text-xs text-gray-400 mt-0.5">Quản lý tài khoản, xem thống kê và tùy chỉnh hệ thống</p>
+            </div>
+          </div>
+
+          {/* EXIT BUTTON */}
+          <button 
+            onClick={() => router.push('/student/dashboard')}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group"
+          >
+            <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+            Quay lại Dashboard
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+          {/* Left Profile Sidebar Card with Corner Brackets */}
+          <div className="relative bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 flex flex-col items-center text-center h-fit space-y-4 shadow-[0_4px_30px_rgba(0,0,0,0.4)] backdrop-blur-md group">
           
           {/* Tech Corner Brackets */}
           <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#00d4aa]/30 group-hover:border-[#00d4aa] transition-colors duration-300" />
@@ -307,10 +338,10 @@ export default function StudentProfilePage() {
               <SecurityForm />
             </div>
           )}
-
         </div>
 
       </div>
     </div>
+  </div>
   )
 }
