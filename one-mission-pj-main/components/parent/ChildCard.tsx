@@ -1,6 +1,7 @@
-'use client'
+"use client"
 
 import React from 'react'
+import Link from 'next/link'
 
 export interface ChildSummary {
   student_id: string
@@ -44,8 +45,8 @@ export function ChildCard({ child }: { child: ChildSummary }) {
     : false
 
   return (
-    <a 
-      href={`/parent/children/${child.student_id}`}
+    <Link
+      href={`/profile/${child.student_id}`}
       className="block bg-[#111318] border border-white/5 rounded-xl p-5 hover:border-[#00d4aa]/30 transition-all duration-200 hover:shadow-[0_0_20px_rgba(0,212,170,0.03)] group"
     >
       {/* Avatar + Tên */}
@@ -101,6 +102,6 @@ export function ChildCard({ child }: { child: ChildSummary }) {
         }`} />
         <span>Hoạt động: {lastActiveText}</span>
       </div>
-    </a>
+    </Link>
   )
 }
