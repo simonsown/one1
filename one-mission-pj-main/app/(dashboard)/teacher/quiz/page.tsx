@@ -38,6 +38,7 @@ export default function TeacherQuizPage() {
   const [randomizeQs, setRandomizeQs] = useState(true)
   const [randomizeOpts, setRandomizeOpts] = useState(true)
   const [isSubmittingQuiz, setIsSubmittingQuiz] = useState(false)
+  const [selectedClassIdForNewQuiz, setSelectedClassIdForNewQuiz] = useState('')
 
   // New Question form state
   const [qContent, setQContent] = useState('')
@@ -136,12 +137,14 @@ export default function TeacherQuizPage() {
         timeLimitMinutes: Number(newTimeLimit),
         maxAttempts: Number(newMaxAttempts),
         randomizeQuestions: randomizeQs,
-        randomizeOptions: randomizeOpts
+        randomizeOptions: randomizeOpts,
+        classId: selectedClassIdForNewQuiz || undefined
       })
       showToast('Đã tạo đề thi mới thành công!')
       setShowCreateModal(false)
       setNewTitle('')
       setNewDesc('')
+      setSelectedClassIdForNewQuiz('')
       fetchData()
     } catch (err: any) {
       alert(err.message || 'Lỗi khi tạo đề thi.')
@@ -729,6 +732,23 @@ export default function TeacherQuizPage() {
                     borderRadius: '12px', padding: '12px 16px', color: '#fff', fontSize: '14px'
                   }}
                 />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#8899a6', marginBottom: '8px' }}>Giao cho lớp học</label>
+                <select 
+                  value={selectedClassIdForNewQuiz}
+                  onChange={(e) => setSelectedClassIdForNewQuiz(e.target.value)}
+                  style={{
+                    width: '100%', background: '#050a14', border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: '12px', padding: '12px 16px', color: '#fff', fontSize: '14px'
+                  }}
+                >
+                  <option value="">Không giao (Tự do/Ngân hàng đề)</option>
+                  {classes.map(c => (
+                    <option key={c.id} value={c.id}>{c.name} ({c.subject})</option>
+                  ))}
+                </select>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>

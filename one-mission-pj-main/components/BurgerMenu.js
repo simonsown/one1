@@ -2,7 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BookOpen, Cpu, ShoppingCart, Users, BrainCircuit, Award, Globe, Sparkles, Menu, Webcam, X, Sun, Moon } from 'lucide-react';
+import { 
+  BookOpen, Cpu, ShoppingCart, Users, BrainCircuit, Award, Globe, Sparkles, 
+  Menu, Webcam, X, Sun, Moon, BarChart2, Map, FileText, Trophy, Bell, MessageSquare, User 
+} from 'lucide-react';
 import JoinClassModal from './JoinClassModal';
 
 const BurgerMenu = ({ 
@@ -24,6 +27,36 @@ const BurgerMenu = ({
     const [hoveredBtn, setHoveredBtn] = useState(null);
     const [showCredits, setShowCredits] = useState(false);
     const [showJoinClass, setShowJoinClass] = useState(false);
+    const [hasClass, setHasClass] = useState(false);
+    const unreadCount = 0;
+    
+    // Check if user has a class
+    useEffect(() => {
+        const checkClass = async () => {
+            try {
+                const { createBrowserClient } = require('@supabase/ssr');
+                const supabase = createBrowserClient(
+                    process.env.NEXT_PUBLIC_SUPABASE_URL,
+                    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+                );
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    const { data: profile } = await supabase
+                      .from('profiles')
+                      .select('class_id, school_id')
+                      .eq('id', user.id)
+                      .single();
+                      
+                    if (profile?.class_id || profile?.school_id) {
+                        setHasClass(true);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        checkClass();
+    }, []);
     
     // Close mobile menu when mode changes
     useEffect(() => {
@@ -138,6 +171,26 @@ const BurgerMenu = ({
                             {lang === 'en' ? 'Lecture Course' : 'Bài Giảng'}
                         </button>
                         
+                        <Link 
+                            href="/student/progress" 
+                            style={{ ...navItemStyle('progress', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('progress')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <BarChart2 style={iconStyle('progress', false)} />
+                            {lang === 'en' ? 'Progress' : 'Tiến Độ Học Tập'}
+                        </Link>
+                        
+                        <Link 
+                            href="/student/learning-path" 
+                            style={{ ...navItemStyle('learning_path', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('learning_path')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <Map style={iconStyle('learning_path', false)} />
+                            {lang === 'en' ? 'Learning Path' : 'Lộ Trình Học'}
+                        </Link>
+                        
                         <button
                             onMouseEnter={() => setHoveredBtn('learning')} onMouseLeave={() => setHoveredBtn(null)}
                             onClick={() => setAppMode('learning')}
@@ -164,6 +217,46 @@ const BurgerMenu = ({
                             <Users style={iconStyle('multiplayer', appMode === 'multiplayer')} />
                             {lang === 'en' ? '2-Player Versus' : '2 Người Chơi'}
                         </button>
+                    </div>
+
+                    {/* NHÓM ĐÁNH GIÁ */}
+                    <div style={{ padding: '12px 0', display: 'flex', flexDirection: 'column', gap: '4px', margin: '0 16px' }}>
+                        <div style={{
+                            fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
+                            color: 'var(--text-muted)', padding: '12px 0 6px 0'
+                        }}>
+                            {lang === 'en' ? 'Assessment' : 'Đánh giá'}
+                        </div>
+                        
+                        <Link 
+                            href="/student/quiz" 
+                            style={{ ...navItemStyle('quiz_bank', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('quiz_bank')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <FileText style={iconStyle('quiz_bank', false)} />
+                            {lang === 'en' ? 'Quiz Bank' : 'Ngân Hàng Đề Thi'}
+                        </Link>
+                        
+                        <Link 
+                            href="/student/achievements" 
+                            style={{ ...navItemStyle('achievements', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('achievements')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <Trophy style={iconStyle('achievements', false)} />
+                            {lang === 'en' ? 'Achievements' : 'Thành Tích'}
+                        </Link>
+                        
+                        <Link 
+                            href="/student/certificates" 
+                            style={{ ...navItemStyle('certificates', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('certificates')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <Award style={iconStyle('certificates', false)} />
+                            {lang === 'en' ? 'Certificates' : 'Chứng Chỉ'}
+                        </Link>
                     </div>
 
                     {/* [4] WEBCAM SECTION */}
@@ -221,14 +314,68 @@ const BurgerMenu = ({
                             {lang === 'en' ? 'Extras' : 'Tính năng khác'}
                         </div>
 
-                        <button
-                            onMouseEnter={() => setHoveredBtn('join_class')} onMouseLeave={() => setHoveredBtn(null)}
-                            onClick={() => setShowJoinClass(true)}
-                            style={navItemStyle('join_class', false)}
+                        {!hasClass ? (
+                            <button
+                                onMouseEnter={() => setHoveredBtn('join_class')} onMouseLeave={() => setHoveredBtn(null)}
+                                onClick={() => setShowJoinClass(true)}
+                                style={navItemStyle('join_class', false)}
+                            >
+                                <Users style={iconStyle('join_class', false)} />
+                                {lang === 'en' ? 'Join Class' : 'Tham gia lớp học'}
+                            </button>
+                        ) : (
+                            <Link 
+                                href="/student/classes" 
+                                style={{ ...navItemStyle('my_class', false), textDecoration: 'none' }}
+                                onMouseEnter={() => setHoveredBtn('my_class')} 
+                                onMouseLeave={() => setHoveredBtn(null)}
+                            >
+                                <Users style={iconStyle('my_class', false)} />
+                                {lang === 'en' ? 'My Class' : 'Lớp Học Của Tôi'}
+                            </Link>
+                        )}
+                        
+                        <Link 
+                            href="/notifications" 
+                            style={{ ...navItemStyle('notifications', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('notifications')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
                         >
-                            <Users style={iconStyle('join_class', false)} />
-                            {lang === 'en' ? 'Join Class' : 'Tham gia lớp học'}
-                        </button>
+                            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                <Bell style={iconStyle('notifications', false)} />
+                                {unreadCount > 0 && (
+                                    <span style={{
+                                        position: 'absolute', top: '-4px', right: '-4px',
+                                        background: '#ef4444', color: 'white', fontSize: '10px',
+                                        fontWeight: 'bold', width: '14px', height: '14px',
+                                        borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                    }}>
+                                        {unreadCount}
+                                    </span>
+                                )}
+                            </div>
+                            <span style={{ marginLeft: '8px' }}>{lang === 'en' ? 'Notifications' : 'Thông Báo'}</span>
+                        </Link>
+                        
+                        <Link 
+                            href="/student/discussion" 
+                            style={{ ...navItemStyle('discussion', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('discussion')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <MessageSquare style={iconStyle('discussion', false)} />
+                            {lang === 'en' ? 'Discussion' : 'Thảo Luận'}
+                        </Link>
+                        
+                        <Link 
+                            href="/student/profile" 
+                            style={{ ...navItemStyle('profile', false), textDecoration: 'none' }}
+                            onMouseEnter={() => setHoveredBtn('profile')} 
+                            onMouseLeave={() => setHoveredBtn(null)}
+                        >
+                            <User style={iconStyle('profile', false)} />
+                            {lang === 'en' ? 'Profile' : 'Hồ Sơ Cá Nhân'}
+                        </Link>
                         
                         <Link href="/about" style={{ textDecoration: 'none' }}>
                             <button

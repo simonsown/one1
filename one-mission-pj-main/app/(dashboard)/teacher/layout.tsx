@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BookOpen, Users, FileText, LogOut, LayoutDashboard, Compass, HelpCircle } from 'lucide-react'
+import { BookOpen, Users, FileText, LogOut, LayoutDashboard, Compass, HelpCircle, Award } from 'lucide-react'
 import { logout } from '@/lib/auth-actions'
 
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
@@ -15,6 +15,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
     { href: '/teacher/classes', label: 'Quản lý lớp học', icon: Users },
     { href: '/teacher/learning-path', label: 'Quản lý Lộ trình', icon: Compass },
     { href: '/teacher/quiz', label: 'Quản lý Đề thi', icon: HelpCircle },
+    { href: '/teacher/certificates', label: 'Quản lý Chứng chỉ', icon: Award },
   ]
 
   return (

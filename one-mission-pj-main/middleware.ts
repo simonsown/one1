@@ -6,9 +6,9 @@ import { NextResponse, type NextRequest } from 'next/server'
 const ROUTE_PERMISSIONS: Record<string, string[]> = {
   '/admin':       ['admin'],
   '/teacher':     ['teacher', 'admin'],
-  '/student':     ['student', 'teacher', 'admin'],
+  '/student':     ['student', 'admin'],
   '/parent':      ['parent', 'admin'],
-  '/builder':     ['student', 'teacher', 'admin'],
+  '/builder':     ['student', 'admin'],
   '/profile':     ['student', 'teacher', 'admin', 'parent'],
   '/notifications':['student', 'teacher', 'admin', 'parent'],
   '/leaderboard': ['student', 'teacher', 'admin', 'parent'],
@@ -58,13 +58,23 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isPublicRoute) {
-    if (user && (pathname === '/login' || pathname === '/register')) {
+    if (user) {
       const { data: profile } = await supabase
         .from('profiles').select('role').eq('id', user.id).single()
       const role = profile?.role ?? 'student'
-      return NextResponse.redirect(
-        new URL(dashMap[role] ?? '/student', request.url)
-      )
+      
+      if (pathname === '/login' || pathname === '/register') {
+        return NextResponse.redirect(
+          new URL(dashMap[role] ?? '/student', request.url)
+        )
+      }
+      
+      // Ngăn giáo viên và phụ huynh truy cập vào trang builder (/builder) của học sinh
+      if (pathname.startsWith('/builder') && (role === 'teacher' || role === 'parent')) {
+        return NextResponse.redirect(
+          new URL(dashMap[role] ?? '/student', request.url)
+        )
+      }
     }
     return response
   }

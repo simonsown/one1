@@ -137,19 +137,38 @@ export async function register(formData: FormData) {
   if (error) return { error: error.message }
 
   if (data.user) {
-    // 4. Tạo Profile thủ công (đảm bảo role và school_id được lưu ngay lập tức)
-    // Dùng upsert vì có thể trigger đã tạo một bản ghi rỗng trước đó
-    const { error: profileError } = await supabase.from('profiles').upsert({
-      id: data.user.id,
-      email: email,
-      full_name: fullName,
-      role: role,
-      school_id: schoolId,
-      school_name: schoolName,
-      updated_at: new Date().toISOString()
-    });
+    // 4. Tạo/Cập nhật Profile thủ công an toàn
+    // Vì trigger handle_new_user thường đã tự động INSERT một bản ghi cơ bản,
+    // ta nên ưu tiên thực hiện UPDATE trước, nếu thất bại mới thực hiện UPSERT.
+    let profileError = null;
+    const { error: updateError } = await supabase
+      .from('profiles')
+      .update({
+        full_name: fullName,
+        role: role,
+        school_id: schoolId,
+        school_name: schoolName,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', data.user.id);
 
-    if (profileError) console.error('Profile Creation Error:', profileError);
+    if (updateError) {
+      console.warn('Profile UPDATE failed, falling back to UPSERT:', updateError.message);
+      const { error: upsertError } = await supabase.from('profiles').upsert({
+        id: data.user.id,
+        email: email,
+        full_name: fullName,
+        role: role,
+        school_id: schoolId,
+        school_name: schoolName,
+        updated_at: new Date().toISOString()
+      });
+      profileError = upsertError;
+    }
+
+    if (profileError) {
+      console.error('Profile Creation/Update Error:', profileError);
+    }
 
     // 5. Nếu là phụ huynh, tạo liên kết với học sinh dựa trên classCode (Mã học sinh/Email)
     if (role === 'parent' && classCode) {

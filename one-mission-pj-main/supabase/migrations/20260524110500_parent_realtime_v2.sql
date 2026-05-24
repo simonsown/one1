@@ -305,15 +305,52 @@ CREATE TRIGGER on_quiz_graded
 
 -- ━━━ BƯỚC 8: ENABLE REALTIME CHO CÁC BẢNG LIÊN QUAN ━━━
 -- Bật realtime cho lesson_progress, quiz_attempts, profiles, notifications, parent_student_links
--- (Lưu ý: Dòng lệnh ALTER PUBLICATION an toàn khi chạy trong local migration)
+-- An toàn: Kiểm tra từng bảng trước khi thêm, tránh lỗi "already member of publication"
 DO $$
+DECLARE
+  pub_exists BOOLEAN;
 BEGIN
-  -- Thêm tables vào realtime publication nếu publication tồn tại
-  IF EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime') THEN
-    ALTER PUBLICATION supabase_realtime ADD TABLE public.lesson_progress;
-    ALTER PUBLICATION supabase_realtime ADD TABLE public.quiz_attempts;
-    ALTER PUBLICATION supabase_realtime ADD TABLE public.notifications;
-    ALTER PUBLICATION supabase_realtime ADD TABLE public.profiles;
-    ALTER PUBLICATION supabase_realtime ADD TABLE public.parent_student_links;
+  SELECT EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime') INTO pub_exists;
+  
+  IF pub_exists THEN
+    -- lesson_progress
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_publication_tables
+      WHERE pubname = 'supabase_realtime' AND schemaname = 'public' AND tablename = 'lesson_progress'
+    ) THEN
+      ALTER PUBLICATION supabase_realtime ADD TABLE public.lesson_progress;
+    END IF;
+
+    -- quiz_attempts
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_publication_tables
+      WHERE pubname = 'supabase_realtime' AND schemaname = 'public' AND tablename = 'quiz_attempts'
+    ) THEN
+      ALTER PUBLICATION supabase_realtime ADD TABLE public.quiz_attempts;
+    END IF;
+
+    -- notifications
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_publication_tables
+      WHERE pubname = 'supabase_realtime' AND schemaname = 'public' AND tablename = 'notifications'
+    ) THEN
+      ALTER PUBLICATION supabase_realtime ADD TABLE public.notifications;
+    END IF;
+
+    -- profiles
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_publication_tables
+      WHERE pubname = 'supabase_realtime' AND schemaname = 'public' AND tablename = 'profiles'
+    ) THEN
+      ALTER PUBLICATION supabase_realtime ADD TABLE public.profiles;
+    END IF;
+
+    -- parent_student_links
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_publication_tables
+      WHERE pubname = 'supabase_realtime' AND schemaname = 'public' AND tablename = 'parent_student_links'
+    ) THEN
+      ALTER PUBLICATION supabase_realtime ADD TABLE public.parent_student_links;
+    END IF;
   END IF;
 END $$;

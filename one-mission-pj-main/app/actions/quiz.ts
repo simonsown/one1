@@ -190,6 +190,7 @@ export async function createQuiz(data: {
   maxAttempts: number;
   randomizeQuestions: boolean;
   randomizeOptions: boolean;
+  classId?: string;
 }) {
   const supabase = await createClient();
   const user = await getAuthUser(supabase);
@@ -197,12 +198,14 @@ export async function createQuiz(data: {
   const { data: quiz, error } = await supabase
     .from('quizzes')
     .insert({
+      teacher_id: user.id,
       title: data.title,
       description: data.description,
       time_limit_minutes: data.timeLimitMinutes,
       max_attempts: data.maxAttempts,
       randomize_questions: data.randomizeQuestions,
       randomize_options: data.randomizeOptions,
+      class_id: data.classId || null,
       is_published: false
     })
     .select()
@@ -251,10 +254,10 @@ export async function addQuestionToQuiz(data: {
 }) {
   const supabase = await createClient();
   
+  // 1. Chèn câu hỏi vào bảng questions (không chèn quiz_id trực tiếp vì cột đó không tồn tại)
   const { data: question, error: qErr } = await supabase
     .from('questions')
     .insert({
-      quiz_id: data.quizId,
       content: data.content,
       type: data.type,
       points: data.points,
@@ -265,6 +268,7 @@ export async function addQuestionToQuiz(data: {
 
   if (qErr || !question) throw qErr;
 
+  // 2. Chèn các đáp án lựa chọn vào bảng question_options
   if (data.options && data.options.length > 0) {
     const optionRows = data.options.map(opt => ({
       question_id: question.id,
@@ -279,6 +283,17 @@ export async function addQuestionToQuiz(data: {
 
     if (optErr) throw optErr;
   }
+
+  // 3. Liên kết câu hỏi với đề thi thông qua bảng quiz_questions trung gian
+  const { error: qqErr } = await supabase
+    .from('quiz_questions')
+    .insert({
+      quiz_id: data.quizId,
+      question_id: question.id,
+      order: data.order
+    });
+
+  if (qqErr) throw qqErr;
 
   revalidatePath('/teacher/quiz');
   return question;

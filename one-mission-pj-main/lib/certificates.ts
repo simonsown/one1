@@ -1,3 +1,5 @@
+'use server'
+
 import { createClient } from '@/lib/supabase-ssr-server'
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import QRCode from 'qrcode'
@@ -185,4 +187,48 @@ export async function issueCertificate(userId: string, pathId: string) {
     console.error("PDF Generation error:", err)
     return cert
   }
+}
+
+export async function issueCustomCertificate(data: {
+  studentId: string;
+  courseTitle: string;
+  finalScore: number;
+  stickerUrl: string;
+  completionDate: string;
+}) {
+  const supabase = await createClient()
+
+  // Generate certificate number
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let randomPart = ''
+  for (let i = 0; i < 5; i++) {
+    randomPart += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  const certNumber = `PCM-2026-${randomPart}`
+  const verifyUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'}/verify/${certNumber}`
+
+  // Get student profile info
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', data.studentId)
+    .single()
+
+  const { data: cert, error: insertErr } = await supabase
+    .from('certificates')
+    .insert({
+      student_id: data.studentId,
+      certificate_number: certNumber,
+      student_name: profile?.full_name || 'Học viên PC Master',
+      course_title: data.courseTitle,
+      final_score: data.finalScore,
+      pdf_url: data.stickerUrl, // Lưu ảnh dán/sticker vào trường pdf_url
+      verify_url: verifyUrl,
+      completion_date: data.completionDate || new Date().toISOString().split('T')[0]
+    })
+    .select()
+    .single()
+
+  if (insertErr || !cert) throw insertErr
+  return cert
 }
