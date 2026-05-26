@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
@@ -24,8 +24,7 @@ export default function LandingPage() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser(null);
-    setProfile(null);
+    setUser(null); setProfile(null);
     router.push('/');
   };
 
@@ -38,21 +37,21 @@ export default function LandingPage() {
         height: '72px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 32px', borderBottom: '1px solid var(--border-default)',
         position: 'fixed', top: 0, left: 0, right: 0, background: 'var(--bg-surface)',
-        zIndex: 10000, boxShadow: '0 1px 3px 0 rgba(113,126,195,0.05)'
+        zIndex: 10000, boxShadow: '0 1px 3px 0 var(--shadow-color)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--text-primary)', cursor: 'pointer' }}>
-            <img src="/logo.png" alt="Logo" style={{ width: '36px', height: '36px' }} />
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--text-primary)' }}>
+            <img src="/logo.png" alt="" style={{ width: '36px', height: '36px' }} />
             <span style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.02em' }}>
               PC<span style={{ color: 'var(--brand-primary)' }}> MASTER</span> BUILDER
             </span>
           </Link>
 
-          <div style={{ display: 'none', gap: '8px', fontWeight: 500, fontSize: '14px', alignItems: 'center' }} className="desktop-nav">
-            <Link href="/about" style={{ color: 'var(--text-muted)', textDecoration: 'none', padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center' }}>
+          <div className="desktop-nav" style={{ display: 'flex', gap: '8px', fontWeight: 500, fontSize: '14px', alignItems: 'center' }}>
+            <Link href="/about" style={{ color: 'var(--text-muted)', textDecoration: 'none', padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s' }}>
               Về chúng tôi
             </Link>
-            <Link href="/builder" style={{ color: 'var(--text-muted)', textDecoration: 'none', padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center' }}>
+            <Link href="/builder" style={{ color: 'var(--text-muted)', textDecoration: 'none', padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s' }}>
               Thực hành
             </Link>
           </div>
@@ -61,7 +60,7 @@ export default function LandingPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {user ? (
             <>
-              <Link href={dashboardUrl} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', cursor: 'pointer', padding: '6px 12px', borderRadius: '8px', background: 'var(--bg-elevated)' }}>
+              <Link href={dashboardUrl} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', padding: '6px 12px', borderRadius: '8px', background: 'var(--bg-elevated)' }}>
                 <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--brand-subtle)', border: '1px solid var(--brand-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-primary)' }}>
                   <UserPlus size={16} />
                 </div>
@@ -87,47 +86,47 @@ export default function LandingPage() {
               </Link>
             </>
           )}
-          <button onClick={() => setMobileMenu(!mobileMenu)} className="mobile-hamburger" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', padding: '8px' }}>
+          <button onClick={() => setMobileMenu(!mobileMenu)} className="mobile-hamburger-btn" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', padding: '8px' }}>
             {mobileMenu ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </nav>
 
       {/* Mobile menu overlay */}
-      {mobileMenu && (
-        <div style={{ position: 'fixed', top: '72px', left: 0, right: 0, background: 'var(--bg-surface)', zIndex: 9999, borderBottom: '1px solid var(--border-default)', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <Link href="/about" style={{ padding: '12px 16px', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '15px', fontWeight: 500 }} onClick={() => setMobileMenu(false)}>Về chúng tôi</Link>
-          <Link href="/builder" style={{ padding: '12px 16px', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '15px', fontWeight: 500 }} onClick={() => setMobileMenu(false)}>Thực hành</Link>
-        </div>
-      )}
+      <div style={{
+        position: 'fixed', top: '72px', left: 0, right: 0, background: 'var(--bg-surface)', zIndex: 9999,
+        borderBottom: '1px solid var(--border-default)', padding: '16px',
+        display: 'flex', flexDirection: 'column', gap: '8px',
+        transform: mobileMenu ? 'translateY(0)' : 'translateY(-100%)',
+        opacity: mobileMenu ? 1 : 0,
+        pointerEvents: mobileMenu ? 'auto' : 'none',
+        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease'
+      }}>
+        <Link href="/about" style={{ padding: '12px 16px', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '15px', fontWeight: 500 }} onClick={() => setMobileMenu(false)}>Về chúng tôi</Link>
+        <Link href="/builder" style={{ padding: '12px 16px', borderRadius: '8px', color: 'var(--text-primary)', fontSize: '15px', fontWeight: 500 }} onClick={() => setMobileMenu(false)}>Thực hành</Link>
+      </div>
 
       {/* HERO */}
       <section className="hero-grid" style={{ padding: '140px 32px 80px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', position: 'relative' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '20px' }}>
-            <span className="lms-tag lms-tag-green" style={{ fontSize: '12px' }}>
-              <Sparkles size={14} /> AI hướng dẫn chi tiết
-            </span>
-            <span className="lms-tag lms-tag-blue" style={{ fontSize: '12px' }}>
-              <MonitorPlay size={14} /> 100% Web-based
-            </span>
-            <span className="lms-tag" style={{ fontSize: '12px' }}>
-              Không cần cài đặt
-            </span>
+          <div className="animate-fade-in-up" style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
+            <span className="lms-tag lms-tag-green"><Sparkles size={14} /> AI hướng dẫn chi tiết</span>
+            <span className="lms-tag lms-tag-blue"><MonitorPlay size={14} /> 100% Web-based</span>
+            <span className="lms-tag">Không cần cài đặt</span>
           </div>
 
-          <h1 style={{
+          <h1 className="animate-fade-in-up animate-delay-1" style={{
             fontSize: 'clamp(36px, 6vw, 56px)', fontWeight: 800, lineHeight: 1.15,
             letterSpacing: '-0.03em', margin: '0 auto 20px auto', color: 'var(--text-primary)'
           }}>
             Học Tin học qua <span style={{ color: 'var(--brand-primary)' }}>mô phỏng PC thực tế</span>
           </h1>
 
-          <p style={{ fontSize: '18px', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 40px auto', lineHeight: 1.6, fontWeight: 500 }}>
+          <p className="animate-fade-in-up animate-delay-2" style={{ fontSize: '18px', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 40px auto', lineHeight: 1.6, fontWeight: 500 }}>
             AI hướng dẫn chi tiết • Trải nghiệm 100% Web-based • Không cần cài đặt
           </p>
 
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="animate-fade-in-up animate-delay-3" style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/builder">
               <button className="lms-btn lms-btn-primary" style={{ padding: '14px 32px', fontSize: '15px', fontWeight: 700 }}>
                 <GraduationCap size={20} /> Tôi là Học sinh
@@ -143,41 +142,36 @@ export default function LandingPage() {
       </section>
 
       {/* TRUST BAR */}
-      <section style={{ padding: '0 32px', marginTop: '-20px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto', background: 'var(--bg-surface)', borderRadius: '10px', padding: '20px 32px', boxShadow: '0 1px 3px 0 rgba(113,126,195,0.1)', border: '1px solid var(--border-default)' }}>
+      <section className="animate-fade-in-up animate-delay-4" style={{ padding: '0 32px', marginTop: '-20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', background: 'var(--bg-surface)', borderRadius: '16px', padding: '20px 32px', boxShadow: '0 1px 3px 0 var(--shadow-color)', border: '1px solid var(--border-default)' }}>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '48px', flexWrap: 'wrap', alignItems: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
-              <School size={20} style={{ color: 'var(--accent-blue)' }} /> THPT Chuyên
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
-              <Users size={20} style={{ color: 'var(--brand-primary)' }} /> 5,000+ Học sinh
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
-              <FileText size={20} style={{ color: 'var(--accent-amber)' }} /> Sách KNTT & Cánh Diều
-            </div>
+            {[
+              { icon: <School size={20} style={{ color: 'var(--accent-blue)' }} />, text: 'THPT Chuyên' },
+              { icon: <Users size={20} style={{ color: 'var(--brand-primary)' }} />, text: '5,000+ Học sinh' },
+              { icon: <FileText size={20} style={{ color: 'var(--accent-amber)' }} />, text: 'Sách KNTT & Cánh Diều' },
+            ].map((item, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                {item.icon} {item.text}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* STATS */}
-      <section style={{ padding: '80px 32px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '32px' }}>
-          <div className="lms-card">
-            <div className="stat-number">50+</div>
-            <div className="stat-label">Linh kiện chi tiết</div>
-          </div>
-          <div className="lms-card">
-            <div className="stat-number">10+</div>
-            <div className="stat-label">Nhiệm vụ thử thách</div>
-          </div>
-          <div className="lms-card">
-            <div className="stat-number" style={{ color: 'var(--accent-blue)' }}>100%</div>
-            <div className="stat-label">Nền tảng Web-based</div>
-          </div>
-          <div className="lms-card">
-            <div className="stat-number" style={{ color: 'var(--accent-amber)' }}>99%</div>
-            <div className="stat-label">Độ chính xác kỹ thuật</div>
-          </div>
+      <section className="animate-fade-in-up animate-delay-5" style={{ padding: '80px 32px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '24px' }}>
+          {[
+            { num: '50+', label: 'Linh kiện chi tiết', color: 'var(--brand-primary)' },
+            { num: '10+', label: 'Nhiệm vụ thử thách', color: 'var(--brand-primary)' },
+            { num: '100%', label: 'Nền tảng Web-based', color: 'var(--accent-blue)' },
+            { num: '99%', label: 'Độ chính xác kỹ thuật', color: 'var(--accent-amber)' },
+          ].map((s, i) => (
+            <div key={i} className="lms-card" style={{ padding: '28px 20px', animation: `fadeInUp 0.5s ease ${0.5 + i * 0.1}s both` }}>
+              <div className="stat-number" style={{ color: s.color }}>{s.num}</div>
+              <div className="stat-label">{s.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -192,13 +186,13 @@ export default function LandingPage() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', alignItems: 'center' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {[
                 { icon: <Zap size={22} />, text: 'Tính toán điện năng (TDP) thời gian thực', color: 'var(--accent-amber)' },
                 { icon: <ShieldCheck size={22} />, text: 'Kiểm tra tương thích socket & kích thước Case', color: 'var(--brand-primary)' },
                 { icon: <Sparkles size={22} />, text: 'Trợ lý AI phân tích và sửa lỗi cấu hình', color: 'var(--accent-blue)' },
               ].map((f, i) => (
-                <div key={i} className="lms-card" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', padding: '20px' }}>
+                <div key={i} className="lms-card animate-slide-left" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', padding: '20px', animationDelay: `${0.7 + i * 0.15}s` }}>
                   <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: i === 0 ? 'rgba(255,163,0,0.1)' : i === 1 ? 'var(--brand-subtle)' : 'rgba(40,156,249,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: f.color, flexShrink: 0 }}>
                     {f.icon}
                   </div>
@@ -209,8 +203,8 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-            <div style={{ position: 'relative' }}>
-              <div style={{ background: 'var(--bg-surface)', borderRadius: '10px', padding: '16px', border: '1px solid var(--border-default)', boxShadow: '0 4px 6px -1px rgba(113,126,195,0.1)' }}>
+            <div className="animate-slide-right" style={{ animationDelay: '1s' }}>
+              <div style={{ background: 'var(--bg-surface)', borderRadius: '16px', padding: '16px', border: '1px solid var(--border-default)', boxShadow: '0 4px 12px -2px var(--shadow-color)' }}>
                 <img src="/showcase.png" alt="Giao diện phần mềm mô phỏng lắp ráp PC Master Builder" style={{ width: '100%', borderRadius: '8px' }} />
                 <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
                   <span className="lms-tag lms-tag-green"><PlayCircle size={14} /> Giao diện Lab thực hành 2D</span>
@@ -238,7 +232,7 @@ export default function LandingPage() {
               { icon: <Wrench size={28} style={{ color: 'var(--accent-amber)' }} />, step: '03', title: 'Thực Hành Lắp Ráp', desc: 'Sử dụng PC Lab 2D để tự tay lắp ráp linh kiện, kiểm tra độ tương thích và tính toán TDP.' },
               { icon: <Bot size={28} style={{ color: 'var(--info)' }} />, step: '04', title: 'Nhận Hỗ Trợ Từ AI', desc: 'Hỏi đáp trực tiếp với AI Guru bất cứ lúc nào bạn gặp khó khăn.' },
             ].map((item, i) => (
-              <div key={i} className="lms-card" style={{ textAlign: 'center', padding: '32px 24px' }}>
+              <div key={i} className="lms-card" style={{ textAlign: 'center', padding: '32px 24px', animation: `fadeInUp 0.5s ease ${0.1 * i}s both` }}>
                 <div style={{ fontSize: '32px', fontWeight: 800, color: 'var(--brand-primary)', marginBottom: '16px' }}>{item.step}</div>
                 <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>{item.icon}</div>
                 <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px', color: 'var(--text-primary)' }}>{item.title}</h3>
@@ -265,16 +259,27 @@ export default function LandingPage() {
               { q: 'Giáo viên có thể theo dõi tiến độ của học sinh không?', a: 'Có. Chúng tôi cung cấp Dashboard dành riêng cho Giáo viên, cho phép tạo lớp học, theo dõi tiến độ hoàn thành bài giảng và kết quả kiểm tra của từng học sinh.' },
               { q: 'Nội dung có bám sát sách giáo khoa không?', a: 'Có. Các bài giảng được thiết kế bám sát chương trình Tin học THPT theo sách Kết nối Tri thức và Cánh Diều của Bộ Giáo dục và Đào tạo.' },
             ].map((faq, i) => (
-              <div key={i} className="lms-card" style={{ padding: '0', overflow: 'hidden', cursor: 'pointer' }} onClick={() => setActiveFaq(activeFaq === i ? null : i)}>
+              <div key={i} className="lms-card" style={{ padding: '0', overflow: 'hidden', cursor: 'pointer', transition: 'all 0.25s ease' }} onClick={() => setActiveFaq(activeFaq === i ? null : i)}>
                 <div style={{ padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: '15px', color: 'var(--text-primary)' }}>
                   {faq.q}
-                  <ChevronDown size={20} style={{ color: 'var(--text-muted)', transform: activeFaq === i ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+                  <ChevronDown size={20} style={{
+                    color: 'var(--text-muted)',
+                    transform: activeFaq === i ? 'rotate(180deg)' : 'rotate(0)',
+                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    flexShrink: 0
+                  }} />
                 </div>
-                {activeFaq === i && (
-                  <div style={{ padding: '0 24px 20px', color: 'var(--text-muted)', fontSize: '14px', lineHeight: 1.7, borderTop: '1px solid var(--border-default)', paddingTop: '16px' }}>
+                <div style={{
+                  overflow: 'hidden',
+                  maxHeight: activeFaq === i ? '300px' : '0',
+                  transition: 'max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.25s ease',
+                  opacity: activeFaq === i ? 1 : 0,
+                  padding: activeFaq === i ? '0 24px 20px' : '0 24px',
+                }}>
+                  <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: '16px', color: 'var(--text-muted)', fontSize: '14px', lineHeight: 1.7 }}>
                     {faq.a}
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>
@@ -287,7 +292,7 @@ export default function LandingPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '32px', marginBottom: '40px', textAlign: 'left' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-                <img src="/logo.png" alt="Logo" style={{ width: '32px', height: '32px' }} />
+                <img src="/logo.png" alt="" style={{ width: '32px', height: '32px' }} />
                 <span style={{ fontWeight: 700, fontSize: '16px' }}>PC Master Builder</span>
               </div>
               <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6 }}>Ứng dụng học tập tin học và lắp ráp máy tính với công nghệ AI.</p>
@@ -317,8 +322,8 @@ export default function LandingPage() {
       </footer>
 
       <style>{`
-        @media (min-width: 769px) { .desktop-nav { display: flex !important; } .mobile-hamburger { display: none !important; } }
-        @media (max-width: 768px) { .desktop-nav { display: none !important; } .mobile-hamburger { display: flex !important; } }
+        @media (min-width: 769px) { .desktop-nav { display: flex !important; } .mobile-hamburger-btn { display: none !important; } }
+        @media (max-width: 768px) { .desktop-nav { display: none !important; } .mobile-hamburger-btn { display: flex !important; } }
       `}</style>
     </div>
   );
