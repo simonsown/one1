@@ -114,10 +114,16 @@ CREATE POLICY "students_lookup_class_by_code" ON public.classes
   FOR SELECT USING (true);
 
 -- Bật realtime cho các bảng chính
-ALTER PUBLICATION supabase_realtime ADD TABLE public.lesson_progress;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.quiz_attempts;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.lessons;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.lesson_sections;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.classes;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.class_members;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.profiles;
+DO $$
+DECLARE tbl text;
+BEGIN
+  FOREACH tbl IN ARRAY ARRAY['public.lesson_progress','public.quiz_attempts','public.lessons','public.lesson_sections','public.classes','public.class_members','public.profiles']
+  LOOP
+    BEGIN
+      EXECUTE format('ALTER PUBLICATION supabase_realtime ADD TABLE %s', tbl);
+    EXCEPTION WHEN OTHERS THEN
+      RAISE NOTICE 'Table % already in publication, skipping', tbl;
+    END;
+  END LOOP;
+END;
+$$;

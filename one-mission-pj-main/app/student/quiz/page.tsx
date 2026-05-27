@@ -140,7 +140,7 @@ export default function StudentQuizPage() {
         .from('profiles')
         .select('total_score')
         .eq('id', user.id)
-        .single()
+        .maybeSingle()
 
       const xp = (profile?.total_score as number) || 0
       // Unlock 1 quiz per 100 XP, starting with 5

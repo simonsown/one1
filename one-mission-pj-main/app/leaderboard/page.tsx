@@ -1,12 +1,14 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Trophy, Medal, Search, Filter, ArrowUp, ArrowDown, User, Star, Award, Zap } from 'lucide-react'
+import { Trophy, Medal, Search, Filter, ArrowUp, ArrowDown, User, Star, Award, Zap, ArrowLeft } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
+import { useRouter } from 'next/navigation'
 
 export default function LeaderboardPage() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState('global')
   const [topPlayers, setTopPlayers] = useState<any[]>([])
   const [otherPlayers, setOtherPlayers] = useState<any[]>([])
@@ -52,6 +54,11 @@ export default function LeaderboardPage() {
       <Navbar />
 
       <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        {/* Back button */}
+        <button onClick={() => router.back()} className="flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors">
+          <ArrowLeft size={18} /> Quay lại
+        </button>
+
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold mb-4">Bảng <span className="text-[#00d2a0]">Xếp hạng</span></h1>
@@ -129,7 +136,7 @@ export default function LeaderboardPage() {
           {otherPlayers.map((p, i) => (
             <div key={p.id} className="flex items-center justify-between p-6 hover:bg-[#1e293b]/50 transition-all border-b border-[#1e293b] last:border-none">
               <div className="flex items-center gap-6">
-                <span className="text-xl font-black text-slate-500 w-8">{p.rank}</span>
+                <span className="text-xl font-black text-slate-500 w-8">{i + 4}</span>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-[#0f0f1a] border border-[#1e293b] flex items-center justify-center font-bold text-slate-400">
                     {p.full_name?.charAt(0)}

@@ -27,6 +27,8 @@ function RegisterForm() {
     teacherCode: '', dob: '', province: '', termsAccepted: false
   })
   const [passwordStrength, setPasswordStrength] = useState(0)
+  const [avatarFile, setAvatarFile] = useState<File | null>(null)
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target as HTMLInputElement
@@ -43,6 +45,7 @@ function RegisterForm() {
 
   const handleNext = () => {
     setError(null)
+    if (isOauth && step === 1) { setStep(2); return }
     if (step === 1) {
       if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword) { setError('Vui lòng điền đủ thông tin.'); return }
       if (formData.password !== formData.confirmPassword) { setError('Mật khẩu xác nhận không khớp.'); return }
@@ -68,6 +71,9 @@ function RegisterForm() {
     if (formData.classCode) submitData.append('class_code', formData.classCode)
     if (formData.schoolCode) submitData.append('school_code', formData.schoolCode)
     if (formData.schoolName) submitData.append('school_name', formData.schoolName)
+    if (formData.dob) submitData.append('dob', formData.dob)
+    if (formData.province) submitData.append('province', formData.province)
+    if (avatarFile) submitData.append('avatar', avatarFile)
 
     const res = isOauth ? await completeOAuthRegistration(submitData) : await register(submitData)
     if (res?.error) {
@@ -242,10 +248,18 @@ function RegisterForm() {
           {step === 3 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '2px dashed var(--border-default)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', cursor: 'pointer', position: 'relative' }}>
-                  <ImageIcon size={24} />
-                  <span style={{ fontSize: '10px', marginTop: '4px' }}>Ảnh đại diện</span>
-                  <input type="file" style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }} accept="image/*" />
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '2px dashed var(--border-default)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', cursor: 'pointer', position: 'relative', overflow: 'hidden', background: avatarPreview ? 'transparent' : 'var(--bg-elevated)' }}>
+                  {avatarPreview ? (
+                    <img src={avatarPreview} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : formData.fullName ? (
+                    <span style={{ fontSize: '28px', fontWeight: 800, color: 'var(--brand-primary)' }}>{formData.fullName.charAt(0).toUpperCase()}</span>
+                  ) : (
+                    <>
+                      <ImageIcon size={24} />
+                      <span style={{ fontSize: '10px', marginTop: '4px' }}>Ảnh đại diện</span>
+                    </>
+                  )}
+                  <input type="file" style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }} accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) { setAvatarFile(f); setAvatarPreview(URL.createObjectURL(f)) } }} />
                 </div>
               </div>
 

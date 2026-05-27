@@ -84,14 +84,17 @@ CREATE POLICY "teacher_own_lessons" ON public.lessons
 
 -- Đảm bảo giáo viên toàn quyền quản lý quizzes
 DROP POLICY IF EXISTS "Teachers can manage their quizzes" ON public.quizzes;
+DROP POLICY IF EXISTS "teachers_manage_quizzes" ON public.quizzes;
 CREATE POLICY "teachers_manage_quizzes" ON public.quizzes
   FOR ALL USING (teacher_id = auth.uid())
   WITH CHECK (teacher_id = auth.uid());
 
 -- Đảm bảo giáo viên toàn quyền quản lý câu hỏi trong đề thi và ngân hàng đề thi
-ALTER TABLE public.questions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.question_options ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.quiz_questions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.questions ENABLE ROW LEVEL security;
+ALTER TABLE public.question_options ENABLE ROW LEVEL security;
+ALTER TABLE public.quiz_questions ENABLE ROW LEVEL security;
+
+DROP POLICY IF EXISTS "teachers_manage_quizzes" ON public.quizzes;
 
 DROP POLICY IF EXISTS "teachers_manage_questions" ON public.questions;
 CREATE POLICY "teachers_manage_questions" ON public.questions

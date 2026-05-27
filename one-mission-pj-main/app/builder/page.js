@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/lib/supabase';
 import { startBuilderSession, endBuilderSession } from '@/lib/learning-actions';
