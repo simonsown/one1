@@ -191,6 +191,7 @@ export async function createQuiz(data: {
   randomizeQuestions: boolean;
   randomizeOptions: boolean;
   classId?: string;
+  requireCamera?: boolean;
 }) {
   const supabase = await createClient();
   const user = await getAuthUser(supabase);
@@ -206,6 +207,7 @@ export async function createQuiz(data: {
       randomize_questions: data.randomizeQuestions,
       randomize_options: data.randomizeOptions,
       class_id: data.classId || null,
+      require_camera: data.requireCamera || false,
       is_published: false
     })
     .select()
@@ -220,12 +222,45 @@ export async function publishQuiz(quizId: string, isPublished: boolean) {
   const supabase = await createClient();
   const user = await getAuthUser(supabase);
 
+  const { data: quiz } = await supabase
+    .from('quizzes')
+    .select('*')
+    .eq('id', quizId)
+    .single();
+
+  if (!quiz) throw new Error('Không tìm thấy đề thi.');
+
   const { error } = await supabase
     .from('quizzes')
     .update({ is_published: isPublished })
     .eq('id', quizId);
 
   if (error) throw error;
+
+  // Auto-send notification when publishing to a class
+  if (isPublished && quiz.class_id) {
+    try {
+      const { data: members } = await supabase
+        .from('class_members')
+        .select('student_id')
+        .eq('class_id', quiz.class_id);
+
+      if (members && members.length > 0) {
+        const notifications = members.map(m => ({
+          user_id: m.student_id,
+          type: 'quiz_published',
+          title: `Đề thi mới: ${quiz.title}`,
+          body: `${quiz.description || 'Một đề thi mới đã được mở.'} Thời gian: ${quiz.time_limit_minutes} phút.`,
+          action_url: quiz.require_camera ? `/exam/${quiz.id}/proctored` : `/student/quiz/${quiz.id}`,
+          data: { quizId: quiz.id, teacherId: user.id, requireCamera: quiz.require_camera }
+        }));
+        await supabase.from('notifications').insert(notifications).select();
+      }
+    } catch (notifErr) {
+      console.error('Notification error:', notifErr);
+    }
+  }
+
   revalidatePath('/teacher/quiz');
   return { success: true };
 }

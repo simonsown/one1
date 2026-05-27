@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Loader2, ChevronRight, BookOpen, FileText, Video, Image as ImageIcon, Link2, Eye, Plus, Trash2, GripVertical } from 'lucide-react'
-import { createClient } from '@/lib/supabase-ssr-client'
+import { ArrowLeft, Loader2, ChevronRight, BookOpen, FileText, Video, Image as ImageIcon, Link2, Eye, Plus, Trash2, GripVertical, Upload } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 type SectionInput = {
   id: string
@@ -20,8 +20,10 @@ export default function CreateLessonPage() {
   const [error, setError] = useState<string | null>(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [thumbnailUrl, setThumbnailUrl] = useState('')
   const [subject, setSubject] = useState('Tin học')
   const [estimatedMinutes, setEstimatedMinutes] = useState(30)
+  const [category, setCategory] = useState('extended')
   const [sections, setSections] = useState<SectionInput[]>([])
 
   const addSection = () => {
@@ -46,7 +48,6 @@ export default function CreateLessonPage() {
     setLoading(true)
     setError(null)
 
-    const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setError('Bạn chưa đăng nhập'); setLoading(false); return }
 
@@ -56,7 +57,9 @@ export default function CreateLessonPage() {
         teacher_id: user.id,
         title: title.trim(),
         description: description.trim(),
+        thumbnail_url: thumbnailUrl.trim() || null,
         subject,
+        category,
         estimated_minutes: estimatedMinutes,
         is_published: false,
       })
@@ -80,181 +83,166 @@ export default function CreateLessonPage() {
           order_index: idx,
         }))
       )
-      if (sectionsError) {
-        console.error('Sections error:', sectionsError)
-      }
+      if (sectionsError) console.error('Sections error:', sectionsError)
     }
 
     setLoading(false)
     router.push(`/teacher/lessons/${lesson.id}?created=true`)
   }
 
+  const getYouTubeThumbnail = (url: string) => {
+    const id = url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/)?.[1]
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null
+  }
+
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <Link
-        href="/teacher/lessons"
-        className="inline-flex items-center gap-2 text-sm font-medium mb-6 transition-colors"
-        style={{ color: 'var(--text-secondary)' }}
-      >
+      <Link href="/teacher/lessons" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 500, marginBottom: '24px', color: 'var(--text-muted)', textDecoration: 'none' }}>
         <ArrowLeft size={16} /> Quay lại
       </Link>
 
-      <div className="rounded-2xl p-8" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)' }}>
-        <h1 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>Tạo bài giảng mới</h1>
+      <div className="rounded-2xl p-8" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px', color: 'var(--text-primary)' }}>Tạo bài giảng mới</h1>
 
         {step === 1 && (
-          <div className="flex flex-col gap-5">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <label className="text-sm font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Tiêu đề *</label>
-              <input
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-colors"
-                style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
-                placeholder="VD: Giới thiệu về CPU"
-              />
+              <label style={{ fontSize: '14px', fontWeight: 500, marginBottom: '6px', display: 'block', color: 'var(--text-muted)' }}>Tiêu đề *</label>
+              <input value={title} onChange={e => setTitle(e.target.value)}
+                style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '14px', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}
+                placeholder="VD: Giới thiệu về CPU" />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Mô tả</label>
-              <textarea
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                rows={3}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-colors resize-none"
-                style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
-                placeholder="Mô tả ngắn về bài giảng..."
-              />
+              <label style={{ fontSize: '14px', fontWeight: 500, marginBottom: '6px', display: 'block', color: 'var(--text-muted)' }}>Thumbnail (URL ảnh)</label>
+              <div style={{ width: '100%', height: '160px', background: 'var(--bg-elevated)', borderRadius: '12px', overflow: 'hidden', marginBottom: '8px', border: '1px dashed var(--border-default)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {thumbnailUrl ? (
+                  <img src={thumbnailUrl} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).parentElement!.innerHTML = '<span style=\'color:var(--text-muted)\'>Ảnh lỗi</span>' }} />
+                ) : (
+                  <Upload size={32} color="var(--text-muted)" />
+                )}
+              </div>
+              <input value={thumbnailUrl} onChange={e => setThumbnailUrl(e.target.value)}
+                style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '14px', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}
+                placeholder="https://example.com/image.jpg" />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label style={{ fontSize: '14px', fontWeight: 500, marginBottom: '6px', display: 'block', color: 'var(--text-muted)' }}>Mô tả</label>
+              <textarea value={description} onChange={e => setDescription(e.target.value)} rows={3}
+                style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '14px', outline: 'none', resize: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}
+                placeholder="Mô tả ngắn về bài giảng..." />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
-                <label className="text-sm font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Môn học</label>
-                <select
-                  value={subject}
-                  onChange={e => setSubject(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                  style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
-                >
+                <label style={{ fontSize: '14px', fontWeight: 500, marginBottom: '6px', display: 'block', color: 'var(--text-muted)' }}>Môn học</label>
+                <select value={subject} onChange={e => setSubject(e.target.value)}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '14px', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}>
                   <option>Tin học</option>
                   <option>Tin học - Lắp ráp PC</option>
                   <option>Khoa học máy tính</option>
                 </select>
               </div>
               <div>
-                <label className="text-sm font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Thời lượng (phút)</label>
-                <input
-                  type="number"
-                  value={estimatedMinutes}
-                  onChange={e => setEstimatedMinutes(Number(e.target.value))}
-                  min={5}
-                  max={300}
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                  style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
-                />
+                <label style={{ fontSize: '14px', fontWeight: 500, marginBottom: '6px', display: 'block', color: 'var(--text-muted)' }}>Thời lượng (phút)</label>
+                <input type="number" value={estimatedMinutes} onChange={e => setEstimatedMinutes(Number(e.target.value))} min={5} max={300}
+                  style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '14px', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }} />
+              </div>
+            </div>
+            <div>
+              <label style={{ fontSize: '14px', fontWeight: 500, marginBottom: '6px', display: 'block', color: 'var(--text-muted)' }}>Danh mục</label>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                {[
+                  { key: 'textbook', label: 'Sách Giáo Khoa' },
+                  { key: 'extended', label: 'Kiến Thức Mở Rộng' },
+                ].map(({ key, label }) => (
+                  <button key={key} onClick={() => setCategory(key)}
+                    style={{
+                      padding: '8px 20px', borderRadius: '8px', border: `2px solid ${category === key ? 'var(--brand-primary)' : 'var(--border-default)'}`,
+                      background: category === key ? 'rgba(var(--brand-primary-rgb),0.1)' : 'transparent',
+                      color: category === key ? 'var(--brand-primary)' : 'var(--text-muted)',
+                      fontWeight: 600, cursor: 'pointer', fontSize: '13px', fontFamily: 'inherit'
+                    }}>
+                    {label}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
         )}
 
         {step === 2 && (
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>Nội dung bài giảng</span>
-              <button
-                onClick={addSection}
-                className="px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5 transition-colors"
-                style={{ background: 'var(--bg-surface)', color: 'var(--brand-primary)', border: '1px solid var(--border-subtle)' }}
-              >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-muted)' }}>Nội dung bài giảng</span>
+              <button onClick={addSection}
+                style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 700, background: 'var(--bg-elevated)', color: 'var(--brand-primary)', border: '1px solid var(--border-default)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'inherit' }}>
                 <Plus size={16} /> Thêm mục
               </button>
             </div>
 
             {sections.length === 0 && (
-              <div className="text-center py-12 rounded-xl border-2 border-dashed" style={{ borderColor: 'var(--border-subtle)' }}>
-                <FileText size={36} className="mx-auto mb-3" style={{ color: 'var(--text-muted)' }} />
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Chưa có mục nội dung nào. Nhấn "Thêm mục" để bắt đầu.</p>
+              <div style={{ textAlign: 'center', padding: '48px 0', borderRadius: '12px', border: '2px dashed var(--border-default)' }}>
+                <FileText size={36} style={{ margin: '0 auto 12px', color: 'var(--text-muted)' }} />
+                <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Chưa có mục nội dung nào. Nhấn "Thêm mục" để bắt đầu.</p>
               </div>
             )}
 
             {sections.map((s, idx) => (
-              <div key={s.id} className="rounded-xl p-4" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)' }}>
-                <div className="flex items-center gap-3 mb-3">
+              <div key={s.id} style={{ padding: '16px', borderRadius: '12px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                   <GripVertical size={16} style={{ color: 'var(--text-muted)' }} />
-                  <span className="text-xs font-bold" style={{ color: 'var(--text-muted)' }}>Mục {idx + 1}</span>
-                  <div className="flex gap-1 ml-auto">
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)' }}>Mục {idx + 1}</span>
+                  <div style={{ display: 'flex', gap: '4px', marginLeft: 'auto' }}>
                     {(['video', 'text', 'image', 'pdf'] as const).map(type => (
-                      <button
-                        key={type}
-                        onClick={() => updateSection(s.id, 'type', type)}
-                        className="p-1.5 rounded-lg text-xs transition-colors"
-                        style={{
-                          background: s.type === type ? 'var(--brand-primary)' : 'transparent',
-                          color: s.type === type ? '#000' : 'var(--text-muted)',
-                        }}
-                        title={type}
-                      >
+                      <button key={type} onClick={() => updateSection(s.id, 'type', type)}
+                        style={{ padding: '6px', borderRadius: '6px', background: s.type === type ? 'var(--brand-primary)' : 'transparent', color: s.type === type ? '#fff' : 'var(--text-muted)', border: 'none', cursor: 'pointer' }}>
                         {type === 'video' && <Video size={14} />}
                         {type === 'text' && <FileText size={14} />}
                         {type === 'image' && <ImageIcon size={14} />}
                         {type === 'pdf' && <Link2 size={14} />}
                       </button>
                     ))}
-                    <button onClick={() => removeSection(s.id)} className="p-1.5 rounded-lg hover:bg-red-500/10" style={{ color: '#ef4444' }}>
+                    <button onClick={() => removeSection(s.id)} style={{ padding: '6px', borderRadius: '6px', background: 'transparent', border: 'none', color: 'var(--danger)', cursor: 'pointer' }}>
                       <Trash2 size={14} />
                     </button>
                   </div>
                 </div>
-                <input
-                  value={s.title}
-                  onChange={e => updateSection(s.id, 'title', e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg text-sm outline-none mb-2"
-                  style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
-                  placeholder="Tiêu đề mục..."
-                />
-                <div style={{ minHeight: '100px' }}>
-                  {s.type === 'text' ? (
-                    <textarea
-                      value={s.content}
-                      onChange={e => updateSection(s.id, 'content', e.target.value)}
-                      rows={4}
-                      className="w-full px-3 py-2 rounded-lg text-sm outline-none resize-none"
-                      style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
-                      placeholder="Nội dung markdown..."
-                    />
-                  ) : (
-                    <input
-                      value={s.content}
-                      onChange={e => updateSection(s.id, 'content', e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg text-sm outline-none"
-                      style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
-                      placeholder={s.type === 'video' ? 'URL YouTube...' : s.type === 'image' ? 'URL hình ảnh...' : 'URL PDF...'}
-                    />
-                  )}
-                </div>
+                <input value={s.title} onChange={e => updateSection(s.id, 'title', e.target.value)}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', background: 'var(--bg-surface)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '13px', outline: 'none', marginBottom: '8px', boxSizing: 'border-box', fontFamily: 'inherit' }}
+                  placeholder="Tiêu đề mục..." />
+                {s.type === 'text' ? (
+                  <textarea value={s.content} onChange={e => updateSection(s.id, 'content', e.target.value)} rows={4}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', background: 'var(--bg-surface)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '13px', outline: 'none', resize: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}
+                    placeholder="Nội dung markdown..." />
+                ) : (
+                  <input value={s.content} onChange={e => updateSection(s.id, 'content', e.target.value)}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', background: 'var(--bg-surface)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', fontSize: '13px', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}
+                    placeholder={s.type === 'video' ? 'URL YouTube...' : s.type === 'image' ? 'URL hình ảnh...' : 'URL PDF...'} />
+                )}
               </div>
             ))}
           </div>
         )}
 
         {error && (
-          <div className="mt-4 px-4 py-3 rounded-lg text-sm font-medium bg-red-500/10 border border-red-500/20" style={{ color: '#f87171' }}>
+          <div style={{ marginTop: '16px', padding: '12px 16px', borderRadius: '8px', background: 'rgba(244,67,54,0.1)', border: '1px solid rgba(244,67,54,0.2)', color: 'var(--danger)', fontSize: '13px', fontWeight: 600 }}>
             {error}
           </div>
         )}
 
-        <div className="flex items-center justify-between mt-8 pt-6 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '32px', paddingTop: '24px', borderTop: '1px solid var(--border-default)' }}>
           {step > 1 ? (
-            <button onClick={() => setStep(step - 1)} className="px-6 py-2.5 rounded-xl text-sm font-bold transition-colors" style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border-subtle)' }}>
+            <button onClick={() => setStep(step - 1)} style={{ padding: '10px 24px', borderRadius: '12px', fontSize: '14px', fontWeight: 700, background: 'var(--bg-elevated)', color: 'var(--text-primary)', border: '1px solid var(--border-default)', cursor: 'pointer', fontFamily: 'inherit' }}>
               Quay lại
             </button>
           ) : <div />}
 
           {step < 2 ? (
-            <button onClick={() => setStep(2)} className="px-6 py-2.5 rounded-xl text-sm font-bold flex items-center gap-1.5" style={{ background: 'var(--brand-primary)', color: '#000' }}>
+            <button onClick={() => setStep(2)} style={{ padding: '10px 24px', borderRadius: '12px', fontSize: '14px', fontWeight: 700, background: 'var(--brand-primary)', color: '#fff', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'inherit' }}>
               Tiếp theo <ChevronRight size={16} />
             </button>
           ) : (
-            <button onClick={handleSubmit} disabled={loading} className="px-6 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2" style={{ background: 'var(--brand-primary)', color: '#000' }}>
-              {loading ? <Loader2 className="animate-spin" size={16} /> : <Eye size={16} />}
+            <button onClick={handleSubmit} disabled={loading} style={{ padding: '10px 24px', borderRadius: '12px', fontSize: '14px', fontWeight: 700, background: 'var(--brand-primary)', color: '#fff', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'inherit' }}>
+              {loading ? <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <Eye size={16} />}
               {loading ? 'Đang tạo...' : 'Tạo bài giảng (Draft)'}
             </button>
           )}

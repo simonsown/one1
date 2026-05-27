@@ -37,6 +37,7 @@ export default function TeacherQuizPage() {
   const [newMaxAttempts, setNewMaxAttempts] = useState(1)
   const [randomizeQs, setRandomizeQs] = useState(true)
   const [randomizeOpts, setRandomizeOpts] = useState(true)
+  const [requireCamera, setRequireCamera] = useState(false)
   const [isSubmittingQuiz, setIsSubmittingQuiz] = useState(false)
   const [selectedClassIdForNewQuiz, setSelectedClassIdForNewQuiz] = useState('')
 
@@ -138,7 +139,8 @@ export default function TeacherQuizPage() {
         maxAttempts: Number(newMaxAttempts),
         randomizeQuestions: randomizeQs,
         randomizeOptions: randomizeOpts,
-        classId: selectedClassIdForNewQuiz || undefined
+        classId: selectedClassIdForNewQuiz || undefined,
+        requireCamera
       })
       showToast('Đã tạo đề thi mới thành công!')
       setShowCreateModal(false)
@@ -326,8 +328,8 @@ export default function TeacherQuizPage() {
   if (loading) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', gap: '16px' }}>
-        <Loader2 className="animate-spin" color="#00f3ff" size={48} />
-        <div style={{ color: '#8899a6', fontSize: '14px', fontWeight: 500 }}>Đang tải dữ liệu giảng dạy...</div>
+        <Loader2 size={48} style={{ color: 'var(--brand-primary)', animation: 'spin 1s linear infinite' }} />
+        <div style={{ color: 'var(--text-muted)', fontSize: '14px', fontWeight: 500 }}>Đang tải dữ liệu giảng dạy...</div>
       </div>
     )
   }
@@ -339,8 +341,8 @@ export default function TeacherQuizPage() {
       {toastMsg && (
         <div style={{
           position: 'fixed', top: '24px', right: '24px', zIndex: 1000,
-          background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff',
-          border: '1px solid #00f3ff', padding: '16px 24px', borderRadius: '16px',
+          background: 'var(--brand-subtle)', color: 'var(--brand-primary)',
+          border: '1px solid var(--brand-primary)', padding: '16px 24px', borderRadius: '16px',
           backdropFilter: 'blur(10px)', boxShadow: '0 8px 32px rgba(0,243,255,0.15)',
           display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, fontSize: '14px'
         }}>
@@ -352,10 +354,10 @@ export default function TeacherQuizPage() {
       {/* Header */}
       <header style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <h1 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 8px 0', color: '#fff' }}>
-            Hệ thống <span style={{ color: '#00f3ff' }}>Đề thi & Đánh giá</span>
+          <h1 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 8px 0', color: 'var(--text-primary)' }}>
+            Hệ thống <span style={{ color: 'var(--brand-primary)' }}>Đề thi & Đánh giá</span>
           </h1>
-          <p style={{ color: '#8899a6', margin: 0 }}>Soạn đề trắc nghiệm phần cứng máy tính, chấm điểm tự động và gửi thông báo trực tuyến.</p>
+          <p style={{ color: 'var(--text-muted)', margin: 0 }}>Soạn đề trắc nghiệm phần cứng máy tính, chấm điểm tự động và gửi thông báo trực tuyến.</p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
           <button 
@@ -790,6 +792,10 @@ export default function TeacherQuizPage() {
                 <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', color: '#e0e6ed', cursor: 'pointer' }}>
                   <input type="checkbox" checked={randomizeOpts} onChange={(e) => setRandomizeOpts(e.target.checked)} />
                   Xáo trộn vị trí các đáp án lựa chọn
+                </label>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', color: '#e0e6ed', cursor: 'pointer' }}>
+                  <input type="checkbox" checked={requireCamera} onChange={(e) => setRequireCamera(e.target.checked)} />
+                  Yêu cầu bật Camera khi thi (Proctoring)
                 </label>
               </div>
 
