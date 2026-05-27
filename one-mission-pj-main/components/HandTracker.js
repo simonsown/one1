@@ -1,43 +1,65 @@
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { FilesetResolver, HandLandmarker } from '@mediapipe/tasks-vision';
+
+const CAMERA_TIMEOUT = 10000;
+const MODEL_TIMEOUT = 15000;
 
 const HandTracker = ({ onLandmarks }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [handLandmarker, setHandLandmarker] = useState(null);
     const [webcamRunning, setWebcamRunning] = useState(false);
+    const [error, setError] = useState(null);
+    const timeoutRef = useRef(null);
+    const modelTimeoutRef = useRef(null);
 
     useEffect(() => {
+        const controller = new AbortController();
+        modelTimeoutRef.current = setTimeout(() => {
+            if (!handLandmarker) {
+                setError("Không thể tải mô hình AI do kết nối mạng chậm. Vui lòng thử lại.");
+            }
+        }, MODEL_TIMEOUT);
+
         const createHandLandmarker = async () => {
-            const vision = await FilesetResolver.forVisionTasks(
-                "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm"
-            );
-            const landmarker = await HandLandmarker.createFromOptions(vision, {
-                baseOptions: {
-                    modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
-                    delegate: "GPU"
-                },
-                runningMode: "VIDEO",
-                numHands: 2
-            });
-            setHandLandmarker(landmarker);
+            try {
+                const vision = await FilesetResolver.forVisionTasks(
+                    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm"
+                );
+                if (controller.signal.aborted) return;
+                const landmarker = await HandLandmarker.createFromOptions(vision, {
+                    baseOptions: {
+                        modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
+                        delegate: "GPU"
+                    },
+                    runningMode: "VIDEO",
+                    numHands: 2
+                });
+                if (controller.signal.aborted) return;
+                if (modelTimeoutRef.current) clearTimeout(modelTimeoutRef.current);
+                setHandLandmarker(landmarker);
+            } catch (err) {
+                console.error("Failed to create HandLandmarker:", err);
+                if (modelTimeoutRef.current) clearTimeout(modelTimeoutRef.current);
+                setError("Không thể tải mô hình AI. Vui lòng thử lại.");
+            }
         };
 
         createHandLandmarker();
+        return () => { controller.abort(); if (modelTimeoutRef.current) clearTimeout(modelTimeoutRef.current); };
     }, []);
 
-    // Auto-start webcam once landmarker is loaded
     useEffect(() => {
-        if (handLandmarker && !webcamRunning) {
+        if (handLandmarker && !webcamRunning && !error) {
             setWebcamRunning(true);
         }
-    }, [handLandmarker, webcamRunning]);
+    }, [handLandmarker, webcamRunning, error]);
 
     useEffect(() => {
         let animationFrameId;
+        let streamRef = null;
 
         const predictWebcam = async () => {
             if (videoRef.current && canvasRef.current && handLandmarker && webcamRunning) {
@@ -81,26 +103,39 @@ const HandTracker = ({ onLandmarks }) => {
 
         if (webcamRunning) {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                alert("Camera access is not supported in your browser or you are not using HTTPS/localhost.");
-                console.error("getUserMedia is not supported in this browser.");
+                setError("Trình duyệt không hỗ trợ camera.");
                 return;
             }
+
+            // Set timeout for camera initialization
+            timeoutRef.current = setTimeout(() => {
+                if (!videoRef.current?.srcObject) {
+                    setError("Camera không phản hồi. Vui lòng kiểm tra quyền truy cập camera và thử lại.");
+                    setWebcamRunning(false);
+                }
+            }, CAMERA_TIMEOUT);
+
             const constraints = { video: true };
             navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+                streamRef = stream;
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                    timeoutRef.current = null;
+                }
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
-                    // predictWebcam is triggered by the effect loop now, but we need to start it?
-                    // The effect depends on webcamRunning. 
-                    // But we also need 'loadeddata' event? 
-                    // Actually, just waiting for stream is enough to set srcObject. 
-                    // The loop checks for video dimensions.
                     videoRef.current.addEventListener("loadeddata", () => {
                         predictWebcam();
                     });
                 }
             }).catch(err => {
                 console.error("Error accessing webcam:", err);
-                alert("Error accessing webcam: " + err.message);
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                    timeoutRef.current = null;
+                }
+                setError("Không thể truy cập camera: " + err.message);
+                setWebcamRunning(false);
             });
         }
 
@@ -108,11 +143,31 @@ const HandTracker = ({ onLandmarks }) => {
             if (animationFrameId) {
                 window.cancelAnimationFrame(animationFrameId);
             }
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+            if (streamRef) {
+                streamRef.getTracks().forEach(track => track.stop());
+            }
         };
     }, [webcamRunning, handLandmarker, onLandmarks]);
 
+    const handleRetry = () => {
+        setError(null);
+        setWebcamRunning(true);
+    };
 
-
+    if (error) {
+        return (
+            <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#020617', color: '#ef4444', gap: '12px', padding: '16px' }}>
+                <p style={{ fontSize: '13px', textAlign: 'center', margin: 0 }}>{error}</p>
+                <button onClick={handleRetry} style={{ padding: '8px 16px', background: '#00d4aa', color: '#000', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', fontSize: '12px' }}>
+                    Thử lại
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div style={{ position: 'relative', width: '100%', height: '100%', backgroundColor: 'black', overflow: 'hidden' }}>
@@ -126,16 +181,16 @@ const HandTracker = ({ onLandmarks }) => {
                 ref={canvasRef}
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', transform: 'scaleX(-1)' }}
             />
-            {!handLandmarker && (
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981', fontWeight: 'bold' }}>
-                    Loading AI Model...
+            {!handLandmarker && !error && (
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+                    <div className="w-6 h-6 border-2 border-[#00d4aa] border-t-transparent rounded-full animate-spin" />
+                    <span style={{ color: '#10b981', fontWeight: 600, fontSize: '13px' }}>Đang tải AI Model...</span>
                 </div>
             )}
         </div>
     );
 };
 
-// Helper functions for drawing
 const drawConnectors = (ctx, landmarks, connections, style) => {
     ctx.strokeStyle = style.color;
     ctx.lineWidth = style.lineWidth;

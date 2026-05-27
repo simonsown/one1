@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BookOpen, Cpu, ShoppingCart, Users, BrainCircuit, Award, Globe, Sparkles, Menu, Webcam, X, Sun, Moon, BarChart2, Map, FileText, Trophy, Bell, MessageSquare, User } from 'lucide-react';
+import { BookOpen, Cpu, ShoppingCart, Users, BrainCircuit, Award, Globe, Sparkles, Menu, Webcam, X, Sun, Moon, BarChart2, Map, FileText, Trophy, Bell, MessageSquare, User, ArrowRight } from 'lucide-react';
 import JoinClassModal from './JoinClassModal';
 
 interface NavItem {
@@ -16,9 +16,10 @@ interface BurgerMenuProps {
   webcamMouseEnabled: boolean; setWebcamMouseEnabled: (enabled: boolean) => void;
   trackingSensitivity: number; setTrackingSensitivity: (s: number) => void;
   onToggleAI: () => void; isAIOpen: boolean; theme: string; setTheme: (t: string) => void;
+  userName?: string; onShowDashboard?: () => void;
 }
 
-const BurgerMenu: React.FC<BurgerMenuProps> = ({ lang, toggleLang, onStartQuiz, appMode, setAppMode, webcamMouseEnabled, setWebcamMouseEnabled, trackingSensitivity, setTrackingSensitivity, onToggleAI, isAIOpen, theme, setTheme }) => {
+const BurgerMenu: React.FC<BurgerMenuProps> = ({ lang, toggleLang, onStartQuiz, appMode, setAppMode, webcamMouseEnabled, setWebcamMouseEnabled, trackingSensitivity, setTrackingSensitivity, onToggleAI, isAIOpen, theme, setTheme, userName, onShowDashboard }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
   const [showCredits, setShowCredits] = useState(false);
@@ -85,6 +86,17 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ lang, toggleLang, onStartQuiz, 
             </span>
           </Link>
           <div style={{ fontSize: '10px', background: 'rgba(8,158,96,0.15)', color: 'var(--brand-primary)', borderRadius: '4px', padding: '2px 8px', fontWeight: 600 }}>V1.0</div>
+        </div>
+
+        <div style={{ padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer' }} onClick={(e) => { e.preventDefault(); if (onShowDashboard) onShowDashboard(); }}>
+          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--brand-primary), #289cf9)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <User size={14} color="#fff" />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: '13px', fontWeight: 600, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userName || (lang === 'en' ? 'Guest' : 'Khách')}</div>
+            <div style={{ fontSize: '10px', color: 'var(--brand-primary)', fontWeight: 500 }}>{lang === 'en' ? 'View Dashboard' : 'Xem bảng điều khiển'}</div>
+          </div>
+          <ArrowRight size={14} style={{ color: 'rgba(255,255,255,0.3)', flexShrink: 0 }} />
         </div>
 
         <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: '0 16px', flexShrink: 0 }} />
@@ -218,7 +230,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ lang, toggleLang, onStartQuiz, 
             <span style={{ fontSize: '11px', fontWeight: lang === 'en' ? 700 : 400, color: lang === 'en' ? 'var(--brand-primary)' : 'rgba(255,255,255,0.4)' }}>EN</span>
           </div>
           <div style={{ display: 'flex', gap: '4px' }}>
-            <button onClick={() => setTheme(theme === 'dark' ? 'editorial-light' : 'dark')}
+            <button onClick={() => { const next = theme === 'dark' ? 'light' : 'dark'; setTheme(next); try { localStorage.setItem('theme', next); document.documentElement.setAttribute('data-theme', next) } catch(e) {} }}
               style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.4)', padding: '6px', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               title={lang === 'en' ? 'Toggle Theme' : 'Đổi giao diện'}>
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}

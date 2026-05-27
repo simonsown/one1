@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import React, { useState } from 'react'
 import { findStudentByCode, requestLinkToStudent } from '@/lib/parent-actions'
 import { Search, ShieldCheck, Heart, User, CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react'

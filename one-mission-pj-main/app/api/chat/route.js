@@ -1,10 +1,14 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { SYSTEM_PROMPT } from '../../../utils/aiConstants';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY;
+const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
 
 export async function POST(req) {
     try {
+        if (!apiKey || !genAI) {
+            return Response.json({ error: '⚠️ API Key chưa được cấu hình. Vui lòng liên hệ quản trị viên.' }, { status: 200 })
+        }
         const { message, history = [], context = {} } = await req.json();
 
         // Build context string to inject into the user's message
@@ -47,7 +51,7 @@ export async function POST(req) {
         }));
 
         const model = genAI.getGenerativeModel({
-            model: 'gemini-flash-latest',
+            model: 'gemini-1.5-flash',
             systemInstruction: SYSTEM_PROMPT
         });
 
@@ -57,10 +61,14 @@ export async function POST(req) {
 
         return Response.json({ reply: responseText });
     } catch (error) {
-        console.error('Chat API Error:', error);
+        console.error('Chat API Error:', error?.message || error, error?.stack || '');
+        const msg = (error?.message || '').toLowerCase();
+        if (msg.includes('api_key') || msg.includes('api key') || msg.includes('not found') || msg.includes('not support') || msg.includes('image')) {
+            return Response.json({ reply: 'Xin lỗi, AI chat hiện đang bảo trì. Vui lòng thử lại sau.' }, { status: 200 })
+        }
         return Response.json(
-            { error: error.message || 'Lỗi kết nối AI. Vui lòng thử lại.' },
-            { status: 500 }
+            { reply: 'Hệ thống AI đang quá tải, vui lòng thử lại sau.' },
+            { status: 200 }
         );
     }
 }

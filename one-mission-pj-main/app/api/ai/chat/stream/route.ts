@@ -1,5 +1,3 @@
-import { NextResponse } from 'next/server';
-
 const GEMINI_API_KEY = () => process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
 
 const SYSTEM_PROMPT = `Bạn là AI Guru - trợ lý AI của nền tảng học tập PC Master Builder. Nhiệm vụ của bạn là hướng dẫn, hỗ trợ học sinh trong việc sử dụng website và trả lời câu hỏi về phần cứng máy tính.
@@ -28,11 +26,11 @@ export async function POST(req: Request) {
     const { message } = await req.json();
     const apiKey = GEMINI_API_KEY();
     if (!apiKey) {
-      return NextResponse.json({ reply: "Xin lỗi, API Key chưa được cấu hình. Vui lòng liên hệ quản trị viên." });
+      return new Response(JSON.stringify({ error: 'API Key chưa được cấu hình' }), { status: 200 });
     }
 
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:streamGenerateContent?alt=sse&key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -43,32 +41,62 @@ export async function POST(req: Request) {
               parts: [{ text: `${SYSTEM_PROMPT}\n\nNgười dùng hỏi: ${message}` }]
             }
           ],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 1024,
-          }
+          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
         })
       }
     );
 
     if (!geminiRes.ok) {
       const errBody = await geminiRes.text();
-      console.error('Gemini API Error:', geminiRes.status, errBody);
-      if (errBody.includes('API_KEY') || errBody.includes('API key')) {
-        return NextResponse.json({ reply: "⚠️ API Key không hợp lệ. Vui lòng liên hệ quản trị viên." });
-      }
-      if (errBody.includes('not found') || errBody.includes('not support') || errBody.includes('image')) {
-        return NextResponse.json({ reply: "Xin lỗi, AI chat hiện chỉ hỗ trợ văn bản. Vui lòng thử lại với câu hỏi khác." });
-      }
-      return NextResponse.json({ reply: "Xin lỗi, tôi gặp sự cố khi kết nối AI. Vui lòng thử lại sau." });
+      console.error('Gemini Stream Error:', geminiRes.status, errBody);
+      const msg = errBody.includes('API_KEY') ? '⚠️ API Key không hợp lệ.' :
+                  errBody.includes('not found') || errBody.includes('not support') ? 'Xin lỗi, AI hiện không khả dụng.' :
+                  'Xin lỗi, tôi gặp sự cố kết nối.';
+      return new Response(JSON.stringify({ error: msg }), { status: 200 });
     }
 
-    const data = await geminiRes.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Xin lỗi, tôi không thể tạo phản hồi ngay bây giờ.';
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+    const reader = geminiRes.body?.getReader();
+    if (!reader) {
+      return new Response(JSON.stringify({ error: 'Không thể kết nối AI' }), { status: 200 });
+    }
 
-    return NextResponse.json({ reply: text });
+    const stream = new ReadableStream({
+      async start(controller) {
+        let buffer = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const json = JSON.parse(line.slice(6));
+                const text = json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                if (text) {
+                  controller.enqueue(encoder.encode(JSON.stringify({ text }) + '\n'));
+                }
+              } catch {}
+            }
+          }
+        }
+        controller.enqueue(encoder.encode(JSON.stringify({ done: true }) + '\n'));
+        controller.close();
+      }
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      }
+    });
   } catch (err: any) {
-    console.error('AI Chat Route Error:', err?.message || err);
-    return NextResponse.json({ reply: "Xin lỗi, hệ thống đang bảo trì. Vui lòng thử lại sau." });
+    console.error('AI Stream Error:', err?.message || err);
+    return new Response(JSON.stringify({ error: 'Hệ thống đang bảo trì.' }), { status: 200 });
   }
 }

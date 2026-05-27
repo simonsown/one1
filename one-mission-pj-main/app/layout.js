@@ -33,6 +33,13 @@ export default function RootLayout({ children }) {
     <html lang="vi" className={`${montserrat.variable}`}>
       <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          try {
+            var t = localStorage.getItem('theme');
+            if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            else document.documentElement.setAttribute('data-theme', 'light');
+          } catch(e) {}
+        `}} />
       </head>
       <body className="font-sans">
         <SessionManager />

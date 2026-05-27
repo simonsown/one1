@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { ArrowLeft, Video, FileText, Image as ImageIcon, FileSearch, CheckCircle, Clock } from 'lucide-react'
 import LessonViewer from './LessonViewer'
 
+export const dynamic = 'force-dynamic'
+
 export default async function StudentLessonDetailPage({
   params,
 }: {

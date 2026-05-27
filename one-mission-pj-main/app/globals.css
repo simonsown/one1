@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+:root, [data-theme="light"] {
   --bg-base:       #efedfb;
   --bg-surface:    #ffffff;
   --bg-elevated:   #f8f7fc;
@@ -46,6 +46,38 @@
   --text-xl:   24px;
   --text-2xl:  32px;
   --text-hero: 48px;
+}
+
+[data-theme="dark"] {
+  --bg-base:       #0d0e13;
+  --bg-surface:    #0f0f1a;
+  --bg-elevated:   #1a1c25;
+  --bg-hover:      #1e202f;
+
+  --brand-primary: #00d4aa;
+  --brand-light:   #4de8c4;
+  --brand-dark:    #00b89c;
+  --brand-subtle:  rgba(0, 212, 170, 0.12);
+
+  --accent-blue:   #4a90e2;
+  --accent-amber:  #f59e0b;
+  --accent-orange: #ff8b00;
+
+  --success:       #00d4aa;
+  --warning:       #f59e0b;
+  --danger:        #e84855;
+  --info:          #636678;
+
+  --text-primary:  #dde0ed;
+  --text-secondary:#b8bbcc;
+  --text-muted:    #636678;
+
+  --border-subtle: rgba(255,255,255,0.05);
+  --border-default:rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+
+  --shadow-color:  rgba(0, 0, 0, 0.4);
+  --shadow-hover:  rgba(0, 0, 0, 0.6);
 }
 
 *, *::before, *::after {

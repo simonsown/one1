@@ -103,6 +103,8 @@ function calculateStreak(progress: LessonProgressRow[]): number {
   return streak
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function StudentDashboardPage() {
   const user = await requireRole(['student'])
   const supabase = await createClient()

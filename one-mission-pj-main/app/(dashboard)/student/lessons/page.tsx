@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Book, Play, CheckCircle, Clock, Star, ArrowRight, Layers } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function StudentLessonsPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

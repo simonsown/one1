@@ -4,5 +4,8 @@
       "path": "/api/cron/daily-quiz",
       "schedule": "0 6 * * *"
     }
+  ],
+  "rewrites": [
+    { "source": "/", "destination": "/" }
   ]
 }

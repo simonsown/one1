@@ -81,7 +81,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
       const data = await res.json();
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: data.error ? `⚠️ ${data.error}` : data.reply
+        content: data.reply || data.error || 'Xin lỗi, tôi gặp sự cố kết nối.'
       }]);
     } catch {
       setMessages(prev => [...prev, {

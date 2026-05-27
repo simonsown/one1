@@ -70,10 +70,19 @@ const Marketplace = ({ lang = 'en', onCheckout, onCancel }) => {
         'Cooler': lang === 'en' ? 'Cooler' : 'Tản nhiệt'
     };
 
-    // Lọc sản phẩm theo Tab
     const filteredProducts = useMemo(() => {
         return componentsData.filter(item => item.type === activeTab);
     }, [activeTab]);
+
+    const groupedProducts = useMemo(() => {
+        const groups = {};
+        for (const prod of filteredProducts) {
+            const key = prod.socket || prod.ramType || (prod.type === 'GPU' ? (prod.power >= 200 ? 'High-End' : prod.power >= 100 ? 'Mid-Range' : 'Entry') : 'Default');
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(prod);
+        }
+        return groups;
+    }, [filteredProducts]);
 
     // Check Logic tương thích cơ bản (Mô phỏng)
     const validateCompat = (item) => {
@@ -206,44 +215,48 @@ const Marketplace = ({ lang = 'en', onCheckout, onCancel }) => {
                         ))}
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem', flex: 1, overflowY: 'auto', paddingRight: '10px' }}>
-                        {filteredProducts.map(prod => {
-                            const inCart = cart.some(c => c.id === prod.id);
-                            return (
-                                <div key={prod.id} style={{
-                                    background: 'rgba(15, 23, 42, 0.8)', border: '1px solid #334155', borderRadius: '10px', padding: '1rem',
-                                    display: 'flex', flexDirection: 'column', gap: '8px', transition: 'transform 0.2s, box-shadow 0.2s',
-                                    cursor: inCart ? 'not-allowed' : 'pointer',
-                                    opacity: inCart ? 0.5 : 1
-                                }}
-                                    onMouseOver={(e) => { if (!inCart) { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,255,255,0.1)'; } }}
-                                    onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
-                                >
-                                    <h4 style={{ margin: 0, color: 'var(--text-light)', fontSize: '1.1rem' }}>{prod.name}</h4>
-                                    <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--primary-neon)' }}>{prod.price.toLocaleString()} VNĐ</div>
-                                    <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: 0, flex: 1 }}>{prod.desc}</p>
-
-                                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', fontSize: '0.75rem' }}>
-                                        {prod.socket && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>Socket: {prod.socket}</span>}
-                                        {prod.ramType && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'RAM:' : 'Loại RAM:'} {prod.ramType}</span>}
-                                        {prod.power && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>TDP: {prod.power}W</span>}
-                                        {prod.wattage && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'Power:' : 'Công suất:'} {prod.wattage}W</span>}
-                                    </div>
-
-                                    <button
-                                        disabled={inCart}
-                                        onClick={() => handleAddToCart(prod)}
-                                        style={{
-                                            marginTop: 'auto', width: '100%', padding: '10px', background: inCart ? '#334155' : 'var(--accent-blue)', color: 'white',
-                                            border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: inCart ? 'not-allowed' : 'pointer',
-                                            boxShadow: inCart ? 'none' : '0 0 10px rgba(56, 189, 248, 0.5)'
-                                        }}
-                                    >
-                                        {inCart ? (lang === 'en' ? 'PURCHASED' : 'ĐÃ CHỌN') : (lang === 'en' ? 'BUY' : 'MUA')}
-                                    </button>
+                    <div style={{ flex: 1, overflowY: 'auto', paddingRight: '10px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {Object.entries(groupedProducts).map(([groupKey, products]) => (
+                            <div key={groupKey} style={{ minHeight: 0 }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: 'var(--primary-neon)', marginBottom: '0.5rem', padding: '4px 8px', background: 'rgba(0,255,255,0.06)', borderRadius: '6px', display: 'inline-block' }}>
+                                    {groupKey}
                                 </div>
-                            );
-                        })}
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem' }}>
+                                    {products.map(prod => {
+                                        const inCart = cart.some(c => c.id === prod.id);
+                                        return (
+                                            <div key={prod.id} style={{
+                                                background: 'rgba(15, 23, 42, 0.8)', border: '1px solid #334155', borderRadius: '10px', padding: '1rem',
+                                                display: 'flex', flexDirection: 'column', gap: '8px', transition: 'transform 0.2s, box-shadow 0.2s',
+                                                cursor: inCart ? 'not-allowed' : 'pointer',
+                                                opacity: inCart ? 0.5 : 1
+                                            }}
+                                                onMouseOver={(e) => { if (!inCart) { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,255,255,0.1)'; } }}
+                                                onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
+                                            >
+                                                <h4 style={{ margin: 0, color: 'var(--text-light)', fontSize: '1rem' }}>{prod.name}</h4>
+                                                <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--primary-neon)' }}>{prod.price.toLocaleString()} VNĐ</div>
+                                                <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0, flex: 1 }}>{prod.desc}</p>
+                                                <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', fontSize: '0.7rem' }}>
+                                                    {prod.socket && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>Socket: {prod.socket}</span>}
+                                                    {prod.ramType && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'RAM:' : 'Loại RAM:'} {prod.ramType}</span>}
+                                                    {prod.power && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>TDP: {prod.power}W</span>}
+                                                    {prod.wattage && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'Power:' : 'Công suất:'} {prod.wattage}W</span>}
+                                                </div>
+                                                <button disabled={inCart} onClick={() => handleAddToCart(prod)}
+                                                    style={{
+                                                        marginTop: 'auto', width: '100%', padding: '10px', background: inCart ? '#334155' : 'var(--accent-blue)', color: 'white',
+                                                        border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: inCart ? 'not-allowed' : 'pointer',
+                                                        boxShadow: inCart ? 'none' : '0 0 10px rgba(56, 189, 248, 0.5)'
+                                                    }}>
+                                                    {inCart ? (lang === 'en' ? 'PURCHASED' : 'ĐÃ CHỌN') : (lang === 'en' ? 'BUY' : 'MUA')}
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

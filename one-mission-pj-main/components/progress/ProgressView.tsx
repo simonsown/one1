@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, ReferenceLine, Cell } from 'recharts'
 import { ProgressStats, DailyProgress, LessonProgress, QuizAttempt, BuilderActivity } from '@/lib/progress'
 import { useRouter } from 'next/navigation'
@@ -40,6 +41,19 @@ function getDailyQuote(): string {
   return MOTIVATIONAL_QUOTES[dayOfYear % MOTIVATIONAL_QUOTES.length]
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+}
+
 export default function ProgressView({ data }: ProgressViewProps) {
   const router = useRouter()
   const { stats, dailyProgress, lessons, quizResults, builderActivity } = data
@@ -53,123 +67,128 @@ export default function ProgressView({ data }: ProgressViewProps) {
   // Heatmap rows & cols logic (simplified for Github contribution graph style)
   const heatmapCols = 13 // approx 3 months of weeks
   const getIntensityColor = (minutes: number) => {
-    if (minutes === 0) return '#1a1c25'
-    if (minutes < 15) return 'rgba(0, 212, 170, 0.4)'
-    if (minutes < 30) return 'rgba(0, 212, 170, 0.6)'
-    if (minutes < 60) return 'rgba(0, 212, 170, 0.8)'
-    return '#00d4aa'
+    if (minutes === 0) return 'var(--bg-elevated)'
+    if (minutes < 15) return 'color-mix(in srgb, var(--brand-primary) 40%, transparent)'
+    if (minutes < 30) return 'color-mix(in srgb, var(--brand-primary) 60%, transparent)'
+    if (minutes < 60) return 'color-mix(in srgb, var(--brand-primary) 80%, transparent)'
+    return 'var(--brand-primary)'
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8 relative z-10">
-      
+    <motion.div
+      className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8 relative z-10"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Workspace Title & Exit Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
-            <BarChart2 size={24} />
+          <div className="p-2.5 rounded-2xl" style={{ background: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent)' }}>
+            <BarChart2 size={24} style={{ color: 'var(--brand-primary)' }} />
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase">Tiến Độ Học Tập Của Bạn</h1>
-            <p className="text-xs text-gray-400 mt-0.5">Tổng quan kết quả, hoạt động phòng Lab và tiến độ hoàn thành khóa học</p>
+            <h1 className="text-xl md:text-2xl font-black tracking-tight uppercase" style={{ color: 'var(--text-primary)' }}>Tiến Độ Học Tập Của Bạn</h1>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>Tổng quan kết quả, hoạt động phòng Lab và tiến độ hoàn thành khóa học</p>
           </div>
         </div>
 
         {/* EXIT BUTTON */}
-        <button 
+        <button
           onClick={() => router.push('/student')}
-          className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+          className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition-all shadow-md group cursor-pointer"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }}
         >
           <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
           Quay lại Dashboard
         </button>
-      </div>
+      </motion.div>
 
       {/* Daily Motivation */}
-      <div className="bg-gradient-to-r from-[#00d4aa15] to-[#06b6d415] border border-[#00d4aa]/20 rounded-2xl p-5 flex items-center gap-4">
+      <motion.div variants={itemVariants} className="rounded-2xl p-5 flex items-center gap-4 border" style={{ background: 'linear-gradient(to right, color-mix(in srgb, var(--brand-primary) 10%, transparent), color-mix(in srgb, #06b6d4 10%, transparent))', borderColor: 'color-mix(in srgb, var(--brand-primary) 20%, transparent)' }}>
         <span className="text-2xl">💡</span>
-        <p className="text-sm text-[#dde0ed] leading-relaxed">{getDailyQuote()}</p>
-      </div>
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>{getDailyQuote()}</p>
+      </motion.div>
 
       {/* Section 1 - Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
+        <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-2xl p-6 flex items-center justify-between shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
           <div>
-            <p className="text-[#6b6e80] text-sm mb-1">Hoàn thành</p>
-            <h2 className="text-3xl font-bold text-[#dde0ed]">{stats.completed} <span className="text-[#6b6e80] text-lg">/ {stats.total}</span></h2>
+            <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Hoàn thành</p>
+            <h2 className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.completed} <span className="text-lg" style={{ color: 'var(--text-secondary)' }}>/ {stats.total}</span></h2>
           </div>
-          <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">✅</div>
-        </div>
+          <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl" style={{ background: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', color: 'var(--brand-primary)' }}>✅</div>
+        </motion.div>
 
-        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
+        <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-2xl p-6 flex items-center justify-between shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
           <div>
-            <p className="text-[#6b6e80] text-sm mb-1">Điểm TB Quiz</p>
-            <h2 className={`text-3xl font-bold ${stats.avgScore >= 70 ? 'text-[#00d4aa]' : 'text-red-500'}`}>{stats.avgScore}</h2>
+            <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Điểm TB Quiz</p>
+            <h2 className={`text-3xl font-bold ${stats.avgScore >= 70 ? '' : 'text-red-500'}`} style={{ color: stats.avgScore >= 70 ? 'var(--brand-primary)' : undefined }}>{stats.avgScore}</h2>
           </div>
-          <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">🎯</div>
-        </div>
+          <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl" style={{ background: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', color: 'var(--brand-primary)' }}>🎯</div>
+        </motion.div>
 
-        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
+        <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-2xl p-6 flex items-center justify-between shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
           <div>
-            <p className="text-[#6b6e80] text-sm mb-1">Thời gian học</p>
-            <h2 className="text-3xl font-bold text-[#dde0ed]">{(stats.totalSeconds / 3600).toFixed(1)}h</h2>
+            <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Thời gian học</p>
+            <h2 className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{(stats.totalSeconds / 3600).toFixed(1)}h</h2>
           </div>
-          <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">⏱️</div>
-        </div>
+          <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl" style={{ background: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', color: 'var(--brand-primary)' }}>⏱️</div>
+        </motion.div>
 
-        <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
+        <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-2xl p-6 flex items-center justify-between shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
           <div>
-            <p className="text-[#6b6e80] text-sm mb-1">Streak</p>
-            <h2 className="text-3xl font-bold text-[#dde0ed]">{stats.streak} ngày</h2>
+            <p className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>Streak</p>
+            <h2 className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.streak} ngày</h2>
           </div>
           <div className="w-12 h-12 bg-orange-500/10 rounded-full flex items-center justify-center text-orange-500 text-xl">🔥</div>
-        </div>
+        </motion.div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Section 2 - Biểu đồ tiến độ */}
-        <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
-          <h3 className="text-lg font-bold text-[#dde0ed] mb-6">Tiến độ 30 ngày</h3>
+        <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-[28px] p-6 shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
+          <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--text-primary)' }}>Tiến độ 30 ngày</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={dailyProgress} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="rgba(0,212,170,0.2)" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="rgba(0,212,170,0)" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="var(--brand-primary)" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="var(--brand-primary)" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="date" stroke="#6b6e80" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#6b6e80" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#1a1c25', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px' }}
-                  itemStyle={{ color: '#00d4aa' }}
+                <XAxis dataKey="date" stroke="var(--text-secondary)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="var(--text-secondary)" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
+                <Tooltip
+                  contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px' }}
+                  itemStyle={{ color: 'var(--brand-primary)' }}
                   formatter={(value: number) => [`${value} bài hoàn thành`, '']}
-                  labelStyle={{ color: '#dde0ed', marginBottom: '4px' }}
+                  labelStyle={{ color: 'var(--text-primary)', marginBottom: '4px' }}
                 />
-                <Line type="monotone" dataKey="count" stroke="#00d4aa" strokeWidth={3} dot={{ fill: '#00d4aa', r: 4 }} activeDot={{ r: 6 }} />
+                <Line type="monotone" dataKey="count" stroke="var(--brand-primary)" strokeWidth={3} dot={{ fill: 'var(--brand-primary)', r: 4 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </motion.div>
 
         {/* Section 4 - Phân tích Quiz */}
-        <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
-          <h3 className="text-lg font-bold text-[#dde0ed] mb-6">Phân tích Quiz</h3>
+        <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-[28px] p-6 shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
+          <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--text-primary)' }}>Phân tích Quiz</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={quizResults} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
-                <XAxis dataKey="quiz_title" stroke="#6b6e80" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => val.length > 10 ? val.substring(0,10)+'...' : val} />
-                <YAxis stroke="#6b6e80" fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#11121d', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px' }}
-                  cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                <XAxis dataKey="quiz_title" stroke="var(--text-secondary)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => val.length > 10 ? val.substring(0,10)+'...' : val} />
+                <YAxis stroke="var(--text-secondary)" fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} />
+                <Tooltip
+                  contentStyle={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)', borderRadius: '8px' }}
+                  cursor={{ fill: 'color-mix(in srgb, var(--text-primary) 5%, transparent)' }}
                 />
-                <ReferenceLine y={70} stroke="#6b6e80" strokeDasharray="3 3" label={{ position: 'top', value: 'Ngưỡng đạt', fill: '#6b6e80', fontSize: 10 }} />
+                <ReferenceLine y={70} stroke="var(--text-secondary)" strokeDasharray="3 3" label={{ position: 'top', value: 'Ngưỡng đạt', fill: 'var(--text-secondary)', fontSize: 10 }} />
                 <Bar dataKey="score" radius={[4, 4, 0, 0]}>
                   {
                     quizResults.map((entry, index) => {
-                      const color = entry.score >= 90 ? '#00d4aa' : entry.score >= 70 ? '#4a90e2' : '#e84855'
+                      const color = entry.score >= 90 ? 'var(--brand-primary)' : entry.score >= 70 ? '#4a90e2' : '#e84855'
                       return <Cell key={`cell-${index}`} fill={color} />
                     })
                   }
@@ -177,17 +196,17 @@ export default function ProgressView({ data }: ProgressViewProps) {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Section 5 - Builder Lab Activity */}
-      <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
-        <h3 className="text-lg font-bold text-[#dde0ed] mb-4">Builder Lab Activity (90 ngày)</h3>
+      <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-[28px] p-6 shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
+        <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Builder Lab Activity (90 ngày)</h3>
         <div className="flex gap-2 overflow-x-auto pb-4">
           <div className="flex flex-col flex-wrap h-32 gap-1 content-start">
             {builderActivity.map((day, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="w-4 h-4 rounded-sm"
                 style={{ backgroundColor: getIntensityColor(day.minutes) }}
                 title={`${day.date}: ${day.minutes} phút`}
@@ -195,27 +214,33 @@ export default function ProgressView({ data }: ProgressViewProps) {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-2 mt-2 text-xs text-[#6b6e80] justify-end">
+        <div className="flex items-center gap-2 mt-2 text-xs justify-end" style={{ color: 'var(--text-secondary)' }}>
           <span>Ít</span>
-          <div className="w-3 h-3 rounded-sm bg-[#11121d] border border-gray-800"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-40"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-60"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-80"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa]"></div>
+          <div className="w-3 h-3 rounded-sm" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}></div>
+          <div className="w-3 h-3 rounded-sm" style={{ background: 'var(--brand-primary)', opacity: 0.4 }}></div>
+          <div className="w-3 h-3 rounded-sm" style={{ background: 'var(--brand-primary)', opacity: 0.6 }}></div>
+          <div className="w-3 h-3 rounded-sm" style={{ background: 'var(--brand-primary)', opacity: 0.8 }}></div>
+          <div className="w-3 h-3 rounded-sm" style={{ background: 'var(--brand-primary)' }}></div>
           <span>Nhiều</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Section 3 - Danh sách bài học */}
-      <div className="bg-[#11121d]/90 border border-gray-800 rounded-[28px] p-6 shadow-lg">
+      <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="rounded-[28px] p-6 shadow-lg" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-default)' }}>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <h3 className="text-lg font-bold text-[#dde0ed]">Lịch sử học tập</h3>
-          <div className="flex gap-2 bg-[#0d0e13] p-1 rounded-lg border border-[rgba(255,255,255,0.07)] overflow-x-auto w-full md:w-auto">
+          <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Lịch sử học tập</h3>
+          <div className="flex gap-2 p-1 rounded-lg border overflow-x-auto w-full md:w-auto" style={{ background: 'var(--bg-base)', borderColor: 'var(--border-default)' }}>
             {['all', 'completed', 'in_progress', 'not_started'].map((f) => (
-              <button 
+              <button
                 key={f}
                 onClick={() => setFilter(f as any)}
-                className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap transition-colors ${filter === f ? 'bg-[#1a1c25] text-[#00d4aa] shadow' : 'text-[#6b6e80] hover:text-[#dde0ed]'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap transition-colors ${filter === f ? 'shadow' : ''}`}
+                style={{
+                  background: filter === f ? 'var(--bg-elevated)' : 'transparent',
+                  color: filter === f ? 'var(--brand-primary)' : 'var(--text-secondary)'
+                }}
+                onMouseEnter={(e) => { if (filter !== f) e.currentTarget.style.color = 'var(--text-primary)' }}
+                onMouseLeave={(e) => { if (filter !== f) e.currentTarget.style.color = 'var(--text-secondary)' }}
               >
                 {f === 'all' ? 'Tất cả' : f === 'completed' ? 'Đã xong' : f === 'in_progress' ? 'Đang học' : 'Chưa bắt đầu'}
               </button>
@@ -226,43 +251,46 @@ export default function ProgressView({ data }: ProgressViewProps) {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
-              <tr className="border-b border-[rgba(255,255,255,0.07)]">
-                <th className="py-3 px-4 text-xs font-semibold text-[#6b6e80] uppercase tracking-wider">Tên bài</th>
-                <th className="py-3 px-4 text-xs font-semibold text-[#6b6e80] uppercase tracking-wider">Loại</th>
-                <th className="py-3 px-4 text-xs font-semibold text-[#6b6e80] uppercase tracking-wider">Trạng thái</th>
-                <th className="py-3 px-4 text-xs font-semibold text-[#6b6e80] uppercase tracking-wider">Điểm</th>
-                <th className="py-3 px-4 text-xs font-semibold text-[#6b6e80] uppercase tracking-wider">Hoàn thành lúc</th>
+              <tr className="border-b" style={{ borderColor: 'var(--border-default)' }}>
+                <th className="py-3 px-4 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Tên bài</th>
+                <th className="py-3 px-4 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Loại</th>
+                <th className="py-3 px-4 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Trạng thái</th>
+                <th className="py-3 px-4 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Điểm</th>
+                <th className="py-3 px-4 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Hoàn thành lúc</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[rgba(255,255,255,0.07)]">
-              {filteredLessons.map((l) => (
-                <tr key={l.id} className="hover:bg-[#0d0e13]/50 transition-colors">
-                  <td className="py-4 px-4 text-sm font-medium text-[#dde0ed]">{l.lesson_title}</td>
-                  <td className="py-4 px-4 text-sm text-[#6b6e80]">{l.type}</td>
+            <tbody>
+              {filteredLessons.map((l, i) => (
+                <tr key={l.id} className="transition-colors" style={{ borderTop: i > 0 ? '1px solid var(--border-default)' : undefined, background: 'transparent' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'color-mix(in srgb, var(--bg-base) 50%, transparent)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+                >
+                  <td className="py-4 px-4 text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{l.lesson_title}</td>
+                  <td className="py-4 px-4 text-sm" style={{ color: 'var(--text-secondary)' }}>{l.type}</td>
                   <td className="py-4 px-4">
                     {l.status === 'completed' ? (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#00d4aa]/10 text-[#00d4aa]">Hoàn thành</span>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" style={{ background: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', color: 'var(--brand-primary)' }}>Hoàn thành</span>
                     ) : l.status === 'in_progress' ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400">Đang học ({l.completion_percentage}%)</span>
                     ) : (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400">Chưa bắt đầu</span>
                     )}
                   </td>
-                  <td className="py-4 px-4 text-sm text-[#dde0ed]">{l.score !== null ? l.score : '-'}</td>
-                  <td className="py-4 px-4 text-sm text-[#6b6e80]">
+                  <td className="py-4 px-4 text-sm" style={{ color: 'var(--text-primary)' }}>{l.score !== null ? l.score : '-'}</td>
+                  <td className="py-4 px-4 text-sm" style={{ color: 'var(--text-secondary)' }}>
                     {l.completed_at ? new Date(l.completed_at).toLocaleString('vi-VN') : '-'}
                   </td>
                 </tr>
               ))}
               {filteredLessons.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-[#6b6e80] text-sm">Không có dữ liệu</td>
+                  <td colSpan={5} className="py-8 text-center text-sm" style={{ color: 'var(--text-secondary)' }}>Không có dữ liệu</td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }

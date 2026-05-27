@@ -21,11 +21,9 @@ const JoinClassModal = ({ isOpen, onClose, lang }) => {
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) throw new Error(lang === 'en' ? 'Please login first' : 'Vui lòng đăng nhập trước');
 
-            // 1. Tìm lớp học theo mã
+            // 1. Tìm lớp học theo mã (dùng SECURITY DEFINER function để bypass RLS)
             const { data: classData, error: classErr } = await supabase
-                .from('classes')
-                .select('id, name')
-                .eq('code', classCode.toUpperCase())
+                .rpc('fn_lookup_class_by_code', { p_code: classCode.toUpperCase() })
                 .single();
 
             if (classErr || !classData) {

@@ -20,6 +20,7 @@ const PUBLIC_ROUTES = [
   '/forgot-password', '/reset-password', '/verify-email',
   '/verify', '/check-email',
   '/builder',
+  '/admin', '/admin/settings', '/admin/users', '/admin/schools',
 ]
 
 export async function middleware(request: NextRequest) {

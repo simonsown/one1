@@ -4,6 +4,8 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { ParentDashboardClient } from './ParentDashboardClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ParentDashboardPage() {
   const cookieStore = await cookies()
   const supabase = createServerClient(

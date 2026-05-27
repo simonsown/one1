@@ -33,6 +33,7 @@ import VirtualAssistant from '../../components/VirtualAssistant';
 import LoadingScreen from '../../components/LoadingScreen';
 import ExamsList from '../../components/ExamsList';
 import LoginModal from '../../components/auth/LoginModal';
+import StudentDashboardContent from '../../components/StudentDashboardContent';
 import { GURU_MESSAGES } from '../../utils/i18nData';
 import { withTracking } from '@/lib/tracking';
 
@@ -57,19 +58,26 @@ function Home(props) {
   const [placedItemsList, setPlacedItemsList] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
   const [isAIOpen, setIsAIOpen] = useState(false);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try { return localStorage.getItem('theme') || 'dark' } catch(e) {}
+    }
+    return 'dark'
+  });
 
   const [isDemo, setIsDemo] = useState(false);
   const [sessionId, setSessionId] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginRedirectTo, setLoginRedirectTo] = useState(null);
+  const [showStudentDashboard, setShowStudentDashboard] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const gameEngineRef = useRef(null);
 
-  const handlePartSelect = useCallback((type) => {
+  const handlePartSelect = useCallback((type, modelId) => {
     if (gameEngineRef.current && gameEngineRef.current.spawnComponent) {
       const count = type === 'RAM' ? 2 : 1;
-      gameEngineRef.current.spawnComponent(type, count);
+      gameEngineRef.current.spawnComponent(type, count, modelId);
     }
   }, []);
 
@@ -83,6 +91,11 @@ function Home(props) {
 
     async function initSession() {
       try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user.id).single();
+          if (profile?.full_name) setUserName(profile.full_name);
+        }
         const id = await startBuilderSession();
         if (id) {
           setSessionId(id);
@@ -106,7 +119,8 @@ function Home(props) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme', theme === 'editorial-light' ? 'light' : theme);
+    try { localStorage.setItem('theme', theme === 'editorial-light' ? 'light' : theme) } catch(e) {}
   }, [theme]);
 
   useEffect(() => {
@@ -279,6 +293,8 @@ function Home(props) {
         isAIOpen={isAIOpen}
         theme={theme}
         setTheme={setTheme}
+        userName={userName}
+        onShowDashboard={() => setShowStudentDashboard(true)}
       />
 
 
@@ -562,6 +578,10 @@ function Home(props) {
       </main>
 
       <LoginModal isOpen={showLoginModal} onClose={() => { setShowLoginModal(false); setLoginRedirectTo(null); }} redirectTo={loginRedirectTo} />
+
+      {showStudentDashboard && (
+        <StudentDashboardContent onClose={() => setShowStudentDashboard(false)} />
+      )}
     </div>
   );
 }

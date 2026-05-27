@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2, Save, GraduationCap, Calendar, Users, Type } from 'lucide-react';
 import Link from 'next/link';
-import { nanoid } from 'nanoid';
+
 
 export default function NewClassPage() {
   const [loading, setLoading] = useState(false);
@@ -28,8 +28,8 @@ export default function NewClassPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Vui lòng đăng nhập lại.');
 
-      // Tự sinh mã lớp 6 ký tự viết hoa
-      const code = nanoid(6).toUpperCase();
+      // Tự sinh mã lớp 6 chữ số (dễ nhập)
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
 
       const { data, error: insertError } = await supabase
         .from('classes')

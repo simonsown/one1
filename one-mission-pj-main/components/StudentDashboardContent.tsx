@@ -3,39 +3,28 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { GraduationCap, LayoutDashboard, Cpu, History, LogOut, Users, BookOpen, ChevronDown, User, Sun, Moon, Map, BarChart2 } from 'lucide-react'
+import { GraduationCap, LayoutDashboard, Cpu, History, LogOut, Users, BookOpen, ChevronDown, User, Sun, Moon, Map, BarChart2, X } from 'lucide-react'
 import { logout } from '@/lib/auth-actions'
 import { createBrowserClient } from '@supabase/ssr'
+import dynamic from 'next/dynamic'
 
-function ThemeToggle() {
+const StudentDashboard = dynamic(() => import('../app/(dashboard)/student/page'), { ssr: false })
+
+export default function StudentDashboardContent({ onClose }: { onClose: () => void }) {
+  const [hasClass, setHasClass] = useState(false)
+  const [profile, setProfile] = useState<any>(null)
   const [theme, setThemeState] = useState<'light' | 'dark'>('light')
+  const pathname = '/student/dashboard'
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+
   useEffect(() => {
     const saved = (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
     setThemeState(saved)
     document.documentElement.setAttribute('data-theme', saved)
   }, [])
-  const toggle = useCallback(() => {
-    const next = theme === 'light' ? 'dark' : 'light'
-    setThemeState(next)
-    document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('theme', next)
-  }, [theme])
-  return (
-    <button onClick={toggle} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', width: '100%', borderRadius: '10px', background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.4)', fontWeight: 500, cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit', transition: 'all 0.2s' }}>
-      {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-      {theme === 'light' ? 'Giao diện tối' : 'Giao diện sáng'}
-    </button>
-  )
-}
-
-export default function StudentLayout({ children }: { children: React.ReactNode }) {
-  const [hasClass, setHasClass] = useState(false)
-  const [profile, setProfile] = useState<any>(null)
-  const pathname = usePathname()
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
 
   useEffect(() => {
     const checkClass = async () => {
@@ -48,6 +37,13 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
     checkClass()
   }, [])
 
+  const toggle = useCallback(() => {
+    const next = theme === 'light' ? 'dark' : 'light'
+    setThemeState(next)
+    document.documentElement.setAttribute('data-theme', next)
+    localStorage.setItem('theme', next)
+  }, [theme])
+
   const navItems = [
     { href: '/student/dashboard', label: 'Bảng điều khiển', icon: LayoutDashboard },
     ...(hasClass ? [{ href: '/student/classes', label: 'Lớp học của tôi', icon: Users }] : []),
@@ -59,7 +55,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
   ]
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-base)' }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', minHeight: '100vh', background: 'var(--bg-base)' }}>
       <aside style={{ width: '280px', background: 'linear-gradient(180deg, #031f3b 0%, #1a2f53 100%)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         <div style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
           <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--brand-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -88,7 +84,13 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
         </nav>
 
         <div style={{ padding: '16px', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <ThemeToggle />
+          <button onClick={toggle} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', width: '100%', borderRadius: '10px', background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.4)', fontWeight: 500, cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit', transition: 'all 0.2s' }}>
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            {theme === 'light' ? 'Giao diện tối' : 'Giao diện sáng'}
+          </button>
+          <button onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', width: '100%', borderRadius: '10px', background: 'transparent', border: 'none', color: 'rgba(244,67,54,0.7)', fontWeight: 600, cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>
+            <X size={18} /> Quay lại Builder
+          </button>
           <button onClick={() => logout()} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', width: '100%', borderRadius: '10px', background: 'transparent', border: 'none', color: 'rgba(244,67,54,0.7)', fontWeight: 600, cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>
             <LogOut size={18} /> Đăng xuất
           </button>
@@ -96,7 +98,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
       </aside>
 
       <main style={{ flex: 1, padding: '32px', overflowY: 'auto', minWidth: 0 }}>
-        {children}
+        <StudentDashboard />
       </main>
     </div>
   )

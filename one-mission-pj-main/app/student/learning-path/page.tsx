@@ -20,6 +20,7 @@ export interface PathItemWithUnlock {
   completed?: boolean;
 }
 import { PathTimeline } from '@/components/learning-path/PathTimeline'
+import { motion } from 'framer-motion'
 import { RefreshCw, Map, ArrowLeft, Youtube, Lightbulb, ExternalLink, Sparkles, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -271,31 +272,51 @@ export default function StudentLearningPathPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2">
-        <RefreshCw size={28} className="animate-spin text-[#00d4aa]" />
-        <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang tải lộ trình học...</span>
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2"
+        style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)' }}
+      >
+        <RefreshCw size={28} className="animate-spin text-[#00d4aa]" style={{ color: 'var(--brand-primary)' }} />
+        <span className="text-xs text-gray-500 font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Đang tải lộ trình học...</span>
+      </motion.div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden"
+      style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)' }}
+    >
       
       {/* Tech decorative corners & neon overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none"
+        style={{ background: 'color-mix(in srgb, var(--brand-primary) 5%, transparent)' }}
+      />
 
       <div className="max-w-3xl mx-auto relative z-10">
         
         {/* Workspace Title & Exit Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10"
+        >
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
+            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl"
+              style={{ background: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', borderColor: 'color-mix(in srgb, var(--brand-primary) 25%, transparent)', color: 'var(--brand-primary)' }}
+            >
               <Map size={24} />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase">Lộ trình học tập PC Master</h1>
-              <p className="text-xs text-gray-400 mt-0.5">Hoàn thành lần lượt các nội dung bài học để mở khóa thử thách tiếp theo</p>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase" style={{ color: 'var(--text-primary)' }}>Lộ trình học tập PC Master</h1>
+              <p className="text-xs text-gray-400 mt-0.5" style={{ color: 'var(--text-secondary)' }}>Hoàn thành lần lượt các nội dung bài học để mở khóa thử thách tiếp theo</p>
             </div>
           </div>
 
@@ -303,47 +324,66 @@ export default function StudentLearningPathPage() {
           <button 
             onClick={() => router.push('/builder')}
             className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+            style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
           >
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
             Quay lại Dashboard
           </button>
-        </div>
+        </motion.div>
 
         {error ? (
-          <div className="p-8 text-center bg-[#1a1c25] border border-gray-800 rounded-2xl text-gray-400">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="p-8 text-center bg-[#1a1c25] border border-gray-800 rounded-2xl text-gray-400"
+            style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
+          >
             {error}
-          </div>
+          </motion.div>
         ) : (
           <PathTimeline items={items} />
         )}
 
         {/* AI suggestions + YouTube recommendations */}
         {suggestions.length > 0 && (
-          <div className="mt-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-10"
+          >
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2 bg-[#ff0000]/10 border border-[#ff0000]/25 text-[#ff0000] rounded-xl">
                 <Youtube size={22} />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-white">Gợi ý từ AI</h2>
-                <p className="text-xs text-gray-400">Video & tài liệu đề xuất dựa trên tiến độ của bạn</p>
+                <h2 className="text-lg font-bold text-white" style={{ color: 'var(--text-primary)' }}>Gợi ý từ AI</h2>
+                <p className="text-xs text-gray-400" style={{ color: 'var(--text-secondary)' }}>Video & tài liệu đề xuất dựa trên tiến độ của bạn</p>
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               {suggestions.map((s, i) => (
-                <div
+                <motion.div
                   key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
+                  whileHover={{ y: -4, boxShadow: '0 8px 24px rgba(0,0,0,0.12)' }}
                   className="rounded-2xl border border-white/10 bg-[#1a1c25] p-5 hover:border-[#00d4aa]/30 transition-all group"
+                  style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#00d4aa]/10 text-[#00d4aa]">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#00d4aa]/10 text-[#00d4aa]"
+                      style={{ background: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)', color: 'var(--brand-primary)' }}
+                    >
                       <Lightbulb size={16} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-bold text-sm text-white mb-1">{s.topic}</h3>
-                      <p className="text-xs text-gray-400 mb-2 leading-relaxed">{s.description}</p>
-                      <p className="text-[10px] text-[#00d4aa]/70 italic mb-3">💡 {s.reason}</p>
+                      <h3 className="font-bold text-sm text-white mb-1" style={{ color: 'var(--text-primary)' }}>{s.topic}</h3>
+                      <p className="text-xs text-gray-400 mb-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{s.description}</p>
+                      <p className="text-[10px] text-[#00d4aa]/70 italic mb-3" style={{ color: 'color-mix(in srgb, var(--brand-primary) 70%, transparent)' }}>💡 {s.reason}</p>
 
                       {/* YouTube links */}
                       {s.youtubeKeywords && (
@@ -368,7 +408,7 @@ export default function StudentLearningPathPage() {
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -392,23 +432,29 @@ export default function StudentLearningPathPage() {
                       setSuggestionsLoading(false)
                     }
                   }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-gray-400 hover:text-white hover:border-white/20 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-gray-400 hover:text-white transition-all"
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   <RefreshCw size={14} />
                   Tải lại gợi ý
                 </button>
               </div>
             )}
-          </div>
+          </motion.div>
         )}
 
         {suggestionsLoading && (
-          <div className="mt-10 text-center py-10">
-            <Loader2 size={24} className="animate-spin text-[#00d4aa] mx-auto mb-2" />
-            <p className="text-xs text-gray-500">AI đang phân tích tiến độ của bạn...</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="mt-10 text-center py-10"
+          >
+            <Loader2 size={24} className="animate-spin text-[#00d4aa] mx-auto mb-2" style={{ color: 'var(--brand-primary)' }} />
+            <p className="text-xs text-gray-500" style={{ color: 'var(--text-secondary)' }}>AI đang phân tích tiến độ của bạn...</p>
+          </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   )
 }

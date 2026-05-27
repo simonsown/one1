@@ -6,26 +6,24 @@ import { Save, Trash2, Video, FileText, Image as ImageIcon, FileSearch, Loader2,
 import Link from 'next/link';
 import { BackButton } from '@/components/ui/BackButton';
 
-// Simple Markdown → HTML renderer (no external lib needed)
 function SimpleMarkdown({ text }) {
     const html = (text || '')
-        .replace(/^## (.+)$/gm, '<h2 style="color:#00f3ff;margin:16px 0 8px">$1</h2>')
-        .replace(/^# (.+)$/gm, '<h1 style="color:#00f3ff;margin:20px 0 10px">$1</h1>')
+        .replace(/^## (.+)$/gm, '<h2 style="color:var(--brand-primary);margin:16px 0 8px">$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1 style="color:var(--brand-primary);margin:20px 0 10px">$1</h1>')
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.+?)\*/g, '<em>$1</em>')
         .replace(/^- (.+)$/gm, '<li style="margin:4px 0">$1</li>')
         .replace(/\n/g, '<br/>');
-    return <div dangerouslySetInnerHTML={{ __html: html }} style={{ color: '#ced4da', lineHeight: 1.7 }} />;
+    return <div dangerouslySetInnerHTML={{ __html: html }} style={{ color: 'var(--text-muted)', lineHeight: 1.7 }} />;
 }
 
-// Toast notification component
 function Toast({ message, type, onClose }) {
     useEffect(() => { const t = setTimeout(onClose, 3000); return () => clearTimeout(t); }, []);
     return (
         <div style={{
             position: 'fixed', bottom: '32px', right: '32px', zIndex: 9999,
-            background: type === 'success' ? '#10b981' : '#ef4444',
-            color: 'white', padding: '14px 24px', borderRadius: '12px',
+            background: type === 'success' ? 'var(--brand-primary)' : 'var(--danger)',
+            color: '#fff', padding: '14px 24px', borderRadius: '12px',
             display: 'flex', alignItems: 'center', gap: '10px',
             fontWeight: 700, boxShadow: '0 10px 40px rgba(0,0,0,0.4)',
             animation: 'slideIn 0.3s ease'
@@ -79,7 +77,7 @@ export default function LessonEditorPage({ params }) {
         }).eq('id', lessonId);
         setSaving(false);
         if (error) { showToast('Lưu thất bại: ' + error.message, 'error'); }
-        else { showToast('✅ Đã lưu bài giảng!'); }
+        else { showToast('Đã lưu bài giảng!'); }
     };
 
     const addSection = async (type) => {
@@ -89,7 +87,6 @@ export default function LessonEditorPage({ params }) {
         if (data) { setSections(prev => [...prev, data]); setActiveSection(data); }
     };
 
-    // Save section manually (only when user stops typing - called by Save button or blur)
     const saveSection = async (section) => {
         const { error } = await supabase.from('lesson_sections').update({
             title: section.title, content: section.content
@@ -124,123 +121,116 @@ export default function LessonEditorPage({ params }) {
     };
 
     if (loading) return (
-        <div style={{ background: '#050a14', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+        <div style={{ background: 'var(--bg-base)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Loader2 style={{ animation: 'spin 1s linear infinite' }} color="var(--brand-primary)" size={48} />
         </div>
     );
 
     if (!lesson) return (
-        <div style={{ background: '#050a14', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-            <AlertCircle size={48} color="#ef4444" />
-            <p>Không tìm thấy bài giảng. Hãy kiểm tra lại Supabase SQL đã chạy chưa.</p>
-            <Link href="/teacher/lessons" style={{ color: '#00f3ff' }}>← Quay lại</Link>
+        <div style={{ background: 'var(--bg-base)', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)' }}>
+            <AlertCircle size={48} color="var(--danger)" />
+            <p>Không tìm thấy bài giảng.</p>
+            <Link href="/teacher/lessons" style={{ color: 'var(--brand-primary)' }}> Quay lại</Link>
         </div>
     );
 
-    const inputStyle = { width: '100%', background: '#0a0f1a', border: '1px solid #1e293b', borderRadius: '12px', padding: '14px', color: 'white', fontSize: '15px', outline: 'none', boxSizing: 'border-box' };
+    const inputStyle = { width: '100%', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '12px', padding: '14px', color: 'var(--text-primary)', fontSize: '15px', outline: 'none', boxSizing: 'border-box' };
 
     return (
-        <div style={{ background: '#050a14', minHeight: '100vh', color: '#e0e6ed', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ background: 'var(--bg-base)', minHeight: '100vh', color: 'var(--text-primary)', display: 'flex', flexDirection: 'column' }}>
             <style>{`@keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }`}</style>
             {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
-            {/* Toolbar */}
-            <header style={{ padding: '16px 32px', background: '#0a0f1a', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 100 }}>
+            <header style={{ padding: '16px 32px', background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-default)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 100 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                     <BackButton href="/teacher/lessons" label="" className="flex items-center text-[#636678] hover:text-[#dde0ed] transition-colors" />
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                        <span style={{ fontSize: '10px', color: '#4b5563', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>Tên bài giảng</span>
+                        <span style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>Tên bài giảng</span>
                         <input
                             value={lesson.title}
                             onChange={(e) => setLesson({ ...lesson, title: e.target.value })}
                             placeholder="Nhập tên bài giảng..."
-                            style={{ background: 'transparent', border: 'none', borderBottom: '2px solid #00f3ff', color: 'white', fontSize: '18px', fontWeight: 800, width: '420px', outline: 'none', paddingBottom: '4px' }}
+                            style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--brand-primary)', color: 'var(--text-primary)', fontSize: '18px', fontWeight: 800, width: '420px', outline: 'none', paddingBottom: '4px' }}
                         />
                     </div>
                 </div>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <button onClick={() => setLesson({ ...lesson, is_published: !lesson.is_published })}
-                        style={{ background: lesson.is_published ? 'rgba(16,185,129,0.15)' : 'rgba(71,85,105,0.15)', color: lesson.is_published ? '#10b981' : '#8899a6', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600 }}>
+                        style={{ background: lesson.is_published ? 'rgba(16,185,129,0.15)' : 'var(--bg-elevated)', color: lesson.is_published ? 'var(--brand-primary)' : 'var(--text-muted)', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, fontFamily: 'inherit' }}>
                         {lesson.is_published ? <Eye size={18} /> : <EyeOff size={18} />}
                         {lesson.is_published ? 'Đã xuất bản' : 'Bản nháp'}
                     </button>
                     <button onClick={handleSaveLesson} disabled={saving}
-                        style={{ background: '#00f3ff', color: '#050a14', border: 'none', padding: '10px 28px', borderRadius: '10px', fontWeight: 800, cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '15px' }}>
-                        {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />} Lưu bài giảng
+                        style={{ background: 'var(--brand-primary)', color: '#fff', border: 'none', padding: '10px 28px', borderRadius: '10px', fontWeight: 800, cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontFamily: 'inherit' }}>
+                        {saving ? <Loader2 style={{ animation: 'spin 1s linear infinite' }} size={18} /> : <Save size={18} />} Lưu bài giảng
                     </button>
                 </div>
             </header>
 
             <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-                {/* LEFT SIDEBAR */}
-                <div style={{ width: '340px', minWidth: '340px', background: '#0a0f1a', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
-                    {/* Thumbnail */}
-                    <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                        <p style={{ fontSize: '11px', color: '#4b5563', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>Ảnh Thumbnail</p>
-                        <div style={{ width: '100%', height: '140px', background: '#020617', borderRadius: '10px', overflow: 'hidden', marginBottom: '10px', border: '1px dashed #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '340px', minWidth: '340px', background: 'var(--bg-surface)', borderRight: '1px solid var(--border-default)', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+                    <div style={{ padding: '20px', borderBottom: '1px solid var(--border-default)' }}>
+                        <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>Ảnh Thumbnail</p>
+                        <div style={{ width: '100%', height: '140px', background: 'var(--bg-elevated)', borderRadius: '10px', overflow: 'hidden', marginBottom: '10px', border: '1px dashed var(--border-default)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {lesson.thumbnail_url
                                 ? <img src={lesson.thumbnail_url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.target.style.display = 'none'} />
-                                : <Upload size={28} color="#1e293b" />}
+                                : <Upload size={28} color="var(--text-muted)" />}
                         </div>
                         <input placeholder="Dán URL ảnh thumbnail..." value={lesson.thumbnail_url || ''}
                             onChange={(e) => setLesson({ ...lesson, thumbnail_url: e.target.value })}
-                            style={{ width: '100%', background: '#050a14', border: '1px solid #1e293b', borderRadius: '8px', padding: '8px 12px', color: 'white', fontSize: '13px', boxSizing: 'border-box' }} />
+                            style={{ width: '100%', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px', padding: '8px 12px', color: 'var(--text-primary)', fontSize: '13px', boxSizing: 'border-box' }} />
                         <textarea placeholder="Mô tả bài học..." value={lesson.description || ''}
                             onChange={(e) => setLesson({ ...lesson, description: e.target.value })}
-                            style={{ width: '100%', background: '#050a14', border: '1px solid #1e293b', borderRadius: '8px', padding: '8px 12px', color: 'white', fontSize: '13px', boxSizing: 'border-box', marginTop: '8px', height: '72px', resize: 'none' }} />
+                            style={{ width: '100%', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px', padding: '8px 12px', color: 'var(--text-primary)', fontSize: '13px', boxSizing: 'border-box', marginTop: '8px', height: '72px', resize: 'none' }} />
 
-                        {/* Category Selector */}
                         <div style={{ marginTop: '14px' }}>
-                            <p style={{ fontSize: '11px', color: '#4b5563', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Đăng vào mục</p>
+                            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Đăng vào mục</p>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                                 <button onClick={() => setLesson({ ...lesson, category: 'textbook' })} style={{
-                                    padding: '10px 8px', borderRadius: '10px', border: `2px solid ${(lesson.category || 'extended') === 'textbook' ? '#3b82f6' : '#1e293b'}`,
+                                    padding: '10px 8px', borderRadius: '10px', border: `2px solid ${(lesson.category || 'extended') === 'textbook' ? 'var(--accent-blue)' : 'var(--border-default)'}`,
                                     background: (lesson.category || 'extended') === 'textbook' ? 'rgba(59,130,246,0.15)' : 'transparent',
-                                    color: (lesson.category || 'extended') === 'textbook' ? '#3b82f6' : '#4b5563',
-                                    cursor: 'pointer', fontWeight: 700, fontSize: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', transition: 'all 0.2s'
+                                    color: (lesson.category || 'extended') === 'textbook' ? 'var(--accent-blue)' : 'var(--text-muted)',
+                                    cursor: 'pointer', fontWeight: 700, fontSize: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', transition: 'all 0.2s', fontFamily: 'inherit'
                                 }}>
-                                    🎓 Sách Giáo Khoa
+                                    Sách Giáo Khoa
                                 </button>
                                 <button onClick={() => setLesson({ ...lesson, category: 'extended' })} style={{
-                                    padding: '10px 8px', borderRadius: '10px', border: `2px solid ${(lesson.category || 'extended') === 'extended' ? '#f59e0b' : '#1e293b'}`,
+                                    padding: '10px 8px', borderRadius: '10px', border: `2px solid ${(lesson.category || 'extended') === 'extended' ? 'var(--accent-amber)' : 'var(--border-default)'}`,
                                     background: (lesson.category || 'extended') === 'extended' ? 'rgba(245,158,11,0.15)' : 'transparent',
-                                    color: (lesson.category || 'extended') === 'extended' ? '#f59e0b' : '#4b5563',
-                                    cursor: 'pointer', fontWeight: 700, fontSize: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', transition: 'all 0.2s'
+                                    color: (lesson.category || 'extended') === 'extended' ? 'var(--accent-amber)' : 'var(--text-muted)',
+                                    cursor: 'pointer', fontWeight: 700, fontSize: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', transition: 'all 0.2s', fontFamily: 'inherit'
                                 }}>
-                                    💡 Kiến Thức Mở Rộng
+                                    Kiến Thức Mở Rộng
                                 </button>
                             </div>
                         </div>
 
-                        {/* Source Fields */}
-                        <div style={{ marginTop: '20px', padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                            <p style={{ fontSize: '11px', color: '#00f3ff', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>Nguồn tài liệu</p>
+                        <div style={{ marginTop: '20px', padding: '16px', background: 'var(--bg-elevated)', borderRadius: '12px', border: '1px solid var(--border-default)' }}>
+                            <p style={{ fontSize: '11px', color: 'var(--brand-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>Nguồn tài liệu</p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                 <div>
-                                    <label style={{ fontSize: '10px', color: '#4b5563', display: 'block', marginBottom: '4px' }}>Tên nguồn (VD: Wikipedia)</label>
+                                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Tên nguồn (VD: Wikipedia)</label>
                                     <input placeholder="Nhập tên nguồn..." value={lesson.source_name || ''}
                                         onChange={(e) => setLesson({ ...lesson, source_name: e.target.value })}
-                                        style={{ width: '100%', background: '#050a14', border: '1px solid #1e293b', borderRadius: '8px', padding: '8px 12px', color: 'white', fontSize: '13px', boxSizing: 'border-box' }} />
+                                        style={{ width: '100%', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px', padding: '8px 12px', color: 'var(--text-primary)', fontSize: '13px', boxSizing: 'border-box' }} />
                                 </div>
                                 <div>
-                                    <label style={{ fontSize: '10px', color: '#4b5563', display: 'block', marginBottom: '4px' }}>Link nguồn (URL)</label>
+                                    <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Link nguồn (URL)</label>
                                     <input placeholder="https://..." value={lesson.source_url || ''}
                                         onChange={(e) => setLesson({ ...lesson, source_url: e.target.value })}
-                                        style={{ width: '100%', background: '#050a14', border: '1px solid #1e293b', borderRadius: '8px', padding: '8px 12px', color: 'white', fontSize: '13px', boxSizing: 'border-box' }} />
+                                        style={{ width: '100%', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px', padding: '8px 12px', color: 'var(--text-primary)', fontSize: '13px', boxSizing: 'border-box' }} />
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
-                    {/* Tabs */}
-                    <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ display: 'flex', borderBottom: '1px solid var(--border-default)' }}>
                         {['content', 'books'].map(tab => (
                             <button key={tab} onClick={() => setActiveTab(tab)} style={{
-                                flex: 1, padding: '12px', background: activeTab === tab ? 'rgba(0,243,255,0.05)' : 'transparent',
-                                color: activeTab === tab ? '#00f3ff' : '#4b5563', border: 'none',
-                                borderBottom: activeTab === tab ? '2px solid #00f3ff' : '2px solid transparent',
-                                fontWeight: 700, cursor: 'pointer', fontSize: '13px'
+                                flex: 1, padding: '12px', background: activeTab === tab ? 'rgba(var(--brand-primary-rgb),0.05)' : 'transparent',
+                                color: activeTab === tab ? 'var(--brand-primary)' : 'var(--text-muted)', border: 'none',
+                                borderBottom: activeTab === tab ? '2px solid var(--brand-primary)' : '2px solid transparent',
+                                fontWeight: 700, cursor: 'pointer', fontSize: '13px', fontFamily: 'inherit'
                             }}>{tab === 'content' ? 'Nội dung' : 'Sách & Tài liệu'}</button>
                         ))}
                     </div>
@@ -248,28 +238,28 @@ export default function LessonEditorPage({ params }) {
                     <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
                         {activeTab === 'content' ? (
                             <>
-                                {sections.length === 0 && <p style={{ color: '#4b5563', fontSize: '13px', textAlign: 'center', padding: '20px 0' }}>Chưa có nội dung. Thêm phần đầu tiên bên dưới.</p>}
+                                {sections.length === 0 && <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '20px 0' }}>Chưa có nội dung. Thêm phần đầu tiên bên dưới.</p>}
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                     {sections.map(s => (
                                         <div key={s.id} onClick={() => { if (activeSection && activeSection.id !== s.id) saveSection(activeSection); setActiveSection(s); }}
-                                            style={{ padding: '10px 14px', borderRadius: '10px', background: activeSection?.id === s.id ? 'rgba(0,243,255,0.1)' : 'transparent', border: activeSection?.id === s.id ? '1px solid #00f3ff' : '1px solid transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', transition: 'all 0.2s' }}>
-                                            <GripVertical size={14} color="#4b5563" />
-                                            <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: '#050a14', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00f3ff', flexShrink: 0 }}>
+                                            style={{ padding: '10px 14px', borderRadius: '10px', background: activeSection?.id === s.id ? 'rgba(var(--brand-primary-rgb),0.1)' : 'transparent', border: activeSection?.id === s.id ? '1px solid var(--brand-primary)' : '1px solid transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', transition: 'all 0.2s' }}>
+                                            <GripVertical size={14} color="var(--text-muted)" />
+                                            <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: 'var(--bg-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-primary)', flexShrink: 0 }}>
                                                 {s.type === 'video' && <Video size={14} />}
                                                 {s.type === 'text' && <FileText size={14} />}
                                                 {s.type === 'image' && <ImageIcon size={14} />}
                                                 {s.type === 'pdf' && <FileSearch size={14} />}
                                             </div>
                                             <div style={{ flex: 1, overflow: 'hidden' }}>
-                                                <p style={{ margin: 0, fontSize: '13px', fontWeight: 600, color: activeSection?.id === s.id ? 'white' : '#e0e6ed', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.title}</p>
-                                                <p style={{ margin: 0, fontSize: '10px', color: '#4b5563', textTransform: 'uppercase' }}>{s.type}</p>
+                                                <p style={{ margin: 0, fontSize: '13px', fontWeight: 600, color: activeSection?.id === s.id ? 'var(--text-primary)' : 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.title}</p>
+                                                <p style={{ margin: 0, fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{s.type}</p>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                                 <div style={{ marginTop: '16px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                                     {[['video', <Video size={13} />, '+Video'], ['text', <FileText size={13} />, '+Chữ'], ['image', <ImageIcon size={13} />, '+Ảnh'], ['pdf', <FileSearch size={13} />, '+PDF']].map(([type, icon, label]) => (
-                                        <button key={type} onClick={() => addSection(type)} style={{ padding: '8px', background: 'rgba(255,255,255,0.03)', border: '1px solid #1e293b', borderRadius: '8px', color: '#8899a6', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                        <button key={type} onClick={() => addSection(type)} style={{ padding: '8px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px', color: 'var(--text-muted)', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'inherit' }}>
                                             {icon} {label}
                                         </button>
                                     ))}
@@ -278,18 +268,18 @@ export default function LessonEditorPage({ params }) {
                         ) : (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                 {books.map(book => (
-                                    <div key={book.id} style={{ padding: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid #1e293b', borderRadius: '10px', display: 'flex', gap: '10px' }}>
+                                    <div key={book.id} style={{ padding: '12px', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '10px', display: 'flex', gap: '10px' }}>
                                         <img src={book.cover_image_url} style={{ width: '36px', height: '52px', borderRadius: '4px', objectFit: 'cover' }} onError={e => e.target.style.display = 'none'} />
                                         <div style={{ flex: 1 }}>
-                                            <p style={{ margin: 0, fontSize: '13px', fontWeight: 700 }}>{book.title}</p>
-                                            <button onClick={async () => { await supabase.from('lesson_books').delete().eq('id', book.id); setBooks(books.filter(b => b.id !== book.id)); }} style={{ background: 'none', border: 'none', color: '#f87171', fontSize: '11px', cursor: 'pointer', padding: 0, marginTop: '4px' }}>Xóa</button>
+                                            <p style={{ margin: 0, fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>{book.title}</p>
+                                            <button onClick={async () => { await supabase.from('lesson_books').delete().eq('id', book.id); setBooks(books.filter(b => b.id !== book.id)); }} style={{ background: 'none', border: 'none', color: 'var(--danger)', fontSize: '11px', cursor: 'pointer', padding: 0, marginTop: '4px', fontFamily: 'inherit' }}>Xóa</button>
                                         </div>
                                     </div>
                                 ))}
                                 <button onClick={async () => {
                                     const { data } = await supabase.from('lesson_books').insert({ lesson_id: lessonId, title: 'Sách mới', cover_image_url: '', drive_embed_url: '', description: '' }).select().single();
                                     if (data) setBooks([...books, data]);
-                                }} style={{ width: '100%', padding: '12px', background: 'rgba(0,243,255,0.08)', color: '#00f3ff', border: '1px dashed rgba(0,243,255,0.4)', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontSize: '14px' }}>
+                                }} style={{ width: '100%', padding: '12px', background: 'rgba(var(--brand-primary-rgb),0.08)', color: 'var(--brand-primary)', border: '1px dashed rgba(var(--brand-primary-rgb),0.4)', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>
                                     + Thêm sách mới
                                 </button>
                             </div>
@@ -297,27 +287,26 @@ export default function LessonEditorPage({ params }) {
                     </div>
                 </div>
 
-                {/* RIGHT: Editor */}
-                <div style={{ flex: 1, overflowY: 'auto', padding: '40px', background: '#050a14' }}>
+                <div style={{ flex: 1, overflowY: 'auto', padding: '40px', background: 'var(--bg-base)' }}>
                     {activeSection ? (
                         <div style={{ maxWidth: '820px', margin: '0 auto' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
-                                <h2 style={{ margin: 0, color: '#00f3ff', fontSize: '20px', fontWeight: 800 }}>✏️ Phần: {activeSection.type.toUpperCase()}</h2>
+                                <h2 style={{ margin: 0, color: 'var(--brand-primary)', fontSize: '20px', fontWeight: 800 }}>Phần: {activeSection.type.toUpperCase()}</h2>
                                 <div style={{ display: 'flex', gap: '10px' }}>
-                                    <button onClick={() => saveSection(activeSection)} style={{ background: 'rgba(0,243,255,0.1)', color: '#00f3ff', border: '1px solid rgba(0,243,255,0.3)', padding: '8px 18px', borderRadius: '8px', cursor: 'pointer', fontWeight: 700, fontSize: '13px' }}>💾 Lưu phần này</button>
-                                    <button onClick={() => deleteSection(activeSection.id)} style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}>🗑 Xóa</button>
+                                    <button onClick={() => saveSection(activeSection)} style={{ background: 'rgba(var(--brand-primary-rgb),0.1)', color: 'var(--brand-primary)', border: '1px solid rgba(var(--brand-primary-rgb),0.3)', padding: '8px 18px', borderRadius: '8px', cursor: 'pointer', fontWeight: 700, fontSize: '13px', fontFamily: 'inherit' }}>Lưu phần này</button>
+                                    <button onClick={() => deleteSection(activeSection.id)} style={{ background: 'rgba(239,68,68,0.1)', color: 'var(--danger)', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', fontFamily: 'inherit' }}>Xóa</button>
                                 </div>
                             </div>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', minHeight: '360px' }}>
                                 <div>
-                                    <label style={{ display: 'block', color: '#4b5563', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Tiêu đề phần</label>
+                                    <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Tiêu đề phần</label>
                                     <input value={activeSection.title} onChange={(e) => updateSectionLocal({ ...activeSection, title: e.target.value })} style={inputStyle} />
                                 </div>
 
                                 {activeSection.type === 'video' && <>
                                     <div>
-                                        <label style={{ display: 'block', color: '#4b5563', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Link YouTube</label>
+                                        <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Link YouTube</label>
                                         <input placeholder="https://www.youtube.com/watch?v=..." value={activeSection.content} onChange={(e) => updateSectionLocal({ ...activeSection, content: e.target.value })} style={inputStyle} />
                                     </div>
                                     {getYouTubeEmbed(activeSection.content) && (
@@ -330,14 +319,14 @@ export default function LessonEditorPage({ params }) {
                                 {activeSection.type === 'text' && (
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                                         <div>
-                                            <label style={{ display: 'block', color: '#4b5563', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Markdown</label>
+                                            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Markdown</label>
                                             <textarea value={activeSection.content} onChange={(e) => updateSectionLocal({ ...activeSection, content: e.target.value })}
                                                 style={{ ...inputStyle, height: '360px', fontFamily: 'monospace', resize: 'vertical' }}
-                                                placeholder="## Tiêu đề&#10;**In đậm**, *in nghiêng*&#10;- Danh sách" />
+                                                placeholder="## Tiêu đề" />
                                         </div>
                                         <div>
-                                            <label style={{ display: 'block', color: '#4b5563', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Xem trước</label>
-                                            <div style={{ height: '360px', background: '#0a0f1a', border: '1px solid #1e293b', borderRadius: '12px', padding: '16px', overflowY: 'auto' }}>
+                                            <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Xem trước</label>
+                                            <div style={{ height: '360px', background: 'var(--bg-surface)', border: '1px solid var(--border-default)', borderRadius: '12px', padding: '16px', overflowY: 'auto' }}>
                                                 <SimpleMarkdown text={activeSection.content} />
                                             </div>
                                         </div>
@@ -346,22 +335,22 @@ export default function LessonEditorPage({ params }) {
 
                                 {activeSection.type === 'image' && <>
                                     <div>
-                                        <label style={{ display: 'block', color: '#4b5563', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>URL Ảnh</label>
+                                        <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>URL Ảnh</label>
                                         <input value={activeSection.content} onChange={(e) => updateSectionLocal({ ...activeSection, content: e.target.value })} style={inputStyle} placeholder="https://..." />
                                     </div>
-                                    {activeSection.content && <img src={activeSection.content} style={{ maxWidth: '100%', borderRadius: '12px', border: '1px solid #1e293b' }} onError={e => e.target.style.display = 'none'} />}
+                                    {activeSection.content && <img src={activeSection.content} style={{ maxWidth: '100%', borderRadius: '12px', border: '1px solid var(--border-default)' }} onError={e => e.target.style.display = 'none'} />}
                                 </>}
 
                                 {activeSection.type === 'pdf' && <>
-                                    <div style={{ background: 'rgba(0,243,255,0.05)', border: '1px solid rgba(0,243,255,0.15)', borderRadius: '12px', padding: '16px', fontSize: '13px', color: '#8899a6', lineHeight: 1.6 }}>
-                                        💡 <strong style={{ color: '#00f3ff' }}>Hướng dẫn lấy link Drive:</strong> Vào Google Drive → Chuột phải file PDF → <em>Chia sẻ</em> → Sao chép link → Đổi <code>/view</code> thành <code>/preview</code>
+                                    <div style={{ background: 'rgba(var(--brand-primary-rgb),0.05)', border: '1px solid rgba(var(--brand-primary-rgb),0.15)', borderRadius: '12px', padding: '16px', fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                                        Hướng dẫn lấy link Drive: Vào Google Drive  Chuột phải file PDF  <em>Chia sẻ</em>  Sao chép link  Đổi <code>/view</code> thành <code>/preview</code>
                                     </div>
                                     <div>
-                                        <label style={{ display: 'block', color: '#4b5563', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Google Drive Embed URL</label>
+                                        <label style={{ display: 'block', color: 'var(--text-muted)', fontSize: '12px', fontWeight: 700, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>Google Drive Embed URL</label>
                                         <input placeholder="https://drive.google.com/file/d/FILE_ID/preview" value={activeSection.content} onChange={(e) => updateSectionLocal({ ...activeSection, content: e.target.value })} style={inputStyle} />
                                     </div>
                                     {getDriveEmbed(activeSection.content) && (
-                                        <div style={{ width: '100%', height: '500px', background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid #1e293b' }}>
+                                        <div style={{ width: '100%', height: '500px', background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-default)' }}>
                                             <iframe src={getDriveEmbed(activeSection.content)} style={{ width: '100%', height: '100%', border: 'none' }} allow="autoplay" />
                                         </div>
                                     )}
@@ -369,7 +358,7 @@ export default function LessonEditorPage({ params }) {
                             </div>
                         </div>
                     ) : (
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#1e293b', gap: '16px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-muted)', gap: '16px' }}>
                             <PlusCircle size={64} />
                             <p style={{ fontSize: '16px' }}>Chọn hoặc thêm mới một phần nội dung ở bên trái</p>
                         </div>

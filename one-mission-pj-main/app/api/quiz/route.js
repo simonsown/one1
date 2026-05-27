@@ -6,7 +6,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 export async function POST(req) {
     try {
         const { lang, topic, level } = await req.json();
-        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         // Bước 1: Lấy kiến thức từ Knowledge Base (RAG)
         const context = searchKnowledge(topic);

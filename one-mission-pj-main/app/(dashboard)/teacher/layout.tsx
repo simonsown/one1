@@ -3,9 +3,30 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BookOpen, Users, FileText, LogOut, LayoutDashboard, Compass, HelpCircle, Award, Laptop, MessageSquare, TrendingUp, ChevronDown, User, Shield, GraduationCap } from 'lucide-react'
+import { BookOpen, Users, FileText, LogOut, LayoutDashboard, Compass, HelpCircle, Award, Laptop, MessageSquare, TrendingUp, ChevronDown, User, Shield, GraduationCap, Sun, Moon } from 'lucide-react'
 import { logout } from '@/lib/auth-actions'
 import { supabase } from '@/lib/supabase'
+
+function ThemeToggle() {
+  const [theme, setThemeState] = useState<'light' | 'dark'>('light')
+  React.useEffect(() => {
+    const saved = (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
+    setThemeState(saved)
+    document.documentElement.setAttribute('data-theme', saved)
+  }, [])
+  const toggle = React.useCallback(() => {
+    const next = theme === 'light' ? 'dark' : 'light'
+    setThemeState(next)
+    document.documentElement.setAttribute('data-theme', next)
+    localStorage.setItem('theme', next)
+  }, [theme])
+  return (
+    <button onClick={toggle} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 16px', width: '100%', borderRadius: '10px', background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.4)', fontWeight: 500, cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit', transition: 'all 0.2s' }}>
+      {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+      {theme === 'light' ? 'Giao diện tối' : 'Giao diện sáng'}
+    </button>
+  )
+}
 
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -90,16 +111,14 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
             <NavItem href="/teacher/quiz" icon={HelpCircle} label="Đề thi" />
             <NavItem href="/teacher/certificates" icon={Award} label="Chứng chỉ" />
           </NavGroup>
-          <NavGroup label="Góc nhìn học sinh">
-            <NavItem href="/builder" icon={Laptop} label="Thực hành PC 3D" />
-            <NavItem href="/student/quiz" icon={HelpCircle} label="Ngân hàng đề thi" />
-            <NavItem href="/student/learning-path" icon={TrendingUp} label="Lộ trình học tập" />
-            <NavItem href="/student/certificates" icon={Award} label="Chứng chỉ học viên" />
-            <NavItem href="/student/discussion" icon={MessageSquare} label="Diễn đàn học tập" />
+          <NavGroup label="Tiện ích">
+            <NavItem href="/teacher/certificates" icon={Award} label="Chứng chỉ" />
+            <NavItem href="/student/discussion" icon={MessageSquare} label="Diễn đàn" />
           </NavGroup>
         </nav>
 
-        <div style={{ padding: '12px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ padding: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <ThemeToggle />
           <button onClick={async () => { await logout() }}
             style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 16px', width: '100%', borderRadius: '10px', background: 'transparent', border: 'none', color: 'rgba(244,67,54,0.7)', fontWeight: 600, cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>
             <LogOut size={18} /> Đăng xuất

@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Loader2, Mail, Lock, Eye, EyeOff, ShieldCheck, LogIn, ArrowLeft, Github, Monitor } from 'lucide-react'
+import { Loader2, Mail, Lock, Eye, EyeOff, ShieldCheck, LogIn, ArrowLeft, Github, Monitor, Shield, KeyRound } from 'lucide-react'
 import { login } from '@/lib/auth-actions'
 import { createBrowserClient } from '@supabase/ssr'
 
@@ -12,7 +12,28 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
+  const [showAdmin, setShowAdmin] = useState(false)
+  const [adminPass, setAdminPass] = useState('')
+  const [adminError, setAdminError] = useState('')
+  const [adminLoading, setAdminLoading] = useState(false)
   const router = useRouter()
+
+  function handleAdminLogin() {
+    if (!adminPass.trim()) { setAdminError('Vui lòng nhập mật khẩu admin'); return }
+    setAdminLoading(true)
+    setAdminError('')
+
+    setTimeout(() => {
+      if (adminPass === 'nguyen200113') {
+        localStorage.setItem('admin_auth', 'true')
+        localStorage.setItem('admin_login_time', Date.now().toString())
+        router.push('/admin')
+      } else {
+        setAdminError('Mật khẩu admin không chính xác')
+        setAdminLoading(false)
+      }
+    }, 500)
+  }
 
   async function handleGoogleLogin() {
     setError(null)
@@ -126,6 +147,64 @@ export default function LoginPage() {
               Đăng ký ngay
             </Link>
           </p>
+
+          <div style={{ marginTop: '24px', textAlign: 'center' }}>
+            <button
+              onClick={() => setShowAdmin(!showAdmin)}
+              style={{
+                background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                color: showAdmin ? 'var(--brand-primary)' : 'var(--text-muted)',
+                fontSize: '12px', fontWeight: 500, padding: '4px 8px', borderRadius: '4px',
+                transition: 'all 0.2s', textDecoration: showAdmin ? 'none' : 'underline',
+                textDecorationStyle: 'dotted', textUnderlineOffset: '3px'
+              }}
+            >
+              <Shield size={12} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
+              {showAdmin ? 'Đóng truy cập Admin' : 'Đăng nhập với tư cách Admin'}
+            </button>
+
+            {showAdmin && (
+              <div style={{ marginTop: '12px' }}>
+                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px', display: 'block' }}>
+                  Mật khẩu Admin
+                </label>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ position: 'relative', flex: 1 }}>
+                    <KeyRound size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <input
+                      type="password"
+                      value={adminPass}
+                      onChange={e => { setAdminPass(e.target.value); setAdminError('') }}
+                      onKeyDown={e => { if (e.key === 'Enter') handleAdminLogin() }}
+                      placeholder="Nhập mật khẩu admin"
+                      style={{
+                        height: '42px', borderRadius: '8px', border: '1px solid var(--border-strong)',
+                        padding: '0 12px 0 36px', fontFamily: 'inherit', fontSize: '13px',
+                        color: 'var(--text-primary)', background: 'var(--bg-surface)',
+                        outline: 'none', width: '100%', transition: 'border-color 0.2s'
+                      }}
+                    />
+                  </div>
+                  <button
+                    onClick={handleAdminLogin}
+                    disabled={adminLoading}
+                    style={{
+                      padding: '0 20px', borderRadius: '8px', background: 'var(--brand-primary)',
+                      color: '#fff', fontWeight: 700, border: 'none', cursor: 'pointer',
+                      fontSize: '13px', fontFamily: 'inherit', whiteSpace: 'nowrap',
+                      transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '6px'
+                    }}
+                  >
+                    {adminLoading ? <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <LogIn size={16} />}
+                    Vào
+                  </button>
+                </div>
+                {adminError && (
+                  <p style={{ marginTop: '8px', fontSize: '12px', color: 'var(--danger)', fontWeight: 600 }}>{adminError}</p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
