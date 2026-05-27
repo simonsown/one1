@@ -8,15 +8,24 @@ import { useRouter } from 'next/navigation'
 import { Thread } from '@/hooks/useDiscussion'
 import { ThreadCard } from '@/components/discussion/ThreadCard'
 import { ThreadDetail } from '@/components/discussion/ThreadDetail'
-import { MessageSquare, RefreshCw, Send, Bot, Sparkles, Globe, School, Loader2, Cpu, User, ArrowLeft } from 'lucide-react'
+import { MessageSquare, Send, Bot, Sparkles, Globe, School, Loader2, Cpu, ArrowLeft } from 'lucide-react'
 
 interface ChatMessage {
   id: string;
   sender: string;
+  sender_id: string;
   avatar: string;
   role: 'student' | 'teacher' | 'assistant';
   content: string;
   time: string;
+  channel: string;
+}
+
+function formatTime(ts: string): string {
+  try {
+    const d = new Date(ts);
+    return d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  } catch { return ''; }
 }
 
 export default function DiscussionDashboardPage() {
@@ -25,6 +34,7 @@ export default function DiscussionDashboardPage() {
   const [loading, setLoading] = useState(true)
   const [selectedThread, setSelectedThread] = useState<Thread | null>(null)
   const [userProfile, setUserProfile] = useState<any>(null)
+  const [user, setUser] = useState<any>(null)
   
   // Realtime Chat States
   const [chatChannel, setChatChannel] = useState<'global' | 'class'>('global')
@@ -44,129 +54,112 @@ export default function DiscussionDashboardPage() {
   const supabase = createClientComponentClient()
 
   useEffect(() => {
-    const loadThreads = async () => {
+    const loadInitial = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (!user) return
+        const { data: { user: u } } = await supabase.auth.getUser()
+        if (!u) { setLoading(false); return }
+        setUser(u)
 
-        // Load Profile
-        const { data: prof } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+        const { data: prof } = await supabase.from('profiles').select('*').eq('id', u.id).maybeSingle()
         setUserProfile(prof)
 
-        // Load all threads
-        const { data, error } = await supabase
+        // Load threads
+        const { data: threadsData } = await supabase
           .from('discussion_threads')
-          .select(`
-            *,
-            author:profiles(full_name, avatar_url, role)
-          `)
+          .select('*, author:profiles(full_name, avatar_url, role)')
           .eq('is_deleted', false)
           .order('created_at', { ascending: false })
-        
-        if (!error && data) {
-          setThreads(data as any[])
+        if (threadsData) setThreads(threadsData as any[])
+
+        // Load persisted messages
+        const { data: messages } = await supabase
+          .from('discussion_messages')
+          .select('*')
+          .order('created_at', { ascending: true })
+          .limit(200)
+        if (messages) {
+          const mapped = messages.map(m => ({
+            id: m.id,
+            sender: m.sender_name || 'Học viên',
+            sender_id: m.sender_id || '',
+            avatar: '💻',
+            role: 'student' as const,
+            content: m.content,
+            time: formatTime(m.created_at),
+            channel: m.channel
+          }))
+          setGlobalMessages(mapped.filter(m => m.channel === 'global'))
+          setClassMessages(mapped.filter(m => m.channel !== 'global'))
         }
       } catch (err) {
-        console.error('Error loading threads:', err)
+        console.error('Error loading initial data:', err)
       } finally {
         setLoading(false)
       }
     }
-
-    loadThreads()
+    loadInitial()
   }, [supabase])
 
-  // Real-time topic analysis algorithm
+  // Realtime subscription for new messages
   useEffect(() => {
-    if (globalMessages.length === 0) {
-       setTrendingTopic('Chưa có dữ liệu');
-       return;
-    }
-    const words = globalMessages.map(m => m.content).join(' ').toLowerCase().split(/\s+/);
-    const stopWords = ['có','không','là','thì','mà','và','để','của','cho','những','các','một','với','khi','trong','như','đã','sẽ','này','đó','đây','bạn','mình','thầy','ơi','nhé','ạ','vậy','cái','gì','nào'];
-    const counts: Record<string, number> = {};
-    words.forEach(w => {
-      const cw = w.replace(/[^a-z0-9]/gi, '');
-      if (cw.length > 2 && !stopWords.includes(cw)) {
-        counts[cw] = (counts[cw] || 0) + 1;
-      }
-    });
-    const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
-    if (sorted.length > 0) {
-      setTrendingTopic(sorted.slice(0, 3).map(x => '#' + x[0].toUpperCase()).join(', '));
-    }
-  }, [globalMessages])
-
-  // Realtime WebSocket broadcast connection for chat channel
-  useEffect(() => {
-    if (!userProfile) return
-
-    const channelName = `discussion_realtime_chat`
-    const channel = supabase.channel(channelName, {
-      config: {
-        broadcast: { self: true },
-      },
-    })
-
-    channel
-      .on('broadcast', { event: 'new-message' }, (response) => {
-        const payload = response.payload
+    const channel = supabase
+      .channel('discussion_messages_realtime')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'discussion_messages' }, (payload) => {
+        const m = payload.new as any
         const newMsg: ChatMessage = {
-          id: payload.id,
-          sender: payload.sender,
-          avatar: payload.avatar,
-          role: payload.role,
-          content: payload.content,
-          time: payload.time
+          id: m.id,
+          sender: m.sender_name || 'Học viên',
+          sender_id: m.sender_id || '',
+          avatar: '💻',
+          role: 'student' as const,
+          content: m.content,
+          time: formatTime(m.created_at),
+          channel: m.channel
         }
-
-        if (payload.channel === 'global') {
-          setGlobalMessages(prev => {
-            if (prev.some(m => m.id === newMsg.id)) return prev
-            return [...prev, newMsg]
-          })
+        if (m.channel === 'global') {
+          setGlobalMessages(prev => prev.some(x => x.id === newMsg.id) ? prev : [...prev, newMsg])
         } else {
-          setClassMessages(prev => {
-            if (prev.some(m => m.id === newMsg.id)) return prev
-            return [...prev, newMsg]
-          })
+          setClassMessages(prev => prev.some(x => x.id === newMsg.id) ? prev : [...prev, newMsg])
         }
       })
       .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [userProfile, supabase])
+    return () => { supabase.removeChannel(channel) }
+  }, [supabase])
 
-  // Scroll to bottom of chat
+  // Trending topics from global messages
+  useEffect(() => {
+    if (globalMessages.length === 0) { setTrendingTopic('Chưa có dữ liệu'); return }
+    const words = globalMessages.map(m => m.content).join(' ').toLowerCase().split(/\s+/)
+    const stopWords = ['có','không','là','thì','mà','và','để','của','cho','những','các','một','với','khi','trong','như','đã','sẽ','này','đó','đây','bạn','mình','thầy','ơi','nhé','ạ','vậy','cái','gì','nào']
+    const counts: Record<string, number> = {}
+    words.forEach(w => {
+      const cw = w.replace(/[^a-z0-9]/gi, '')
+      if (cw.length > 2 && !stopWords.includes(cw)) counts[cw] = (counts[cw] || 0) + 1
+    })
+    const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1])
+    if (sorted.length > 0) setTrendingTopic(sorted.slice(0, 3).map(x => '#' + x[0].toUpperCase()).join(', '))
+  }, [globalMessages])
+
+  // Scroll to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [globalMessages, classMessages])
 
-  // Handle Send Chat in Real-time via Supabase WebSockets
+  // Send chat - persists to DB
   const handleSendChat = async () => {
-    if (!chatInput.trim() || !userProfile) return
-    const msgId = 'msg-' + Date.now().toString() + '-' + Math.random().toString(36).substring(2, 7)
-
-    const payloadMsg = {
-      id: msgId,
-      sender: userProfile.full_name || 'Học viên',
-      avatar: userProfile.avatar_url || '💻',
-      role: userProfile.role === 'teacher' ? 'teacher' : 'student',
-      content: chatInput,
-      time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
-      channel: chatChannel
-    }
-
+    if (!chatInput.trim() || !userProfile || !user) return
     try {
-      await supabase.channel(`discussion_realtime_chat`).send({
-        type: 'broadcast',
-        event: 'new-message',
-        payload: payloadMsg
+      const { error } = await supabase.from('discussion_messages').insert({
+        channel: chatChannel,
+        class_id: chatChannel === 'class' ? userProfile.class_id || null : null,
+        sender_id: user.id,
+        sender_name: userProfile.full_name || 'Học viên',
+        content: chatInput.trim()
       })
+      if (error) console.error('Error saving message:', error)
     } catch (err) {
-      console.error('Error broadcasting message:', err)
+      console.error('Error sending message:', err)
     }
     setChatInput('')
   }
@@ -178,7 +171,6 @@ export default function DiscussionDashboardPage() {
     setAiInput('')
     setAiReplies(prev => [...prev, `Học viên: ${userQ}`])
     setAiLoading(true)
-
     try {
       const res = await fetch('/api/ai/chat', {
         method: 'POST',
@@ -187,79 +179,75 @@ export default function DiscussionDashboardPage() {
       })
       const data = await res.json()
       setAiReplies(prev => [...prev, `AI Guru: ${data.reply || 'Xin lỗi, tôi gặp sự cố kết nối.'}`])
-    } catch (err) {
+    } catch {
       setAiReplies(prev => [...prev, 'AI Guru: Tôi đang bận xử lý dữ liệu khác, vui lòng thử lại sau.'])
     } finally {
       setAiLoading(false)
     }
   }
 
+  // Convert className hardcoded colors to inline CSS variables
+  const s = {
+    bgBase: 'var(--bg-base)',
+    bgSurface: 'var(--bg-surface)',
+    bgElevated: 'var(--bg-elevated)',
+    brand: 'var(--brand-primary)',
+    textMuted: 'var(--text-muted)',
+    textPrimary: 'var(--text-primary)',
+    border: 'var(--border-default)',
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex justify-center items-center">
+      <div style={{ minHeight: '100vh', background: s.bgBase, color: s.textPrimary, paddingTop: '96px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div className="flex flex-col items-center gap-2">
-          <Loader2 className="animate-spin text-[#00d4aa]" size={32} />
-          <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang kết nối diễn đàn...</span>
+          <Loader2 className="animate-spin" style={{ color: s.brand }} size={32} />
+          <span style={{ fontSize: '12px', color: s.textMuted, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Đang kết nối diễn đàn...</span>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div style={{ minHeight: '100vh', background: s.bgBase, color: s.textPrimary, paddingTop: '96px', paddingBottom: '48px', paddingLeft: '16px', paddingRight: '16px', position: 'relative', overflow: 'hidden' }}>
       
-      {/* Decorative High-Tech Background */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#00d4aa]/5 rounded-full filter blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#00b4d8]/5 rounded-full filter blur-[120px] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative" style={{ zIndex: 10 }}>
         
-        {/* Workspace Title & Exit Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10 relative">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 relative" style={{ borderBottom: '1px solid var(--border-default)' }}>
           
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl shadow-[0_0_15px_rgba(0,212,170,0.1)]">
+            <div style={{ padding: '10px', background: `color-mix(in srgb, ${s.brand} 10%, transparent)`, border: `1px solid color-mix(in srgb, ${s.brand} 25%, transparent)`, color: s.brand, borderRadius: '16px' }}>
               <MessageSquare size={24} />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+              <h1 className="text-xl md:text-2xl font-black tracking-tight uppercase flex items-center gap-2" style={{ color: s.textPrimary }}>
                 KHÔNG GIAN THẢO LUẬN 3D
-                <span className="text-[9px] bg-[#00d4aa]/15 text-[#00d4aa] font-black border border-[#00d4aa]/25 px-2 py-0.5 rounded-full uppercase">REAL-TIME</span>
+                <span style={{ fontSize: '9px', background: `color-mix(in srgb, ${s.brand} 15%, transparent)`, color: s.brand, border: `1px solid color-mix(in srgb, ${s.brand} 25%, transparent)`, padding: '2px 8px', borderRadius: '999px', fontWeight: 900, textTransform: 'uppercase' }}>REAL-TIME</span>
               </h1>
-              <p className="text-xs text-gray-400 mt-0.5">Nơi trao đổi kiến thức phần cứng máy tính thời gian thực giữa thầy và trò</p>
+              <p style={{ fontSize: '12px', color: s.textMuted, marginTop: '2px' }}>Nơi trao đổi kiến thức phần cứng máy tính thời gian thực giữa thầy và trò</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-2 bg-black/40 border border-gray-800 rounded-full px-4 py-1.5 text-xs text-slate-400 font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#00d4aa] animate-ping" />
-              Lớp {userProfile?.grade || 'PC Master'}
-            </div>
-
-            {/* EXIT/BACK BUTTON */}
             <button 
               onClick={() => router.push('/builder')}
-              className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+              className="relative z-50 flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer" style={{ background: `color-mix(in srgb, ${s.bgElevated} 90%, transparent)`, border: `1px solid ${s.border}`, color: s.textMuted, fontFamily: 'inherit' }}
+              onMouseEnter={e => { e.currentTarget.style.color = s.textPrimary; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = s.textMuted; e.currentTarget.style.borderColor = s.border }}
             >
-              <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-              Quay lại Dashboard
+              <ArrowLeft size={14} /> Quay lại Dashboard
             </button>
           </div>
         </div>
 
-        {/* Workspace Layout: Left (Discussions) & Right (Realtime Chat + Micro AI) */}
+        {/* Layout: Left (Discussions) & Right (Chat + AI) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Column (60%): Forums/Threads */}
+          {/* Left Column */}
           <div className="lg:col-span-7 space-y-6 relative">
-            
-            {/* Tech decorative corners */}
-            <div className="absolute -top-1 -left-1 w-3.5 h-3.5 border-t-2 border-l-2 border-[#00d4aa]/30 pointer-events-none" />
-            <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-[#00d4aa]/30 pointer-events-none" />
-
             {selectedThread ? (
-              <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative min-h-[500px]">
+              <div style={{ background: s.bgSurface, border: `1px solid ${s.border}`, borderRadius: '24px', padding: '24px', minHeight: '500px' }}>
                 <ThreadDetail 
                   thread={selectedThread}
                   currentUserId={userProfile?.id}
@@ -267,22 +255,22 @@ export default function DiscussionDashboardPage() {
                 />
               </div>
             ) : (
-              <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative space-y-4 min-h-[500px]">
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                  <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-                    <Globe size={18} className="text-[#00d4aa]" />
+              <div style={{ background: s.bgSurface, border: `1px solid ${s.border}`, borderRadius: '24px', padding: '24px', minHeight: '500px' }}>
+                <div className="flex items-center justify-between pb-4" style={{ borderBottom: '1px solid color-mix(in srgb, white 5%, transparent)' }}>
+                  <h2 className="text-lg font-bold tracking-tight flex items-center gap-2" style={{ color: s.textPrimary }}>
+                    <Globe size={18} style={{ color: s.brand }} />
                     Chủ đề thảo luận sôi nổi
                   </h2>
-                  <span className="text-[10px] bg-[#00d4aa]/15 text-[#00d4aa] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  <span style={{ fontSize: '10px', background: `color-mix(in srgb, ${s.brand} 15%, transparent)`, color: s.brand, fontWeight: 700, padding: '4px 8px', borderRadius: '999px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     {threads.length} chủ đề
                   </span>
                 </div>
                 {threads.length === 0 ? (
-                  <div className="p-20 text-center text-gray-500 italic">
+                  <div style={{ padding: '80px 0', textAlign: 'center', color: s.textMuted, fontStyle: 'italic' }}>
                     Chưa có chủ đề thảo luận nào được tạo. Hãy là người đầu tiên đặt câu hỏi!
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginTop: '16px' }}>
                     {threads.map(thread => (
                       <ThreadCard 
                         key={thread.id}
@@ -296,58 +284,49 @@ export default function DiscussionDashboardPage() {
             )}
           </div>
 
-          {/* Right Column (40%): Realtime Chat Workspace & Lockable Micro AI */}
+          {/* Right Column */}
           <div className="lg:col-span-5 flex flex-col gap-6 relative">
-            
-            {/* Tech decorative corners */}
-            <div className="absolute -top-1 -right-1 w-3.5 h-3.5 border-t-2 border-r-2 border-[#00b4d8]/30 pointer-events-none" />
-            <div className="absolute -bottom-1 -left-1 w-3.5 h-3.5 border-b-2 border-l-2 border-[#00b4d8]/30 pointer-events-none" />
 
             {/* Realtime Chat Card */}
-            <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl shadow-xl overflow-hidden flex flex-col h-[400px]">
+            <div style={{ background: s.bgSurface, border: `1px solid ${s.border}`, borderRadius: '24px', display: 'flex', flexDirection: 'column', height: '400px', overflow: 'hidden' }}>
               
               {/* Channel Tabs */}
-              <div className="p-3 bg-[#181926] border-b border-gray-800 flex items-center justify-between shrink-0">
+              <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderBottom: `1px solid ${s.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
                 <div className="flex gap-2">
-                  <button 
-                    onClick={() => setChatChannel('global')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'global' ? 'bg-[#00d4aa]/10 text-[#00d4aa] border border-[#00d4aa]/25' : 'text-gray-400 hover:text-white'}`}
-                  >
-                    <Globe size={14} /> Kênh Chung
-                  </button>
-                  <button 
-                    onClick={() => setChatChannel('class')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'class' ? 'bg-[#00d4aa]/10 text-[#00d4aa] border border-[#00d4aa]/25' : 'text-gray-400 hover:text-white'}`}
-                  >
-                    <School size={14} /> Kênh Lớp Học
-                  </button>
+                  {(['global', 'class'] as const).map(ch => (
+                    <button key={ch} onClick={() => setChatChannel(ch)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 12px', borderRadius: '12px',
+                        fontSize: '12px', fontWeight: 700, cursor: 'pointer', border: 'none', fontFamily: 'inherit',
+                        background: chatChannel === ch ? `color-mix(in srgb, ${s.brand} 10%, transparent)` : 'transparent',
+                        color: chatChannel === ch ? s.brand : s.textMuted,
+                      }}
+                    >
+                      {ch === 'global' ? <Globe size={14} /> : <School size={14} />}
+                      {ch === 'global' ? 'Kênh Chung' : 'Kênh Lớp Học'}
+                    </button>
+                  ))}
                 </div>
-                <div className="text-[10px] text-gray-400 flex flex-col items-end hidden sm:flex">
-                  <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" /> Trực tuyến</div>
-                  <div className="text-[#00d4aa] font-bold mt-0.5" title="Chủ đề đang hot">Trending: {trendingTopic}</div>
+                <div style={{ fontSize: '10px', color: s.textMuted, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }} className="hidden sm:flex">
+                  <div className="flex items-center gap-1"><div style={{ width: '6px', height: '6px', background: '#22c55e', borderRadius: '50%', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} /> Trực tuyến</div>
+                  <div style={{ color: s.brand, fontWeight: 700, marginTop: '2px' }}>Trending: {trendingTopic}</div>
                 </div>
               </div>
 
-              {/* Chat Stream */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0c0c16]/50">
+              {/* Messages */}
+              <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', background: `color-mix(in srgb, ${s.bgBase} 50%, transparent)` }}>
                 {(chatChannel === 'global' ? globalMessages : classMessages).map(m => (
                   <div key={m.id} className="flex gap-3 text-xs items-start">
-                    <span className="w-8 h-8 rounded-xl bg-gray-800 border border-gray-700/50 flex items-center justify-center text-sm shrink-0 shadow-md">
-                      {m.avatar}
-                    </span>
-                    <div className="flex-1">
+                    <span style={{ width: '32px', height: '32px', borderRadius: '12px', background: s.bgElevated, border: `1px solid ${s.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', flexShrink: 0 }}>{m.avatar}</span>
+                    <div style={{ flex: 1 }}>
                       <div className="flex items-center gap-2">
-                        <span className={`font-bold ${m.role === 'teacher' ? 'text-[#00d4aa]' : 'text-slate-200'}`}>
-                          {m.sender}
-                        </span>
+                        <span style={{ fontWeight: 700, color: m.role === 'teacher' ? s.brand : 'var(--text-secondary)' }}>{m.sender}</span>
                         {m.role === 'teacher' && (
-                          <span className="text-[8px] bg-[#00d4aa]/10 text-[#00d4aa] border border-[#00d4aa]/20 px-1.5 py-0.5 rounded font-black uppercase tracking-widest">
-                            GV
-                          </span>
+                          <span style={{ fontSize: '8px', background: `color-mix(in srgb, ${s.brand} 10%, transparent)`, color: s.brand, border: `1px solid color-mix(in srgb, ${s.brand} 20%, transparent)`, padding: '2px 6px', borderRadius: '4px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}>GV</span>
                         )}
-                        <span className="text-[9px] text-gray-500 font-medium ml-auto">{m.time}</span>
+                        <span style={{ fontSize: '9px', color: s.textMuted, marginLeft: 'auto' }}>{m.time}</span>
                       </div>
-                      <p className="text-gray-300 mt-1 leading-relaxed bg-[#141523]/60 p-2.5 rounded-2xl rounded-tl-none border border-white/5">
+                      <p style={{ color: 'var(--text-secondary)', marginTop: '4px', lineHeight: 1.5, background: `color-mix(in srgb, ${s.bgElevated} 60%, transparent)`, padding: '10px', borderRadius: '16px', borderTopLeftRadius: '4px', border: `1px solid color-mix(in srgb, white 5%, transparent)` }}>
                         {m.content}
                       </p>
                     </div>
@@ -357,78 +336,72 @@ export default function DiscussionDashboardPage() {
               </div>
 
               {/* Chat Input */}
-              <div className="p-3 border-t border-gray-800 bg-[#11121d] shrink-0">
-                <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#00d4aa] rounded-2xl p-1.5 pl-3 transition-colors">
+              <div style={{ padding: '12px', borderTop: `1px solid ${s.border}`, background: s.bgSurface, flexShrink: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: s.bgBase, border: `1px solid ${s.border}`, borderRadius: '16px', padding: '6px 12px' }}>
                   <input 
                     type="text" 
                     placeholder={chatChannel === 'global' ? "Chat chung với học viên toàn quốc..." : "Nhắn tin cho bạn bè trong lớp..."}
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendChat()}
-                    className="flex-1 bg-transparent border-none outline-none text-xs text-white placeholder-gray-500"
+                    style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', fontSize: '12px', color: s.textPrimary }}
                   />
-                  <button 
-                    onClick={handleSendChat}
-                    className="p-2 bg-[#00d4aa] text-black rounded-xl hover:scale-105 transition-transform"
-                  >
+                  <button onClick={handleSendChat}
+                    style={{ padding: '8px', background: s.brand, color: '#000', borderRadius: '12px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'inherit' }}>
                     <Send size={12} fill="currentColor" />
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Anchored Micro AI Assistant (Locked Tiny Chatbot) */}
-            <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-5 shadow-xl relative overflow-hidden flex flex-col justify-between h-[230px] group">
+            {/* Micro AI Assistant */}
+            <div style={{ background: s.bgSurface, border: `1px solid ${s.border}`, borderRadius: '24px', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '230px', position: 'relative', overflow: 'hidden' }}>
               
-              {/* Tech Corner Pins */}
-              <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#00d4aa]/30 group-hover:border-[#00d4aa]/80 transition-colors" />
-              <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#00d4aa]/30 group-hover:border-[#00d4aa]/80 transition-colors" />
-              
-              {/* Header Info */}
-              <div className="flex items-center justify-between shrink-0">
+              <div className="flex items-center justify-between" style={{ flexShrink: 0 }}>
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-lg animate-pulse">
+                  <div style={{ padding: '6px', background: `color-mix(in srgb, ${s.brand} 10%, transparent)`, border: `1px solid color-mix(in srgb, ${s.brand} 25%, transparent)`, color: s.brand, borderRadius: '8px' }}>
                     <Cpu size={14} />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-white tracking-tight flex items-center gap-1.5">
+                    <h4 className="text-xs font-bold tracking-tight flex items-center gap-1.5" style={{ color: s.textPrimary }}>
                       MICRO AI GURU
-                      <Sparkles size={10} className="text-yellow-400" />
+                      <Sparkles size={10} style={{ color: '#eab308' }} />
                     </h4>
-                    <p className="text-[9px] text-[#00d4aa] uppercase font-bold tracking-widest">Đang khóa song song</p>
+                    <p style={{ fontSize: '9px', color: s.brand, textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.1em' }}>Đang khóa song song</p>
                   </div>
                 </div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#00d4aa] animate-ping" />
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: s.brand, animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite' }} />
               </div>
 
-              {/* Quick AI Response Window */}
-              <div className="flex-1 overflow-y-auto my-3 p-3 bg-[#0c0c16]/50 rounded-xl border border-white/5 space-y-2 text-[11px] leading-relaxed">
+              <div style={{ flex: 1, overflowY: 'auto', margin: '12px 0', padding: '12px', background: `color-mix(in srgb, ${s.bgBase} 50%, transparent)`, borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '11px', lineHeight: 1.5 }}>
                 {aiReplies.map((r, i) => (
-                  <div key={i} className={`p-2 rounded-lg ${r.startsWith('AI Guru:') ? 'bg-[#00d4aa]/5 text-slate-300 border-l-2 border-[#00d4aa]' : 'bg-[#181926] text-slate-200 border-l-2 border-slate-600'}`}>
+                  <div key={i} style={{
+                    padding: '8px', borderRadius: '8px',
+                    background: r.startsWith('AI Guru:') ? `color-mix(in srgb, ${s.brand} 5%, transparent)` : s.bgElevated,
+                    color: r.startsWith('AI Guru:') ? 'var(--text-secondary)' : 'var(--text-secondary)',
+                    borderLeft: `2px solid ${r.startsWith('AI Guru:') ? s.brand : s.border}`
+                  }}>
                     {r}
                   </div>
                 ))}
                 {aiLoading && (
-                  <div className="flex items-center gap-1 text-slate-400 italic text-[10px]">
-                    <Loader2 className="animate-spin text-[#00d4aa]" size={10} /> AI Guru đang tính toán cấu hình...
+                  <div className="flex items-center gap-1" style={{ color: s.textMuted, fontStyle: 'italic', fontSize: '10px' }}>
+                    <Loader2 className="animate-spin" style={{ color: s.brand }} size={10} /> AI Guru đang tính toán cấu hình...
                   </div>
                 )}
               </div>
 
-              {/* Mini AI Input */}
-              <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#00d4aa] rounded-xl p-1.5 pl-3 transition-colors shrink-0">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: s.bgBase, border: `1px solid ${s.border}`, borderRadius: '12px', padding: '6px 12px', flexShrink: 0 }}>
                 <input 
                   type="text" 
                   placeholder="Hỏi nhanh AI về socket, vga, psu..."
                   value={aiInput}
                   onChange={(e) => setAiInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendAi()}
-                  className="flex-1 bg-transparent border-none outline-none text-[10px] text-white placeholder-gray-500"
+                  style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', fontSize: '10px', color: s.textPrimary }}
                 />
-                <button 
-                  onClick={handleSendAi}
-                  className="p-1.5 bg-[#00d4aa] text-black rounded-lg hover:scale-105 transition-transform"
-                >
+                <button onClick={handleSendAi}
+                  style={{ padding: '6px', background: s.brand, color: '#000', borderRadius: '8px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'inherit' }}>
                   <Bot size={10} />
                 </button>
               </div>
