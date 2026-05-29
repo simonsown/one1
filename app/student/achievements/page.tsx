@@ -52,7 +52,7 @@ export default function StudentAchievementsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d0e13] text-white pt-24 flex flex-col items-center justify-center gap-2">
+      <div className="min-h-screen bg-[#f8f9fa] text-gray-900 pt-24 flex flex-col items-center justify-center gap-2">
         <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500">Đang tải bảng huy hiệu...</span>
       </div>
@@ -60,11 +60,11 @@ export default function StudentAchievementsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0e13] text-white pt-24 pb-12 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#f8f9fa] text-gray-900 pt-24 pb-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         
         {/* Header Overview */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10 bg-[#1a1c25] border border-gray-800 p-6 rounded-2xl shadow-xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10 bg-[#ffffff] border border-gray-200 p-6 rounded-2xl shadow-xl">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center">
               <Trophy size={24} />
@@ -75,14 +75,14 @@ export default function StudentAchievementsPage() {
             </div>
           </div>
 
-          <div className="flex gap-6 border-l border-white/5 pl-6">
+          <div className="flex gap-6 border-l border-gray-200 pl-6">
             <div className="text-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Tổng điểm</p>
               <p className="text-2xl font-black text-[#089e60]">{totalPoints} PTS</p>
             </div>
             <div className="text-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Đã mở khóa</p>
-              <p className="text-2xl font-black text-white">{earnedCount} / {badges.length}</p>
+              <p className="text-2xl font-black text-gray-900">{earnedCount} / {badges.length}</p>
             </div>
           </div>
         </div>

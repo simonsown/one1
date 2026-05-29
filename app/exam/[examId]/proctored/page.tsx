@@ -143,7 +143,7 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
                      {!hasPermission ? (
                         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
                            <Camera size={48} className="text-slate-700" />
-                           <button onClick={startCamera} className="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-sm font-bold hover:bg-white/10 transition-all">
+                           <button onClick={startCamera} className="px-6 py-2 bg-gray-100 border border-gray-200 rounded-xl text-sm font-bold hover:bg-white/10 transition-all">
                               Kích hoạt Camera
                            </button>
                         </div>
@@ -232,7 +232,7 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
                 <p className="text-2xl font-bold opacity-80 leading-relaxed">
                    Bạn vừa rời khỏi màn hình thi hoặc thoát chế độ toàn màn hình. 
                 </p>
-                <div className="bg-black/20 p-6 rounded-3xl border border-white/10">
+                <div className="bg-black/20 p-6 rounded-3xl border border-gray-200">
                    <div className="text-xs font-black uppercase tracking-widest opacity-50 mb-2">Số lần vi phạm</div>
                    <div className="text-5xl font-black">{violations} / 3</div>
                 </div>

@@ -91,7 +91,7 @@ export default function Onboarding() {
         >
           <button 
             onClick={handleClose}
-            className="absolute top-6 right-6 p-2 text-slate-500 hover:text-white transition-colors z-10"
+            className="absolute top-6 right-6 p-2 text-slate-500 hover:text-gray-900 transition-colors z-10"
           >
             <X size={20} />
           </button>
@@ -112,7 +112,7 @@ export default function Onboarding() {
               animate={{ opacity: 1, x: 0 }}
               className="space-y-4 mb-10"
             >
-              <h2 className="text-3xl font-black text-white leading-tight">{currentStep.title}</h2>
+              <h2 className="text-3xl font-black text-gray-900 leading-tight">{currentStep.title}</h2>
               <p className="text-slate-400 text-lg leading-relaxed">{currentStep.desc}</p>
             </motion.div>
 

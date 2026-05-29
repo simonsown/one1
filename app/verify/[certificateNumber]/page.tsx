@@ -24,8 +24,8 @@ export default async function VerifyCertificatePage({ params }: { params: { cert
     .maybeSingle()
 
   return (
-    <div className="min-h-screen bg-[#0d0e13] text-white flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#1a1c25] border border-gray-800 rounded-3xl p-8 shadow-2xl text-center space-y-6">
+    <div className="min-h-screen bg-[#f8f9fa] text-white flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md bg-[#ffffff] border border-gray-200 rounded-3xl p-8 shadow-2xl text-center space-y-6">
         
         {/* Shield Header */}
         <div className="flex justify-center">
@@ -39,7 +39,7 @@ export default async function VerifyCertificatePage({ params }: { params: { cert
           <p className="text-xs text-gray-500 mt-1">Cổng thông tin xác thực chứng chỉ hoàn thành học tập</p>
         </div>
 
-        <div className="border-t border-white/5 pt-6 space-y-4">
+        <div className="border-t border-gray-200 pt-6 space-y-4">
           {!cert ? (
             <div className="space-y-3">
               <div className="flex justify-center text-red-500">
@@ -67,7 +67,7 @@ export default async function VerifyCertificatePage({ params }: { params: { cert
               </div>
               <h2 className="text-md font-bold text-[#089e60] text-center">Chứng chỉ hợp lệ</h2>
 
-              <div className="space-y-2 bg-[#1e202f]/50 border border-gray-800 p-4 rounded-xl text-xs">
+              <div className="space-y-2 bg-[#f1f1f1]/50 border border-gray-200 p-4 rounded-xl text-xs">
                 <p className="text-gray-400">Học viên nhận:</p>
                 <p className="font-bold text-white text-sm">{cert.student_name}</p>
 

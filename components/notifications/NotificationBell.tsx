@@ -27,7 +27,7 @@ export function NotificationBell({ userId }: { userId?: string }) {
       {/* Bell button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-slate-400 hover:text-white hover:bg-[#ffffff] rounded-full transition-colors"
+        className="relative p-2 text-slate-400 hover:text-gray-900 hover:bg-[#ffffff] rounded-full transition-colors"
         aria-label={`Thông báo${unreadCount > 0 ? ` (${unreadCount} chưa đọc)` : ''}`}
       >
         <Bell size={20} />
@@ -43,11 +43,11 @@ export function NotificationBell({ userId }: { userId?: string }) {
       {isOpen && (
         <div className="
           absolute right-0 top-full mt-2 w-80
-          bg-[#1a1c25] border border-gray-800
+          bg-[#ffffff] border border-gray-200
           rounded-xl shadow-2xl z-50 overflow-hidden
         ">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800 bg-[#ffffff]/50">
-            <span className="text-sm font-bold text-[#dde0ed]">Thông báo</span>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-[#ffffff]/50">
+            <span className="text-sm font-bold text-gray-800">Thông báo</span>
             {unreadCount > 0 && (
               <button onClick={markAllAsRead} className="text-xs text-[#089e60] font-medium hover:underline">
                 Đọc tất cả
@@ -72,7 +72,7 @@ export function NotificationBell({ userId }: { userId?: string }) {
             onClick={() => setIsOpen(false)}
             className="
               block text-center py-3 text-xs font-medium text-[#089e60]
-              border-t border-gray-800 bg-[#ffffff]/30 hover:bg-[#ffffff] transition-colors
+              border-t border-gray-200 bg-[#ffffff]/30 hover:bg-[#ffffff] transition-colors
             "
           >
             Xem tất cả thông báo →

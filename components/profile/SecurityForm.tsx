@@ -59,7 +59,7 @@ export function SecurityForm() {
             required
             value={currentPass}
             onChange={(e) => setCurrentPass(e.target.value)}
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#089e60] transition-colors"
+            className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 focus:outline-none focus:border-[#089e60] transition-colors"
           />
         </div>
 
@@ -71,7 +71,7 @@ export function SecurityForm() {
             value={newPass}
             onChange={(e) => setNewPass(e.target.value)}
             placeholder="Tối thiểu 8 ký tự, 1 chữ hoa, 1 số"
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
+            className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
           />
         </div>
 
@@ -82,21 +82,21 @@ export function SecurityForm() {
             required
             value={confirmPass}
             onChange={(e) => setConfirmPass(e.target.value)}
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#089e60] transition-colors"
+            className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 focus:outline-none focus:border-[#089e60] transition-colors"
           />
         </div>
 
         <button 
           type="submit" 
           disabled={loading}
-          className="w-full py-3 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full py-3 bg-[#089e60] text-white font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           {loading ? 'Đang thực thi...' : 'Cập nhật mật khẩu'}
         </button>
       </form>
 
       {/* Global Signout */}
-      <div className="pt-6 border-t border-white/5 space-y-4">
+      <div className="pt-6 border-t border-gray-200 space-y-4">
         <h4 className="text-xs font-bold text-red-400 uppercase tracking-wider">Phiên đăng nhập & Bảo mật</h4>
         <p className="text-[10px] text-gray-500">Nếu nghi ngờ tài khoản bị lộ mật khẩu, bạn có thể thực hiện đăng xuất khỏi mọi thiết bị di động, web, máy tính khác ngay lập tức.</p>
         

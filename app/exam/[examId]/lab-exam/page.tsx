@@ -96,7 +96,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
       {/* Header */}
       <header className="h-20 bg-[#ffffff] border-b border-[#e7e7e7] flex items-center justify-between px-8 z-50">
         <div className="flex items-center gap-6">
-          <button onClick={() => router.back()} className="p-2 hover:bg-white/5 rounded-lg transition-colors">
+          <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
             <ChevronLeft size={24} />
           </button>
           <div>
@@ -140,7 +140,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
             <p className="text-sm text-slate-300 leading-relaxed italic">
               "{missionData.scenario}"
             </p>
-            <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-end">
+            <div className="mt-4 pt-4 border-t border-gray-200 flex justify-between items-end">
                <div>
                  <div className="text-[10px] text-slate-500 font-bold uppercase">Ngân sách</div>
                  <div className="text-lg font-black text-white">{missionData.budget.toLocaleString()}đ</div>
@@ -154,7 +154,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
         </div>
 
         {/* The 2D Lab Canvas (Reusing your GameEngine) */}
-        <main className="flex-1 flex items-center justify-center bg-black/40">
+        <main className="flex-1 flex items-center justify-center bg-gray-100/40">
            <div className="relative w-full max-w-[1400px] aspect-[14/8]">
               <GameEngine 
                 landmarks={landmarks}
@@ -164,7 +164,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
               
               {/* Camera Feed Integrated */}
               {isCameraActive && (
-                <div className="absolute bottom-6 right-6 w-64 p-2 bg-[#ffffff] rounded-2xl border border-white/10 shadow-2xl">
+                <div className="absolute bottom-6 right-6 w-64 p-2 bg-[#ffffff] rounded-2xl border border-gray-200 shadow-2xl">
                    <div className="aspect-video bg-black rounded-lg overflow-hidden">
                       <HandTracker onLandmarks={setLandmarks} />
                    </div>

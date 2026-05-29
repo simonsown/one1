@@ -48,9 +48,9 @@ export function PreferencesForm({ preferences }: Props) {
       <div className="space-y-4">
         <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Thông báo nhận</h4>
         
-        <label className="flex items-center justify-between p-3 bg-[#1e202f]/30 border border-gray-850 rounded-xl cursor-pointer">
+        <label className="flex items-center justify-between p-3 bg-[#f1f1f1]/30 border border-gray-200 rounded-xl cursor-pointer">
           <div>
-            <p className="text-xs font-semibold text-white">Thông báo qua Email</p>
+            <p className="text-xs font-semibold text-gray-900">Thông báo qua Email</p>
             <p className="text-[10px] text-gray-500">Nhận thông báo chấm điểm, bài học mới qua email.</p>
           </div>
           <input 
@@ -61,9 +61,9 @@ export function PreferencesForm({ preferences }: Props) {
           />
         </label>
 
-        <label className="flex items-center justify-between p-3 bg-[#1e202f]/30 border border-gray-850 rounded-xl cursor-pointer">
+        <label className="flex items-center justify-between p-3 bg-[#f1f1f1]/30 border border-gray-200 rounded-xl cursor-pointer">
           <div>
-            <p className="text-xs font-semibold text-white">Thông báo đẩy (Push Notifications)</p>
+            <p className="text-xs font-semibold text-gray-900">Thông báo đẩy (Push Notifications)</p>
             <p className="text-[10px] text-gray-500">Hiển thị thông báo Toast trực tiếp khi dùng app.</p>
           </div>
           <input 
@@ -74,9 +74,9 @@ export function PreferencesForm({ preferences }: Props) {
           />
         </label>
 
-        <label className="flex items-center justify-between p-3 bg-[#1e202f]/30 border border-gray-850 rounded-xl cursor-pointer">
+        <label className="flex items-center justify-between p-3 bg-[#f1f1f1]/30 border border-gray-200 rounded-xl cursor-pointer">
           <div>
-            <p className="text-xs font-semibold text-white">Báo cáo học tập tuần</p>
+            <p className="text-xs font-semibold text-gray-900">Báo cáo học tập tuần</p>
             <p className="text-[10px] text-gray-500">Nhận báo cáo tóm tắt tiến trình học tập hàng tuần.</p>
           </div>
           <input 
@@ -95,7 +95,7 @@ export function PreferencesForm({ preferences }: Props) {
           <select 
             value={theme}
             onChange={(e) => setTheme(e.target.value as any)}
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#089e60]"
+            className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 focus:outline-none focus:border-[#089e60]"
           >
             <option value="dark">🌙 Dark Mode</option>
             <option value="light">☀️ Light Mode</option>
@@ -108,7 +108,7 @@ export function PreferencesForm({ preferences }: Props) {
           <select 
             value={language}
             onChange={(e) => setLanguage(e.target.value as any)}
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#089e60]"
+            className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 focus:outline-none focus:border-[#089e60]"
           >
             <option value="vi">🇻🇳 Tiếng Việt</option>
             <option value="en">🇺🇸 English</option>
@@ -119,7 +119,7 @@ export function PreferencesForm({ preferences }: Props) {
       <button 
         type="submit" 
         disabled={saving}
-        className="w-full py-3 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full py-3 bg-[#089e60] text-white font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {saving ? 'Đang lưu...' : 'Lưu cấu hình'}
       </button>

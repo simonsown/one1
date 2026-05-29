@@ -26,7 +26,7 @@ export default function CertificatesPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-white">
+    <div className="min-h-screen bg-[#f8f9fa] text-gray-900">
       <Navbar />
 
       <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -82,7 +82,7 @@ export default function CertificatesPage() {
             >
               <div className="aspect-[16/10] relative">
                 <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gray-100/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
                   <button className="p-4 bg-white text-black rounded-full hover:scale-110 transition-transform">
                     <Download size={24} />
                   </button>

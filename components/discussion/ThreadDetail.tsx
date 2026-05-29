@@ -36,10 +36,10 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-full bg-[#ffffff]/20 rounded-2xl border border-gray-800 overflow-hidden">
+    <div className="flex flex-col h-full bg-[#ffffff]/20 rounded-2xl border border-gray-200 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-800 bg-[#ffffff]/50 flex-shrink-0">
-        <button onClick={onBack} className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+      <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200 bg-[#ffffff]/50 flex-shrink-0">
+        <button onClick={onBack} className="p-1 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
           <ArrowLeft size={18} />
         </button>
         <span className="text-xs text-gray-400 font-medium">Chi tiết thảo luận</span>
@@ -48,17 +48,17 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
       {/* Content area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* Main OP Thread */}
-        <div className="space-y-3 pb-6 border-b border-gray-800">
+        <div className="space-y-3 pb-6 border-b border-gray-200">
           <div className="flex items-center gap-3 text-xs text-gray-400">
             {thread.author?.avatar_url ? (
               <img src={thread.author.avatar_url} alt="Avatar" className="w-6 h-6 rounded-full object-cover" />
             ) : (
-              <div className="w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
                 <User size={12} className="text-gray-400" />
               </div>
             )}
             <div>
-              <p className="font-semibold text-[#dde0ed] flex items-center gap-1">
+              <p className="font-semibold text-gray-800 flex items-center gap-1">
                 {thread.author?.full_name || 'Ẩn danh'}
                 {thread.author?.role === 'teacher' && (
                   <span className="text-[9px] bg-[#089e60]/10 text-[#089e60] px-1 rounded uppercase font-bold border border-[#089e60]/20">GV</span>
@@ -68,7 +68,7 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
             </div>
           </div>
 
-          <h3 className="text-lg font-bold text-white">{thread.title}</h3>
+          <h3 className="text-lg font-bold text-gray-900">{thread.title}</h3>
           
           <div className="prose prose-invert max-w-none text-sm text-gray-300">
             <ReactMarkdown 
@@ -89,15 +89,15 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
               Chưa có phản hồi nào. Hãy là người đầu tiên trả lời!
             </div>
           ) : (
-            <div className="space-y-4 pl-2 border-l border-gray-800">
+            <div className="space-y-4 pl-2 border-l border-gray-200">
               {replies.map(reply => (
-                <div key={reply.id} className="space-y-2 p-3 bg-[#1e202f]/30 border border-gray-800/50 rounded-xl">
+                <div key={reply.id} className="space-y-2 p-3 bg-[#f1f1f1]/30 border border-gray-200/50 rounded-xl">
                   <div className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2 text-gray-400">
                       {reply.author?.avatar_url ? (
                         <img src={reply.author.avatar_url} alt="Avatar" className="w-4 h-4 rounded-full object-cover" />
                       ) : (
-                        <div className="w-4 h-4 rounded-full bg-gray-800 flex items-center justify-center">
+                        <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center">
                           <User size={8} className="text-gray-400" />
                         </div>
                       )}
@@ -125,7 +125,7 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
       </div>
 
       {/* Comment Form */}
-      <form onSubmit={handleSend} className="p-4 border-t border-gray-800 bg-[#ffffff]/30 flex-shrink-0">
+      <form onSubmit={handleSend} className="p-4 border-t border-gray-200 bg-[#ffffff]/30 flex-shrink-0">
         {error && (
           <div className="p-2 mb-2 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-lg">
             {error}
@@ -139,12 +139,12 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
             value={commentBody}
             onChange={(e) => setCommentBody(e.target.value)}
             placeholder="Nhập nội dung câu trả lời..."
-            className="flex-1 bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
+            className="flex-1 bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
           />
           <button 
             type="submit"
             disabled={submitting}
-            className="p-2.5 bg-[#089e60] text-[#0d0e13] rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center"
+            className="p-2.5 bg-[#089e60] text-white rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center"
           >
             <Send size={16} />
           </button>

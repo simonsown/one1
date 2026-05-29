@@ -142,7 +142,7 @@ export default function TeacherLearningPathPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d0e13] text-white pt-24 flex flex-col items-center justify-center gap-2">
+      <div className="min-h-screen bg-[#f8f9fa] text-gray-900 pt-24 flex flex-col items-center justify-center gap-2">
         <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500">Đang tải cấu hình lộ trình...</span>
       </div>
@@ -150,19 +150,19 @@ export default function TeacherLearningPathPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0e13] text-white pt-24 pb-12 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#f8f9fa] text-gray-900 pt-24 pb-12 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         
         {/* Left Side: Paths Manager & Create forms */}
         <div className="space-y-6">
-          <div className="bg-[#1a1c25] border border-gray-800 p-6 rounded-2xl shadow-xl">
-            <h2 className="text-lg font-bold text-white mb-4">Lộ trình học tập</h2>
+          <div className="bg-[#ffffff] border border-gray-200 p-6 rounded-2xl shadow-xl">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Lộ trình học tập</h2>
             <div className="space-y-2">
               {paths.map(p => (
                 <button
                   key={p.id}
                   onClick={() => { setSelectedPath(p); loadItems(p.id); }}
-                  className={`w-full text-left px-4 py-3 rounded-xl border text-sm font-semibold transition-all ${selectedPath?.id === p.id ? 'border-[#089e60] bg-[#089e60]/10 text-white' : 'border-gray-800 text-gray-400 hover:border-gray-700'}`}
+                  className={`w-full text-left px-4 py-3 rounded-xl border text-sm font-semibold transition-all ${selectedPath?.id === p.id ? 'border-[#089e60] bg-[#089e60]/10 text-gray-900' : 'border-gray-200 text-gray-400 hover:border-gray-300'}`}
                 >
                   {p.title}
                 </button>
@@ -170,8 +170,8 @@ export default function TeacherLearningPathPage() {
             </div>
           </div>
 
-          <div className="bg-[#1a1c25] border border-gray-800 p-6 rounded-2xl shadow-xl">
-            <h3 className="text-sm font-bold text-white mb-3">Tạo lộ trình mới</h3>
+          <div className="bg-[#ffffff] border border-gray-200 p-6 rounded-2xl shadow-xl">
+            <h3 className="text-sm font-bold text-gray-900 mb-3">Tạo lộ trình mới</h3>
             <form onSubmit={handleCreatePath} className="space-y-3">
               <input
                 type="text"
@@ -179,18 +179,18 @@ export default function TeacherLearningPathPage() {
                 placeholder="Tên lộ trình..."
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
-                className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
+                className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
               />
               <textarea
                 placeholder="Mô tả lộ trình học..."
                 value={newDesc}
                 onChange={(e) => setNewDesc(e.target.value)}
-                className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors resize-none"
+                className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors resize-none"
               />
               <button
                 type="submit"
                 disabled={saving}
-                className="w-full py-2.5 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
+                className="w-full py-2.5 bg-[#089e60] text-white font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
               >
                 Tạo lộ trình
               </button>
@@ -203,8 +203,8 @@ export default function TeacherLearningPathPage() {
           {selectedPath ? (
             <>
               {/* Add Item form */}
-              <div className="bg-[#1a1c25] border border-gray-800 p-6 rounded-2xl shadow-xl">
-                <h3 className="text-md font-bold text-white mb-4">Thêm nhiệm vụ vào lộ trình</h3>
+              <div className="bg-[#ffffff] border border-gray-200 p-6 rounded-2xl shadow-xl">
+                <h3 className="text-md font-bold text-gray-900 mb-4">Thêm nhiệm vụ vào lộ trình</h3>
                 <form onSubmit={handleAddItem} className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
                   <div className="sm:col-span-2">
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Tên nhiệm vụ</label>
@@ -214,7 +214,7 @@ export default function TeacherLearningPathPage() {
                       placeholder="VD: Lắp Ráp CPU vào Mainboard"
                       value={itemTitle}
                       onChange={(e) => setItemTitle(e.target.value)}
-                      className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
+                      className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
                     />
                   </div>
                   <div>
@@ -222,7 +222,7 @@ export default function TeacherLearningPathPage() {
                     <select
                       value={itemType}
                       onChange={(e) => setItemType(e.target.value as any)}
-                      className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#089e60] transition-colors"
+                      className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-900 focus:outline-none focus:border-[#089e60] transition-colors"
                     >
                       <option value="lesson">📖 Bài học</option>
                       <option value="quiz">📝 Trắc nghiệm</option>
@@ -232,7 +232,7 @@ export default function TeacherLearningPathPage() {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="w-full py-2.5 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
+                    className="w-full py-2.5 bg-[#089e60] text-white font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
                   >
                     Thêm bài
                   </button>
@@ -240,8 +240,8 @@ export default function TeacherLearningPathPage() {
               </div>
 
               {/* Items List */}
-              <div className="bg-[#1a1c25] border border-gray-800 p-6 rounded-2xl shadow-xl space-y-4">
-                <h3 className="text-md font-bold text-white mb-2">Chi tiết tiến trình bài giảng</h3>
+              <div className="bg-[#ffffff] border border-gray-200 p-6 rounded-2xl shadow-xl space-y-4">
+                <h3 className="text-md font-bold text-gray-900 mb-2">Chi tiết tiến trình bài giảng</h3>
                 
                 {items.length === 0 ? (
                   <div className="p-8 text-center text-gray-500 text-xs">
@@ -250,11 +250,11 @@ export default function TeacherLearningPathPage() {
                 ) : (
                   <div className="space-y-3">
                     {items.map((item, idx) => (
-                      <div key={item.id} className="p-4 bg-[#1e202f]/50 border border-gray-800 rounded-xl flex items-center justify-between gap-4">
+                      <div key={item.id} className="p-4 bg-[#f1f1f1]/50 border border-gray-200 rounded-xl flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                           <span className="text-xs font-bold text-[#089e60] w-6">#{item.order}</span>
                           <div>
-                            <h4 className="font-semibold text-sm text-white">{item.title}</h4>
+                            <h4 className="font-semibold text-sm text-gray-900">{item.title}</h4>
                             <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mt-0.5">
                               {item.item_type === 'quiz' ? '📝 TRẮC NGHIỆM' : item.item_type === 'lab_session' ? '⚙️ THỰC HÀNH' : '📖 BÀI HỌC'}
                             </p>
@@ -267,14 +267,14 @@ export default function TeacherLearningPathPage() {
                           <button
                             disabled={idx === 0}
                             onClick={() => moveItem(idx, 'up')}
-                            className="p-1.5 bg-gray-800 rounded hover:bg-gray-700 text-gray-400 disabled:opacity-30"
+                            className="p-1.5 bg-white rounded hover:bg-gray-700 text-gray-400 disabled:opacity-30"
                           >
                             <ArrowUp size={14} />
                           </button>
                           <button
                             disabled={idx === items.length - 1}
                             onClick={() => moveItem(idx, 'down')}
-                            className="p-1.5 bg-gray-800 rounded hover:bg-gray-700 text-gray-400 disabled:opacity-30"
+                            className="p-1.5 bg-white rounded hover:bg-gray-700 text-gray-400 disabled:opacity-30"
                           >
                             <ArrowDown size={14} />
                           </button>
@@ -303,7 +303,7 @@ export default function TeacherLearningPathPage() {
               </div>
             </>
           ) : (
-            <div className="p-12 text-center bg-[#1a1c25] border border-gray-800 rounded-2xl text-gray-500">
+            <div className="p-12 text-center bg-[#ffffff] border border-gray-200 rounded-2xl text-gray-500">
               Hãy tạo hoặc chọn một Lộ trình ở cột bên trái để bắt đầu sắp xếp.
             </div>
           )}

@@ -75,10 +75,10 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
-            className="fixed bottom-24 right-8 w-[calc(100vw-40px)] max-w-[340px] bg-[#161F38] border border-gray-800 rounded-3xl shadow-2xl z-[1000] overflow-hidden flex flex-col h-[420px]"
+            className="fixed bottom-24 right-8 w-[calc(100vw-40px)] max-w-[340px] bg-[#f5f6f8] border border-gray-200 rounded-3xl shadow-2xl z-[1000] overflow-hidden flex flex-col h-[420px]"
           >
             {/* Header */}
-            <div className="p-4 bg-[#e7e7e7] flex items-center justify-between border-b border-gray-800">
+            <div className="p-4 bg-[#e7e7e7] flex items-center justify-between border-b border-gray-200">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#089e60] text-black rounded-xl flex items-center justify-center">
                   <Bot size={24} />
@@ -88,7 +88,7 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
                   <p className="text-[10px] text-[#089e60] font-bold uppercase tracking-widest">Đang trực tuyến</p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="p-2 text-slate-400 hover:text-white transition-colors">
+              <button onClick={() => setIsOpen(false)} className="p-2 text-slate-400 hover:text-gray-900 transition-colors">
                 <X size={20} />
               </button>
             </div>
@@ -124,7 +124,7 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Hỏi AI Guru điều gì đó..."
-                  className="flex-1 bg-transparent border-none outline-none text-sm text-white"
+                  className="flex-1 bg-transparent border-none outline-none text-sm text-gray-900"
                 />
                 <button 
                   onClick={handleSend}

@@ -37,14 +37,14 @@ export function NotificationItem({ notification, onRead }: Props) {
       onClick={() => {
         if (!notification.is_read) onRead(notification.id)
       }}
-      className={`block px-4 py-3 border-b border-white/5 hover:bg-white/5 transition-colors ${!notification.is_read ? 'bg-[#089e60]/5' : ''}`}
+      className={`block px-4 py-3 border-b border-gray-200 hover:bg-gray-100 transition-colors ${!notification.is_read ? 'bg-[#089e60]/5' : ''}`}
     >
       <div className="flex gap-3">
         <div className="mt-1 flex-shrink-0">
           {getIcon()}
         </div>
         <div className="flex-1 min-w-0">
-          <p className={`text-sm font-medium truncate ${!notification.is_read ? 'text-white font-bold' : 'text-gray-300'}`}>
+          <p className={`text-sm font-medium truncate ${!notification.is_read ? 'text-gray-900 font-bold' : 'text-gray-300'}`}>
             {notification.title}
           </p>
           <p className="text-xs text-gray-400 mt-0.5 line-clamp-2">

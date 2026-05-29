@@ -51,7 +51,7 @@ export default function NotificationsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2">
+      <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 flex flex-col items-center justify-center gap-2">
         <div className="w-8 h-8 border-4 border-[#089e60] border-t-transparent rounded-full animate-spin"></div>
         <span className="text-xs text-gray-500 font-bold uppercase tracking-widest mt-2">Đang tải thông báo...</span>
       </div>
@@ -59,7 +59,7 @@ export default function NotificationsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       {/* High-tech overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#089e60]/5 rounded-full filter blur-[100px] pointer-events-none" />
@@ -67,20 +67,20 @@ export default function NotificationsPage() {
       <div className="max-w-3xl mx-auto relative z-10">
         
         {/* Header Title & Exit Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl">
               <Bell size={24} />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase">Tất Cả Thông Báo</h1>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-gray-900 uppercase">Tất Cả Thông Báo</h1>
               <p className="text-xs text-gray-400 mt-0.5">Cập nhật tin tức, nhiệm vụ và tiến độ học tập mới nhất</p>
             </div>
           </div>
 
           <button 
             onClick={() => router.push('/student')}
-            className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+            className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 text-xs font-bold text-slate-300 hover:text-gray-900 rounded-xl transition-all shadow-md group cursor-pointer"
           >
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
             Quay lại Dashboard
@@ -97,14 +97,14 @@ export default function NotificationsPage() {
           </button>
         </div>
 
-        <div className="bg-[#11121d]/80 rounded-2xl border border-[#e7e7e7] overflow-hidden shadow-xl backdrop-blur-md relative z-10">
+        <div className="bg-[#ffffff]/80 rounded-2xl border border-[#e7e7e7] overflow-hidden shadow-xl backdrop-blur-md relative z-10">
           {notifications.length === 0 ? (
             <div className="p-12 text-center text-gray-400 font-medium">
               Bạn không có thông báo nào.
             </div>
           ) : (
             notifications.map((notif, index) => (
-              <div key={notif.id} className={index !== notifications.length - 1 ? 'border-b border-gray-800' : ''}>
+              <div key={notif.id} className={index !== notifications.length - 1 ? 'border-b border-gray-200' : ''}>
                 <NotificationItem 
                   notification={notif} 
                   onRead={markAsRead} 

@@ -87,7 +87,7 @@ export default function StudentQuizPage() {
   )
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-16 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 pb-16 px-4 sm:px-6 relative overflow-hidden">
       
       {/* High-tech overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
@@ -96,13 +96,13 @@ export default function StudentQuizPage() {
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Workspace Title & Exit Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl">
               <Award size={24} />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-gray-900 uppercase flex items-center gap-2">
                 Ngân Hàng <span className="text-[#089e60]">Đề Thi & Quiz</span>
               </h1>
               <p className="text-xs text-gray-400 mt-0.5">Đánh giá kiến thức phần cứng, tích lũy điểm XP để mở khóa danh hiệu mới</p>
@@ -118,14 +118,14 @@ export default function StudentQuizPage() {
                 placeholder="Tìm kiếm bài trắc nghiệm..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#ffffff]/50 border border-gray-800 focus:border-[#089e60] outline-none pl-11 pr-4 py-2.5 rounded-2xl text-xs transition-all text-white placeholder-gray-500"
+                className="w-full bg-[#ffffff]/50 border border-gray-200 focus:border-[#089e60] outline-none pl-11 pr-4 py-2.5 rounded-2xl text-xs transition-all text-gray-900 placeholder-gray-500"
               />
             </div>
 
             {/* EXIT BUTTON */}
             <button 
               onClick={() => router.push('/student')}
-              className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+              className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 text-xs font-bold text-slate-300 hover:text-gray-900 rounded-xl transition-all shadow-md group cursor-pointer"
             >
               <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
               Quay lại Dashboard
@@ -141,7 +141,7 @@ export default function StudentQuizPage() {
             placeholder="Tìm kiếm bài trắc nghiệm..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#ffffff]/50 border border-gray-800 focus:border-[#089e60] outline-none pl-11 pr-4 py-2 rounded-2xl text-xs transition-all text-white placeholder-gray-500"
+            className="w-full bg-[#ffffff]/50 border border-gray-200 focus:border-[#089e60] outline-none pl-11 pr-4 py-2 rounded-2xl text-xs transition-all text-gray-900 placeholder-gray-500"
           />
         </div>
 
@@ -157,7 +157,7 @@ export default function StudentQuizPage() {
             </div>
           </div>
 
-          <div className="p-6 bg-[#ffffff]/40 border border-gray-800 rounded-3xl flex items-center gap-4">
+          <div className="p-6 bg-[#ffffff]/40 border border-gray-200 rounded-3xl flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center shrink-0">
               <Star size={24} />
             </div>
@@ -167,7 +167,7 @@ export default function StudentQuizPage() {
             </div>
           </div>
 
-          <div className="p-6 bg-[#ffffff]/40 border border-gray-800 rounded-3xl flex items-center gap-4">
+          <div className="p-6 bg-[#ffffff]/40 border border-gray-200 rounded-3xl flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center shrink-0">
               <Flame size={24} />
             </div>
@@ -192,11 +192,11 @@ export default function StudentQuizPage() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-[#1a1c25]/80 border border-gray-800 rounded-3xl p-6 hover:shadow-[0_0_30px_rgba(8,158,96,0.05)] hover:border-gray-700 transition-all flex flex-col justify-between group"
+                className="bg-[#ffffff]/80 border border-gray-200 rounded-3xl p-6 hover:shadow-[0_0_30px_rgba(8,158,96,0.05)] hover:border-gray-300 transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest bg-gray-900/60 px-2.5 py-1 rounded-md">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest bg-white/60 px-2.5 py-1 rounded-md">
                       {quiz.lessons?.title || 'Chương Trình PC'}
                     </span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -207,7 +207,7 @@ export default function StudentQuizPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold mb-6 text-white group-hover:text-[#089e60] transition-colors line-clamp-2">
+                  <h3 className="text-lg font-bold mb-6 text-gray-900 group-hover:text-[#089e60] transition-colors line-clamp-2">
                     {quiz.title}
                   </h3>
                 </div>
@@ -220,7 +220,7 @@ export default function StudentQuizPage() {
 
                   <Link 
                     href={`/student/quiz/${quiz.id}`}
-                    className="w-full py-3 bg-[#0d0e13] text-white border border-gray-800 hover:border-[#089e60] hover:text-[#089e60] font-bold rounded-2xl flex items-center justify-center gap-2 transition-all"
+                    className="w-full py-3 bg-[#f8f9fa] text-gray-900 border border-gray-200 hover:border-[#089e60] hover:text-[#089e60] font-bold rounded-2xl flex items-center justify-center gap-2 transition-all"
                   >
                     BẮT ĐẦU LÀM BÀI <Play size={14} fill="currentColor" />
                   </Link>
@@ -229,7 +229,7 @@ export default function StudentQuizPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-[#ffffff]/20 border border-dashed border-gray-800 rounded-[32px]">
+          <div className="text-center py-20 bg-[#ffffff]/20 border border-dashed border-gray-200 rounded-[32px]">
             <HelpCircle size={48} className="mx-auto text-gray-600 mb-4" />
             <p className="text-gray-500 font-medium italic">Không tìm thấy bài trắc nghiệm nào phù hợp.</p>
           </div>

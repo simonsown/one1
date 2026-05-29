@@ -230,7 +230,7 @@ export default function StudentLearningPathPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2">
+      <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 flex flex-col items-center justify-center gap-2">
         <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang tải lộ trình học...</span>
       </div>
@@ -238,7 +238,7 @@ export default function StudentLearningPathPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       
       {/* Tech decorative corners & neon overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
@@ -247,13 +247,13 @@ export default function StudentLearningPathPage() {
       <div className="max-w-3xl mx-auto relative z-10">
         
         {/* Workspace Title & Exit Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl">
               <Map size={24} />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase">Lộ trình học tập PC Master</h1>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-gray-900 uppercase">Lộ trình học tập PC Master</h1>
               <p className="text-xs text-gray-400 mt-0.5">Hoàn thành lần lượt các nội dung bài học để mở khóa thử thách tiếp theo</p>
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function StudentLearningPathPage() {
           {/* EXIT BUTTON */}
           <button 
             onClick={() => router.push('/student')}
-            className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+            className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 text-xs font-bold text-slate-300 hover:text-gray-900 rounded-xl transition-all shadow-md group cursor-pointer"
           >
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
             Quay lại Dashboard
@@ -269,7 +269,7 @@ export default function StudentLearningPathPage() {
         </div>
 
         {error ? (
-          <div className="p-8 text-center bg-[#1a1c25] border border-gray-800 rounded-2xl text-gray-400">
+          <div className="p-8 text-center bg-[#ffffff] border border-gray-200 rounded-2xl text-gray-400">
             {error}
           </div>
         ) : (

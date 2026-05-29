@@ -36,10 +36,10 @@ export default function DiscussionPanel({ lessonId, currentUserId, userRole }: D
   }
 
   return (
-    <div className="flex flex-col h-full bg-[#ffffff]/20 rounded-2xl border border-gray-800 overflow-hidden">
+    <div className="flex flex-col h-full bg-[#ffffff]/20 rounded-2xl border border-gray-200 overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-gray-800 bg-[#ffffff]/50 flex items-center justify-between flex-shrink-0">
-        <h3 className="font-bold text-white text-sm flex items-center gap-2">
+      <div className="p-4 border-b border-gray-200 bg-[#ffffff]/50 flex items-center justify-between flex-shrink-0">
+        <h3 className="font-bold text-gray-900 text-sm flex items-center gap-2">
           <MessageSquare size={16} className="text-[#089e60]" />
           <span>Thảo luận ({threads.length})</span>
         </h3>
@@ -52,24 +52,24 @@ export default function DiscussionPanel({ lessonId, currentUserId, userRole }: D
       </div>
 
       {/* Tabs */}
-      <div className="flex px-4 py-2 border-b border-gray-800/50 bg-[#ffffff]/10 gap-2 flex-shrink-0">
+      <div className="flex px-4 py-2 border-b border-gray-200/50 bg-[#ffffff]/10 gap-2 flex-shrink-0">
         <button 
           onClick={() => setActiveTab('all')}
-          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'all' ? 'bg-[#089e60] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
+          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'all' ? 'bg-[#089e60] text-white' : 'text-gray-400 hover:text-gray-900'}`}
         >
           Tất cả
         </button>
         {userRole === 'teacher' && (
           <button 
             onClick={() => setActiveTab('unanswered')}
-            className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'unanswered' ? 'bg-[#089e60] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
+            className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'unanswered' ? 'bg-[#089e60] text-white' : 'text-gray-400 hover:text-gray-900'}`}
           >
             Chưa trả lời
           </button>
         )}
         <button 
           onClick={() => setActiveTab('pinned')}
-          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'pinned' ? 'bg-[#089e60] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
+          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'pinned' ? 'bg-[#089e60] text-white' : 'text-gray-400 hover:text-gray-900'}`}
         >
           Ghim
         </button>

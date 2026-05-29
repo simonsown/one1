@@ -34,13 +34,13 @@ export default function CertificateCard({ courseName, issueDate, verificationCod
         </div>
 
         <div>
-          <h3 className="text-2xl font-black text-white mb-2">{courseName}</h3>
+          <h3 className="text-2xl font-black text-gray-900 mb-2">{courseName}</h3>
           <p className="text-sm text-text-secondary leading-relaxed">
-            Chứng nhận <span className="text-white font-bold">{studentName}</span> đã hoàn thành xuất sắc lộ trình đào tạo và các bài kiểm tra đánh giá.
+            Chứng nhận <span className="text-gray-900 font-bold">{studentName}</span> đã hoàn thành xuất sắc lộ trình đào tạo và các bài kiểm tra đánh giá.
           </p>
         </div>
 
-        <div className="flex items-center gap-6 py-4 border-y border-white/5">
+        <div className="flex items-center gap-6 py-4 border-y border-gray-200">
            <div className="flex items-center gap-2">
               <Calendar size={14} className="text-brand-primary" />
               <span className="text-xs text-text-muted">Ngày cấp: <strong>{new Date(issueDate).toLocaleDateString('vi-VN')}</strong></span>
@@ -55,7 +55,7 @@ export default function CertificateCard({ courseName, issueDate, verificationCod
           <button className="flex-1 py-3 bg-brand-primary text-black rounded-xl font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg">
             <Download size={14} /> Tải PDF
           </button>
-          <button className="px-4 py-3 bg-white/5 text-white rounded-xl hover:bg-white/10 transition-all flex items-center justify-center">
+          <button className="px-4 py-3 bg-gray-100 text-gray-900 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center">
             <Share2 size={16} />
           </button>
         </div>

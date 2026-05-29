@@ -39,12 +39,12 @@ export function NewThreadModal({ isOpen, onClose, onSubmit, userRole }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[#1a1c25] border border-gray-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-[#ffffff] border border-gray-200 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-[#ffffff]/30">
-          <h3 className="font-bold text-white text-lg">Đặt câu hỏi mới</h3>
-          <button onClick={onClose} className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-[#ffffff]/30">
+          <h3 className="font-bold text-gray-900 text-lg">Đặt câu hỏi mới</h3>
+          <button onClick={onClose} className="p-1 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
             <X size={20} />
           </button>
         </div>
@@ -67,7 +67,7 @@ export function NewThreadModal({ isOpen, onClose, onSubmit, userRole }: Props) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="VD: Làm thế nào để tính công suất nguồn (TDP)?"
-              className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
+              className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
             />
           </div>
 
@@ -79,7 +79,7 @@ export function NewThreadModal({ isOpen, onClose, onSubmit, userRole }: Props) {
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value as any)}
-                className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#089e60] transition-colors"
+                className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:border-[#089e60] transition-colors"
               >
                 <option value="question">❓ Câu hỏi</option>
                 <option value="discussion">💬 Thảo luận</option>
@@ -98,14 +98,14 @@ export function NewThreadModal({ isOpen, onClose, onSubmit, userRole }: Props) {
               value={body}
               onChange={(e) => setBody(e.target.value)}
               placeholder="Mô tả chi tiết thắc mắc của bạn..."
-              className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors resize-none"
+              className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors resize-none"
             />
           </div>
 
           <button 
             type="submit"
             disabled={loading}
-            className="w-full bg-[#089e60] text-[#0d0e13] font-bold py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="w-full bg-[#089e60] text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
           >
             {loading ? 'Đang gửi...' : 'Đăng chủ đề'}
           </button>

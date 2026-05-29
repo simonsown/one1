@@ -94,7 +94,7 @@ export default function StudentCertificatesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2">
+      <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 flex flex-col items-center justify-center gap-2">
         <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang tải chứng chỉ...</span>
       </div>
@@ -102,7 +102,7 @@ export default function StudentCertificatesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       {/* High-tech overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#089e60]/5 rounded-full filter blur-[100px] pointer-events-none" />
@@ -110,20 +110,20 @@ export default function StudentCertificatesPage() {
       <div className="max-w-4xl mx-auto relative z-10">
         
         {/* Header Title & Exit Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl">
               <Award size={24} />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase">Chứng chỉ & Danh hiệu</h1>
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-gray-900 uppercase">Chứng chỉ & Danh hiệu</h1>
               <p className="text-xs text-gray-400 mt-0.5">Hoàn thành nhiệm vụ để thu thập các chứng chỉ danh giá</p>
             </div>
           </div>
 
           <button 
             onClick={() => router.push('/student')}
-            className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+            className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 text-xs font-bold text-slate-300 hover:text-gray-900 rounded-xl transition-all shadow-md group cursor-pointer"
           >
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
             Quay lại Dashboard
@@ -138,29 +138,29 @@ export default function StudentCertificatesPage() {
             return (
               <div 
                 key={certType.id} 
-                className={`bg-[#11121d]/80 border rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden backdrop-blur-md transition-all ${isEarned ? 'border-[#089e60]/50' : 'border-[#e7e7e7]'}`}
+                className={`bg-[#ffffff]/80 border rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden backdrop-blur-md transition-all ${isEarned ? 'border-[#089e60]/50' : 'border-[#e7e7e7]'}`}
               >
-                <div className={`absolute left-0 top-0 bottom-0 w-2 ${isEarned ? 'bg-[#089e60]' : 'bg-gray-800'}`}></div>
+                <div className={`absolute left-0 top-0 bottom-0 w-2 ${isEarned ? 'bg-[#089e60]' : 'bg-white'}`}></div>
 
                 <div className="flex items-start gap-4 w-full md:w-auto flex-1">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1 ${isEarned ? 'bg-[#089e60]/20 border border-[#089e60]/30 text-[#089e60] shadow-[0_0_15px_rgba(8,158,96,0.2)]' : 'bg-gray-800/50 border border-gray-700 text-gray-500'}`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1 ${isEarned ? 'bg-[#089e60]/20 border border-[#089e60]/30 text-[#089e60] shadow-[0_0_15px_rgba(8,158,96,0.2)]' : 'bg-gray-1000 border border-gray-300 text-gray-500'}`}>
                     {certType.icon}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className={`text-lg font-black uppercase ${isEarned ? 'text-white' : 'text-gray-400'}`}>{certType.title}</h3>
+                      <h3 className={`text-lg font-black uppercase ${isEarned ? 'text-gray-900' : 'text-gray-400'}`}>{certType.title}</h3>
                       {isEarned && <CheckCircle size={16} className="text-[#089e60]" />}
                     </div>
                     <p className="text-sm text-gray-400 mb-3">{certType.description}</p>
                     
-                    <div className="bg-[#161F38] p-3 rounded-xl border border-[#e7e7e7]">
+                    <div className="bg-[#f5f6f8] p-3 rounded-xl border border-[#e7e7e7]">
                       <p className="text-xs font-bold text-blue-400 mb-1 flex items-center gap-1.5"><Target size={14} /> Nhiệm vụ cần đạt:</p>
                       <p className="text-xs text-gray-300">{certType.mission}</p>
                     </div>
 
                     {isEarned && (
                       <div className="mt-3 text-xs text-gray-500">
-                        Mã xác thực: <strong className="text-white font-mono">{earnedCert.certificate_number}</strong>
+                        Mã xác thực: <strong className="text-gray-900 font-mono">{earnedCert.certificate_number}</strong>
                       </div>
                     )}
                   </div>
@@ -174,14 +174,14 @@ export default function StudentCertificatesPage() {
                           href={earnedCert.pdf_url} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="flex-1 text-center md:w-44 px-4 py-2.5 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(0,212,170,0.15)]"
+                          className="flex-1 text-center md:w-44 px-4 py-2.5 bg-[#089e60] text-white font-bold text-xs rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(0,212,170,0.15)]"
                         >
                           <FileText size={14} /> Tải PDF
                         </a>
                       )}
                       <button 
                         onClick={() => handleCopyLink(earnedCert.verify_url)}
-                        className="flex-1 md:w-44 px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2"
+                        className="flex-1 md:w-44 px-4 py-2.5 bg-white hover:bg-gray-700 text-gray-900 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2"
                       >
                         <Copy size={14} /> Copy link xác thực
                       </button>
@@ -190,7 +190,7 @@ export default function StudentCertificatesPage() {
                     <button 
                       onClick={handleRequestCertificate}
                       disabled={issuing}
-                      className="flex-1 md:w-44 px-4 py-2.5 bg-gray-800 text-gray-400 font-bold text-xs rounded-xl hover:bg-gray-700 transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2"
+                      className="flex-1 md:w-44 px-4 py-2.5 bg-white text-gray-400 font-bold text-xs rounded-xl hover:bg-gray-700 transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2"
                     >
                       {issuing ? <RefreshCw size={14} className="animate-spin" /> : <Lock size={14} />}
                       Yêu cầu kiểm tra

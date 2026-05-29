@@ -68,7 +68,7 @@ export function AvatarUpload({ userId, currentAvatarUrl, onUploadSuccess }: Prop
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative group">
-        <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-800 bg-[#1e202f]/50 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-200 bg-[#f1f1f1]/50 flex items-center justify-center">
           {currentAvatarUrl ? (
             <img 
               src={currentAvatarUrl} 
@@ -83,7 +83,7 @@ export function AvatarUpload({ userId, currentAvatarUrl, onUploadSuccess }: Prop
 
         {/* Floating Upload Trigger */}
         <label className="
-          absolute bottom-0 right-0 p-2 bg-[#089e60] text-[#0d0e13] rounded-full cursor-pointer
+          absolute bottom-0 right-0 p-2 bg-[#089e60] text-white rounded-full cursor-pointer
           hover:opacity-90 transition-opacity shadow-lg flex items-center justify-center
         ">
           {uploading ? <Loader size={14} className="animate-spin" /> : <Camera size={14} />}

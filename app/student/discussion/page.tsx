@@ -194,7 +194,7 @@ export default function DiscussionDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#161F38] text-white pt-24 flex justify-center items-center">
+      <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 flex justify-center items-center">
         <div className="flex flex-col items-center gap-2">
           <Loader2 className="animate-spin text-[#089e60]" size={32} />
           <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang kết nối diễn đàn...</span>
@@ -204,7 +204,7 @@ export default function DiscussionDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       
       {/* Decorative High-Tech Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
@@ -214,14 +214,14 @@ export default function DiscussionDashboardPage() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Workspace Title & Exit Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10 relative">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-200 relative">
           
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl shadow-[0_0_15px_rgba(0,212,170,0.1)]">
               <MessageSquare size={24} />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-gray-900 uppercase flex items-center gap-2">
                 KHÔNG GIAN THẢO LUẬN 3D
                 <span className="text-[9px] bg-[#089e60]/15 text-[#089e60] font-black border border-[#089e60]/25 px-2 py-0.5 rounded-full uppercase">REAL-TIME</span>
               </h1>
@@ -230,7 +230,7 @@ export default function DiscussionDashboardPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-2 bg-black/40 border border-gray-800 rounded-full px-4 py-1.5 text-xs text-slate-400 font-bold">
+            <div className="hidden md:flex items-center gap-2 bg-gray-100/40 border border-gray-200 rounded-full px-4 py-1.5 text-xs text-slate-400 font-bold">
               <span className="w-2 h-2 rounded-full bg-[#089e60] animate-ping" />
               Lớp {userProfile?.grade || 'PC Master'}
             </div>
@@ -238,7 +238,7 @@ export default function DiscussionDashboardPage() {
             {/* EXIT/BACK BUTTON */}
             <button 
               onClick={() => router.push('/student')}
-              className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-gray-900/90 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-xs font-bold text-slate-300 hover:text-white rounded-xl transition-all shadow-md group cursor-pointer"
+              className="relative z-50 pointer-events-auto flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 text-xs font-bold text-slate-300 hover:text-gray-900 rounded-xl transition-all shadow-md group cursor-pointer"
             >
               <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
               Quay lại Dashboard
@@ -257,7 +257,7 @@ export default function DiscussionDashboardPage() {
             <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-[#089e60]/30 pointer-events-none" />
 
             {selectedThread ? (
-              <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative min-h-[500px]">
+              <div className="bg-[#ffffff]/90 border border-gray-200 rounded-3xl p-6 shadow-xl relative min-h-[500px]">
                 <ThreadDetail 
                   thread={selectedThread}
                   currentUserId={userProfile?.id}
@@ -265,9 +265,9 @@ export default function DiscussionDashboardPage() {
                 />
               </div>
             ) : (
-              <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative space-y-4 min-h-[500px]">
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                  <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+              <div className="bg-[#ffffff]/90 border border-gray-200 rounded-3xl p-6 shadow-xl relative space-y-4 min-h-[500px]">
+                <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+                  <h2 className="text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
                     <Globe size={18} className="text-[#089e60]" />
                     Chủ đề thảo luận sôi nổi
                   </h2>
@@ -302,20 +302,20 @@ export default function DiscussionDashboardPage() {
             <div className="absolute -bottom-1 -left-1 w-3.5 h-3.5 border-b-2 border-l-2 border-[#289cf9]/30 pointer-events-none" />
 
             {/* Realtime Chat Card */}
-            <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl shadow-xl overflow-hidden flex flex-col h-[400px]">
+            <div className="bg-[#ffffff]/90 border border-gray-200 rounded-3xl shadow-xl overflow-hidden flex flex-col h-[400px]">
               
               {/* Channel Tabs */}
-              <div className="p-3 bg-[#181926] border-b border-gray-800 flex items-center justify-between shrink-0">
+              <div className="p-3 bg-[#ffffff] border-b border-gray-200 flex items-center justify-between shrink-0">
                 <div className="flex gap-2">
                   <button 
                     onClick={() => setChatChannel('global')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'global' ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/25' : 'text-gray-400 hover:text-white'}`}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'global' ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/25' : 'text-gray-400 hover:text-gray-900'}`}
                   >
                     <Globe size={14} /> Kênh Chung
                   </button>
                   <button 
                     onClick={() => setChatChannel('class')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'class' ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/25' : 'text-gray-400 hover:text-white'}`}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'class' ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/25' : 'text-gray-400 hover:text-gray-900'}`}
                   >
                     <School size={14} /> Kênh Lớp Học
                   </button>
@@ -327,10 +327,10 @@ export default function DiscussionDashboardPage() {
               </div>
 
               {/* Chat Stream */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0c0c16]/50">
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#f1f1f1]/50">
                 {(chatChannel === 'global' ? globalMessages : classMessages).map(m => (
                   <div key={m.id} className="flex gap-3 text-xs items-start">
-                    <span className="w-8 h-8 rounded-xl bg-gray-800 border border-gray-700/50 flex items-center justify-center text-sm shrink-0 shadow-md">
+                    <span className="w-8 h-8 rounded-xl bg-white border border-gray-300/50 flex items-center justify-center text-sm shrink-0 shadow-md">
                       {m.avatar}
                     </span>
                     <div className="flex-1">
@@ -345,7 +345,7 @@ export default function DiscussionDashboardPage() {
                         )}
                         <span className="text-[9px] text-gray-500 font-medium ml-auto">{m.time}</span>
                       </div>
-                      <p className="text-gray-300 mt-1 leading-relaxed bg-[#141523]/60 p-2.5 rounded-2xl rounded-tl-none border border-white/5">
+                      <p className="text-gray-300 mt-1 leading-relaxed bg-[#141523]/60 p-2.5 rounded-2xl rounded-tl-none border border-gray-200">
                         {m.content}
                       </p>
                     </div>
@@ -355,15 +355,15 @@ export default function DiscussionDashboardPage() {
               </div>
 
               {/* Chat Input */}
-              <div className="p-3 border-t border-gray-800 bg-[#11121d] shrink-0">
-                <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#089e60] rounded-2xl p-1.5 pl-3 transition-colors">
+              <div className="p-3 border-t border-gray-200 bg-[#ffffff] shrink-0">
+                <div className="flex items-center gap-2 bg-[#f1f1f1] border border-gray-200 focus-within:border-[#089e60] rounded-2xl p-1.5 pl-3 transition-colors">
                   <input 
                     type="text" 
                     placeholder={chatChannel === 'global' ? "Chat chung với học viên toàn quốc..." : "Nhắn tin cho bạn bè trong lớp..."}
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendChat()}
-                    className="flex-1 bg-transparent border-none outline-none text-xs text-white placeholder-gray-500"
+                    className="flex-1 bg-transparent border-none outline-none text-xs text-gray-900 placeholder-gray-500"
                   />
                   <button 
                     onClick={handleSendChat}
@@ -376,7 +376,7 @@ export default function DiscussionDashboardPage() {
             </div>
 
             {/* Anchored Micro AI Assistant (Locked Tiny Chatbot) */}
-            <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-5 shadow-xl relative overflow-hidden flex flex-col justify-between h-[230px] group">
+            <div className="bg-[#ffffff]/90 border border-gray-200 rounded-3xl p-5 shadow-xl relative overflow-hidden flex flex-col justify-between h-[230px] group">
               
               {/* Tech Corner Pins */}
               <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#089e60]/30 group-hover:border-[#089e60]/80 transition-colors" />
@@ -389,7 +389,7 @@ export default function DiscussionDashboardPage() {
                     <Cpu size={14} />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-white tracking-tight flex items-center gap-1.5">
+                    <h4 className="text-xs font-bold text-gray-900 tracking-tight flex items-center gap-1.5">
                       MICRO AI GURU
                       <Sparkles size={10} className="text-yellow-400" />
                     </h4>
@@ -400,9 +400,9 @@ export default function DiscussionDashboardPage() {
               </div>
 
               {/* Quick AI Response Window */}
-              <div className="flex-1 overflow-y-auto my-3 p-3 bg-[#0c0c16]/50 rounded-xl border border-white/5 space-y-2 text-[11px] leading-relaxed">
+              <div className="flex-1 overflow-y-auto my-3 p-3 bg-[#f1f1f1]/50 rounded-xl border border-gray-200 space-y-2 text-[11px] leading-relaxed">
                 {aiReplies.map((r, i) => (
-                  <div key={i} className={`p-2 rounded-lg ${r.startsWith('AI Guru:') ? 'bg-[#089e60]/5 text-slate-300 border-l-2 border-[#089e60]' : 'bg-[#181926] text-slate-200 border-l-2 border-slate-600'}`}>
+                  <div key={i} className={`p-2 rounded-lg ${r.startsWith('AI Guru:') ? 'bg-[#089e60]/5 text-slate-300 border-l-2 border-[#089e60]' : 'bg-[#ffffff] text-slate-200 border-l-2 border-slate-600'}`}>
                     {r}
                   </div>
                 ))}
@@ -414,14 +414,14 @@ export default function DiscussionDashboardPage() {
               </div>
 
               {/* Mini AI Input */}
-              <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#089e60] rounded-xl p-1.5 pl-3 transition-colors shrink-0">
+              <div className="flex items-center gap-2 bg-[#f1f1f1] border border-gray-200 focus-within:border-[#089e60] rounded-xl p-1.5 pl-3 transition-colors shrink-0">
                 <input 
                   type="text" 
                   placeholder="Hỏi nhanh AI về socket, vga, psu..."
                   value={aiInput}
                   onChange={(e) => setAiInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendAi()}
-                  className="flex-1 bg-transparent border-none outline-none text-[10px] text-white placeholder-gray-500"
+                  className="flex-1 bg-transparent border-none outline-none text-[10px] text-gray-900 placeholder-gray-500"
                 />
                 <button 
                   onClick={handleSendAi}

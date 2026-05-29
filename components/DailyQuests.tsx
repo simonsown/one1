@@ -63,7 +63,7 @@ export default function DailyQuests() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <p className={`text-sm font-bold ${isDone ? 'text-slate-500 line-through' : 'text-white'}`}>{q.title}</p>
+                    <p className={`text-sm font-bold ${isDone ? 'text-slate-500 line-through' : 'text-gray-900'}`}>{q.title}</p>
                     <span className="text-xs font-bold text-[#089e60]">+{q.xp_reward} XP</span>
                   </div>
                   <p className="text-xs text-slate-500">{q.description}</p>

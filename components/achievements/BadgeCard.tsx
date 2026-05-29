@@ -33,7 +33,7 @@ export function BadgeCard({ badge }: Props) {
       }
       default: return {
         badge: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
-        glow: 'border-gray-800'
+        glow: 'border-gray-200'
       }
     }
   }
@@ -42,13 +42,13 @@ export function BadgeCard({ badge }: Props) {
 
   return (
     <div className={`
-      relative p-6 bg-[#1a1c25]/80 border rounded-2xl flex flex-col items-center text-center transition-all duration-300 overflow-hidden
+      relative p-6 bg-[#ffffff]/80 border rounded-2xl flex flex-col items-center text-center transition-all duration-300 overflow-hidden
       ${badge.earned ? `${styles.glow} bg-gradient-to-b from-[#1a1c25]/80 to-[#1e202f]/40` : 'border-gray-900 bg-gray-950/20 grayscale opacity-45'}
     `}>
       {/* Badge Icon */}
       <div className={`
         w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-4 relative z-10
-        ${badge.earned ? 'bg-[#ffffff]/60 border border-white/10' : 'bg-gray-900 border border-gray-850'}
+        ${badge.earned ? 'bg-[#ffffff]/60 border border-gray-200' : 'bg-white border border-gray-200'}
       `}>
         {badge.earned ? badge.icon : '🔒'}
       </div>
@@ -59,7 +59,7 @@ export function BadgeCard({ badge }: Props) {
       </span>
 
       {/* Title */}
-      <h3 className="font-bold text-white text-base mb-1">
+      <h3 className="font-bold text-gray-900 text-base mb-1">
         {badge.earned ? badge.title : 'Thành tích ẩn'}
       </h3>
 
@@ -69,7 +69,7 @@ export function BadgeCard({ badge }: Props) {
       </p>
 
       {/* Earned Date or Point value */}
-      <div className="mt-auto w-full pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-gray-500 font-bold">
+      <div className="mt-auto w-full pt-3 border-t border-gray-200 flex items-center justify-between text-[10px] text-gray-500 font-bold">
         <span>+{badge.points} PTS</span>
         {badge.earned && badge.earnedAt && (
           <span className="text-[#089e60]">Đạt: {new Date(badge.earnedAt).toLocaleDateString('vi-VN')}</span>

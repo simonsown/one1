@@ -19,7 +19,7 @@ export default async function ProgressPage() {
   )
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return <div className="p-8 text-[#dde0ed]">Vui lòng đăng nhập.</div>
+  if (!user) return <div className="p-8 text-gray-800">Vui lòng đăng nhập.</div>
 
   const [stats, dailyProgress, lessons, quizResults, builderActivity] = await Promise.all([
     getProgressStats(supabase, user.id),
@@ -30,7 +30,7 @@ export default async function ProgressPage() {
   ])
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#f5f6f8] text-gray-900 pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       {/* High-tech overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#089e60]/5 rounded-full filter blur-[100px] pointer-events-none" />

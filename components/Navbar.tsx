@@ -90,7 +90,7 @@ export default function Navbar() {
             {/* LOGO — bên trái */}
             <Link href="/" className="flex flex-row items-center gap-2 flex-shrink-0 group">
               <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain transition-transform group-hover:scale-110" />
-              <span className="font-bold text-white tracking-tight hidden sm:block">PC MASTER <span className="text-[#089e60]">LMS</span></span>
+              <span className="font-bold text-gray-900 tracking-tight hidden sm:block">PC MASTER <span className="text-[#089e60]">LMS</span></span>
             </Link>
 
             {/* NAV LINKS — giữa, CHỈ HIỆN DESKTOP */}
@@ -102,7 +102,7 @@ export default function Navbar() {
                     key={item.path} 
                     href={item.path}
                     className={`relative px-4 py-2 rounded-full flex flex-row items-center gap-2 text-sm font-medium transition-colors ${
-                      isActive ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-[#ffffff]'
+                      isActive ? 'text-gray-900' : 'text-slate-400 hover:text-gray-900 hover:bg-[#ffffff]'
                     }`}
                   >
                     {isActive && (
@@ -158,17 +158,17 @@ export default function Navbar() {
                             className="absolute right-0 mt-2 w-56 bg-[#ffffff] border border-[#e7e7e7] rounded-xl shadow-2xl py-2 z-50"
                           >
                             <div className="px-4 py-2 border-b border-[#e7e7e7] mb-2">
-                              <p className="text-sm font-bold text-white truncate">{userProfile.full_name}</p>
+                              <p className="text-sm font-bold text-gray-900 truncate">{userProfile.full_name}</p>
                               <p className="text-xs text-slate-400 truncate">{userProfile.email}</p>
                               <div className="mt-1 inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/20">
                                 {role}
                               </div>
                             </div>
                             
-                            <Link href="/profile" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#e7e7e7] transition-colors">
+                            <Link href="/profile" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-gray-900 hover:bg-[#e7e7e7] transition-colors">
                               <UserIcon size={16} /> Hồ sơ cá nhân
                             </Link>
-                            <Link href="/settings" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#e7e7e7] transition-colors">
+                            <Link href="/settings" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-gray-900 hover:bg-[#e7e7e7] transition-colors">
                               <Settings size={16} /> Cài đặt
                             </Link>
                             
@@ -191,7 +191,7 @@ export default function Navbar() {
 
               {/* Hamburger — CHỈ MOBILE */}
               <button 
-                className="md:hidden p-2 text-slate-400 hover:text-white bg-[#ffffff] rounded-lg border border-[#e7e7e7]"
+                className="md:hidden p-2 text-slate-400 hover:text-gray-900 bg-[#ffffff] rounded-lg border border-[#e7e7e7]"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <Menu size={20} />
@@ -232,7 +232,7 @@ export default function Navbar() {
                     <img src="/logo.png" alt="Logo" className="w-8 h-8" />
                   )}
                   <div>
-                    <div className="font-bold text-sm text-white">
+                    <div className="font-bold text-sm text-gray-900">
                       {userProfile ? userProfile.full_name : 'PC MASTER LMS'}
                     </div>
                     {userProfile && (
@@ -240,7 +240,7 @@ export default function Navbar() {
                     )}
                   </div>
                 </div>
-                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-slate-400 hover:text-white bg-[#e7e7e7] rounded-lg">
+                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-slate-400 hover:text-gray-900 bg-[#e7e7e7] rounded-lg">
                   <X size={20} />
                 </button>
               </div>
@@ -257,7 +257,7 @@ export default function Navbar() {
                       className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${
                         isActive 
                           ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/20' 
-                          : 'text-slate-300 hover:bg-[#ffffff] hover:text-white'
+                          : 'text-slate-300 hover:bg-[#ffffff] hover:text-gray-900'
                       }`}
                     >
                       {item.icon}
@@ -272,14 +272,14 @@ export default function Navbar() {
                     <Link 
                       href="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#ffffff] hover:text-white transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#ffffff] hover:text-gray-900 transition-colors"
                     >
                       <UserIcon size={18} /> Hồ sơ cá nhân
                     </Link>
                     <Link 
                       href="/settings"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#ffffff] hover:text-white transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#ffffff] hover:text-gray-900 transition-colors"
                     >
                       <Settings size={18} /> Cài đặt
                     </Link>

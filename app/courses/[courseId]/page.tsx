@@ -104,7 +104,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ courseI
                   <div className="aspect-video rounded-[32px] overflow-hidden">
                     <img src={course.thumbnail_url} className="w-full h-full object-cover" />
                   </div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-sm pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-gray-100/40 backdrop-blur-sm pointer-events-none">
                      <div className="w-20 h-20 bg-[#089e60] text-black rounded-full flex items-center justify-center shadow-2xl shadow-[#089e60]/40">
                         <Play size={32} fill="currentColor" />
                      </div>
@@ -138,7 +138,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ courseI
                           <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">4 phần • 45 phút</p>
                        </div>
                     </div>
-                    <Link href={`/courses/${courseId}/lessons/${lesson.id}`} className="px-6 py-2.5 bg-white/5 hover:bg-[#089e60] hover:text-black rounded-xl font-bold text-sm transition-all flex items-center gap-2">
+                    <Link href={`/courses/${courseId}/lessons/${lesson.id}`} className="px-6 py-2.5 bg-gray-100 hover:bg-[#089e60] hover:text-black rounded-xl font-bold text-sm transition-all flex items-center gap-2">
                        HỌC NGAY <ChevronRight size={16} />
                     </Link>
                  </div>

@@ -47,7 +47,7 @@ export function ProfileForm({ profile }: Props) {
           type="email" 
           disabled 
           value={profile.email} 
-          className="w-full bg-[#1e202f]/30 border border-gray-850 text-gray-500 rounded-xl px-4 py-3 text-xs focus:outline-none cursor-not-allowed"
+          className="w-full bg-[#f1f1f1]/30 border border-gray-200 text-gray-500 rounded-xl px-4 py-3 text-xs focus:outline-none cursor-not-allowed"
         />
       </div>
 
@@ -60,7 +60,7 @@ export function ProfileForm({ profile }: Props) {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder="VD: Nguyễn Văn A"
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-550 focus:outline-none focus:border-[#089e60] transition-colors"
+            className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 placeholder-gray-550 focus:outline-none focus:border-[#089e60] transition-colors"
           />
         </div>
 
@@ -71,7 +71,7 @@ export function ProfileForm({ profile }: Props) {
             value={grade}
             onChange={(e) => setGrade(e.target.value)}
             placeholder="VD: 10A1, 11B2..."
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-555 focus:outline-none focus:border-[#089e60] transition-colors"
+            className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 placeholder-gray-555 focus:outline-none focus:border-[#089e60] transition-colors"
           />
         </div>
       </div>
@@ -83,7 +83,7 @@ export function ProfileForm({ profile }: Props) {
           value={school}
           onChange={(e) => setSchool(e.target.value)}
           placeholder="Tên trường THPT..."
-          className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-560 focus:outline-none focus:border-[#089e60] transition-colors"
+          className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 placeholder-gray-560 focus:outline-none focus:border-[#089e60] transition-colors"
         />
       </div>
 
@@ -98,14 +98,14 @@ export function ProfileForm({ profile }: Props) {
           maxLength={200}
           onChange={(e) => setBio(e.target.value)}
           placeholder="Một vài dòng giới thiệu về bản thân..."
-          className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-565 focus:outline-none focus:border-[#089e60] transition-colors resize-none"
+          className="w-full bg-[#f1f1f1]/50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-900 placeholder-gray-565 focus:outline-none focus:border-[#089e60] transition-colors resize-none"
         />
       </div>
 
       <button 
         type="submit" 
         disabled={saving}
-        className="w-full py-3 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full py-3 bg-[#089e60] text-white font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {saving ? 'Đang lưu...' : 'Lưu thay đổi'}
       </button>

@@ -33,14 +33,14 @@ export function PathItemCard({ item, index }: Props) {
 
   const cardContent = (
     <div className={`
-      relative p-5 bg-[#1a1c25]/80 border rounded-2xl flex items-center justify-between gap-4 transition-all duration-200
-      ${item.completed ? 'border-[#089e60]/40 bg-[#089e60]/5' : item.is_unlocked ? 'border-gray-800 hover:border-gray-700' : 'border-gray-900 bg-gray-950/40 opacity-60'}
+      relative p-5 bg-[#ffffff]/80 border rounded-2xl flex items-center justify-between gap-4 transition-all duration-200
+      ${item.completed ? 'border-[#089e60]/40 bg-[#089e60]/5' : item.is_unlocked ? 'border-gray-200 hover:border-gray-300' : 'border-gray-900 bg-gray-50/40 opacity-60'}
     `}>
       <div className="flex items-center gap-4">
         {/* Step Badge */}
         <div className={`
           w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm
-          ${item.completed ? 'bg-[#089e60]/15 text-[#089e60]' : item.is_unlocked ? 'bg-gray-800 text-white' : 'bg-gray-900 text-gray-500'}
+          ${item.completed ? 'bg-[#089e60]/15 text-[#089e60]' : item.is_unlocked ? 'bg-white text-gray-900' : 'bg-white text-gray-500'}
         `}>
           {index + 1}
         </div>
@@ -49,7 +49,7 @@ export function PathItemCard({ item, index }: Props) {
         <div>
           <div className="flex items-center gap-2 mb-1">
             {getIcon()}
-            <h4 className={`font-semibold ${item.is_unlocked ? 'text-white' : 'text-gray-500'}`}>
+            <h4 className={`font-semibold ${item.is_unlocked ? 'text-gray-900' : 'text-gray-500'}`}>
               {item.title}
             </h4>
           </div>
@@ -58,7 +58,7 @@ export function PathItemCard({ item, index }: Props) {
           </p>
           <div className="flex items-center gap-3 text-[10px] font-bold text-gray-500">
             <span>⏱️ {item.estimated_minutes} phút</span>
-            {item.is_optional && <span className="bg-gray-850 px-1.5 py-0.5 rounded text-gray-400 uppercase">Tùy chọn</span>}
+            {item.is_optional && <span className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-400 uppercase">Tùy chọn</span>}
             {!item.is_unlocked && (
               <span className="text-red-400 flex items-center gap-1 font-bold">
                 <Lock size={10} /> {getUnlockConditionText()}
@@ -73,7 +73,7 @@ export function PathItemCard({ item, index }: Props) {
         {item.completed ? (
           <CheckCircle size={24} className="text-[#089e60]" />
         ) : item.is_unlocked ? (
-          <button className="px-4 py-2 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity">
+          <button className="px-4 py-2 bg-[#089e60] text-white font-bold text-xs rounded-xl hover:opacity-90 transition-opacity">
             Học ngay
           </button>
         ) : (

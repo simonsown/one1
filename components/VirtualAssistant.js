@@ -127,7 +127,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#ffffff] rounded-full"></div>
               </div>
               <div>
-                <h3 className="font-bold text-white leading-tight">AI Guru <span className="text-xl leading-none">🤖</span></h3>
+                <h3 className="font-bold text-gray-900 leading-tight">AI Guru <span className="text-xl leading-none">🤖</span></h3>
                 <p className="text-[11px] text-green-400 font-medium uppercase tracking-wider">
                   {isLoading ? 'Đang soạn tin...' : 'Trực tuyến'}
                 </p>
@@ -136,7 +136,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
             <div className="flex items-center gap-2">
               <button 
                 onClick={(e) => { e.stopPropagation(); setIsMinimized(!isMinimized); }}
-                className="p-1.5 text-slate-400 hover:text-white hover:bg-[#e7e7e7] rounded-md transition-colors"
+                className="p-1.5 text-slate-400 hover:text-gray-900 hover:bg-[#e7e7e7] rounded-md transition-colors"
               >
                 {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
               </button>
@@ -236,7 +236,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
                     placeholder="Hỏi AI Guru về linh kiện..."
                     disabled={isLoading}
                     rows={1}
-                    className="flex-1 max-h-[120px] bg-transparent border-none text-white text-[14px] placeholder:text-slate-500 resize-none outline-none py-2.5 px-3"
+                    className="flex-1 max-h-[120px] bg-transparent border-none text-gray-900 text-[14px] placeholder:text-slate-500 resize-none outline-none py-2.5 px-3"
                     onInput={e => {
                       e.target.style.height = 'auto';
                       e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';

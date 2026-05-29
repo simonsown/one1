@@ -35,7 +35,7 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-[#f8f9fa] flex flex-col items-center justify-center text-white">
+      <div className="min-h-screen bg-[#f8f9fa] flex flex-col items-center justify-center text-gray-900">
         <h2 className="text-2xl font-bold mb-4">Vui lòng đăng nhập</h2>
         <a href="/login" className="px-6 py-3 bg-[#089e60] text-black font-bold rounded-xl">Đi tới Đăng nhập</a>
       </div>
@@ -50,7 +50,7 @@ export default function ProfilePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-white">
+    <div className="min-h-screen bg-[#f8f9fa] text-gray-900">
       <Navbar />
 
       <main className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -62,7 +62,7 @@ export default function ProfilePage() {
             {/* Banner Cover Pattern */}
             <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
             
-            <button className="absolute top-4 right-4 p-2 bg-black/40 backdrop-blur-md rounded-lg text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 border border-white/10 flex items-center gap-2 text-sm font-medium z-10">
+            <button className="absolute top-4 right-4 p-2 bg-gray-100/40 backdrop-blur-md rounded-lg text-gray-900 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 border border-gray-200 flex items-center gap-2 text-sm font-medium z-10">
               <Camera size={16} /> <span className="hidden sm:inline">Đổi ảnh bìa</span>
             </button>
           </div>
@@ -104,7 +104,7 @@ export default function ProfilePage() {
                     </p>
                   </div>
                   
-                  <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#e7e7e7] hover:bg-[#e7e7e7] border border-[#e7e7e7] text-white rounded-xl font-medium transition-colors">
+                  <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#e7e7e7] hover:bg-[#e7e7e7] border border-[#e7e7e7] text-gray-900 rounded-xl font-medium transition-colors">
                     <Edit3 size={18} /> Chỉnh sửa hồ sơ
                   </button>
                 </div>
@@ -166,7 +166,7 @@ export default function ProfilePage() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 px-6 py-4 font-medium text-sm whitespace-nowrap transition-colors relative ${
-                  activeTab === tab.id ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-[#e7e7e7]/50'
+                  activeTab === tab.id ? 'text-gray-900' : 'text-slate-400 hover:text-slate-200 hover:bg-[#e7e7e7]/50'
                 }`}
               >
                 {tab.icon} {tab.label}
@@ -194,7 +194,7 @@ export default function ProfilePage() {
                       <div className="absolute w-4 h-4 bg-[#089e60] rounded-full left-[-8.5px] top-1 border-4 border-[#ffffff] shadow-[0_0_10px_rgba(8,158,96,0.5)]"></div>
                       <div className="text-sm text-slate-400 mb-1">Hôm nay, 14:30</div>
                       <div className="bg-[#f8f9fa] p-4 rounded-xl border border-[#e7e7e7]">
-                        <p className="font-medium">Hoàn thành bài học: <span className="text-white">Cấu trúc cơ bản của Mainboard</span></p>
+                        <p className="font-medium">Hoàn thành bài học: <span className="text-gray-900">Cấu trúc cơ bản của Mainboard</span></p>
                         <p className="text-sm text-slate-400 mt-1">Đạt 100% điểm thực hành Lab 2D.</p>
                       </div>
                     </div>
@@ -211,7 +211,7 @@ export default function ProfilePage() {
                       <div className="absolute w-4 h-4 bg-[#e7e7e7] rounded-full left-[-8.5px] top-1 border-4 border-[#ffffff]"></div>
                       <div className="text-sm text-slate-400 mb-1">3 ngày trước</div>
                       <div className="bg-[#f8f9fa] p-4 rounded-xl border border-[#e7e7e7]">
-                        <p className="font-medium text-slate-300">Gia nhập lớp học: <span className="text-white">10A1 - Tin học cơ bản</span></p>
+                        <p className="font-medium text-slate-300">Gia nhập lớp học: <span className="text-gray-900">10A1 - Tin học cơ bản</span></p>
                       </div>
                     </div>
                   </div>
@@ -267,15 +267,15 @@ export default function ProfilePage() {
                     
                     <div className="space-y-6">
                       <div className="bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl p-5">
-                        <h4 className="font-semibold mb-4 text-white">Đổi mật khẩu</h4>
+                        <h4 className="font-semibold mb-4 text-gray-900">Đổi mật khẩu</h4>
                         <div className="space-y-4">
                           <div>
                             <label className="block text-sm font-medium text-slate-400 mb-1.5">Mật khẩu hiện tại</label>
-                            <input type="password" placeholder="••••••••" className="w-full bg-[#ffffff] border border-[#e7e7e7] rounded-lg px-4 py-2.5 outline-none focus:border-[#089e60] text-white" />
+                            <input type="password" placeholder="••••••••" className="w-full bg-[#ffffff] border border-[#e7e7e7] rounded-lg px-4 py-2.5 outline-none focus:border-[#089e60] text-gray-900" />
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-slate-400 mb-1.5">Mật khẩu mới</label>
-                            <input type="password" placeholder="••••••••" className="w-full bg-[#ffffff] border border-[#e7e7e7] rounded-lg px-4 py-2.5 outline-none focus:border-[#089e60] text-white" />
+                            <input type="password" placeholder="••••••••" className="w-full bg-[#ffffff] border border-[#e7e7e7] rounded-lg px-4 py-2.5 outline-none focus:border-[#089e60] text-gray-900" />
                           </div>
                           <button className="px-4 py-2 bg-[#e7e7e7] hover:bg-[#e7e7e7] border border-[#e7e7e7] rounded-lg text-sm font-medium transition-colors">Cập nhật mật khẩu</button>
                         </div>

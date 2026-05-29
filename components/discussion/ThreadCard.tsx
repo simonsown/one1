@@ -29,10 +29,10 @@ export function ThreadCard({ thread, onSelect }: Props) {
   return (
     <div 
       onClick={() => onSelect(thread)}
-      className="p-4 bg-[#1e202f]/50 border border-gray-800 rounded-xl hover:border-gray-700 hover:bg-[#1e202f] transition-all cursor-pointer"
+      className="p-4 bg-[#f1f1f1]/50 border border-gray-200 rounded-xl hover:border-gray-300 hover:bg-[#f1f1f1] transition-all cursor-pointer"
     >
       <div className="flex items-start justify-between gap-3 mb-2">
-        <h4 className="font-semibold text-[#dde0ed] line-clamp-1 group-hover:text-white transition-colors">
+        <h4 className="font-semibold text-gray-800 line-clamp-1 group-hover:text-gray-900 transition-colors">
           {thread.title}
         </h4>
         <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded border ${getBadgeColor()}`}>
@@ -49,7 +49,7 @@ export function ThreadCard({ thread, onSelect }: Props) {
           {thread.author?.avatar_url ? (
             <img src={thread.author.avatar_url} alt="Avatar" className="w-5 h-5 rounded-full object-cover" />
           ) : (
-            <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center">
+            <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center">
               <User size={10} className="text-gray-400" />
             </div>
           )}

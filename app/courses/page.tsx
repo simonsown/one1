@@ -131,7 +131,7 @@ function CourseCard({ course, idx, viewMode }: any) {
           </span>
         </div>
         {(course.progress || 0) > 0 && (
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-black/40">
+          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gray-100/40">
             <div className="h-full bg-[#089e60]" style={{ width: `${course.progress}%` }}></div>
           </div>
         )}

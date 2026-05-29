@@ -33,7 +33,7 @@ export default async function LessonsListPage() {
       <header className="max-w-7xl mx-auto mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <div className="flex items-center gap-4 mb-4">
-            <Link href="/student" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all">
+            <Link href="/student" className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all">
               <ArrowLeft size={20} />
             </Link>
             <h1 className="text-4xl md:text-6xl font-black tracking-tight">
@@ -82,11 +82,11 @@ export default async function LessonsListPage() {
                 )}
 
                 <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                   <div className="px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-xs font-bold border border-white/10 flex items-center gap-1.5">
+                   <div className="px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-xs font-bold border border-gray-200 flex items-center gap-1.5">
                      <Clock size={12} className="text-[#289cf9]" />
                      15 phút
                    </div>
-                   <div className="px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-xs font-bold border border-white/10 flex items-center gap-1.5">
+                   <div className="px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-xs font-bold border border-gray-200 flex items-center gap-1.5">
                      <Star size={12} className="text-yellow-400" />
                      4.9
                    </div>

@@ -139,14 +139,14 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
 
   if (isFinished) {
     return (
-      <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-[#f5f6f8] text-white pt-24 pb-12 px-4 flex flex-col items-center justify-center">
         {submitting ? (
           <div className="flex flex-col items-center gap-4">
             <RefreshCw size={32} className="animate-spin text-[#089e60]" />
             <h2 className="text-xl font-bold tracking-widest text-gray-300 uppercase">Đang nộp bài...</h2>
           </div>
         ) : (
-          <div className="bg-[#11121d]/80 border border-[#e7e7e7] p-8 rounded-3xl shadow-2xl max-w-lg w-full text-center relative overflow-hidden backdrop-blur-xl">
+          <div className="bg-[#ffffff]/80 border border-[#e7e7e7] p-8 rounded-3xl shadow-2xl max-w-lg w-full text-center relative overflow-hidden backdrop-blur-xl">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#089e60] to-blue-500"></div>
             <Trophy size={64} className={`mx-auto mb-6 ${score >= 80 ? 'text-yellow-400' : 'text-gray-400'}`} />
             <h2 className="text-3xl font-black mb-2 uppercase">Kết quả làm bài</h2>
@@ -171,11 +171,11 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
   }
 
   return (
-    <div className="min-h-screen bg-[#161F38] text-white flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#f5f6f8] text-white flex flex-col relative overflow-hidden">
       {/* Decorative Grid */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
       
-      <header className="bg-[#11121d]/90 border-b border-gray-800 p-4 sm:px-8 flex justify-between items-center backdrop-blur-md relative z-50 sticky top-0">
+      <header className="bg-[#ffffff]/90 border-b border-gray-200 p-4 sm:px-8 flex justify-between items-center backdrop-blur-md relative z-50 sticky top-0">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => router.push('/student/quiz')}
@@ -194,7 +194,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
       <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-8 relative z-10 flex flex-col justify-center">
         
         {/* Tiêu đề câu hỏi */}
-        <div className="mb-8 p-6 bg-[#11121d]/70 border border-[#e7e7e7] rounded-2xl shadow-xl backdrop-blur-sm">
+        <div className="mb-8 p-6 bg-[#ffffff]/70 border border-[#e7e7e7] rounded-2xl shadow-xl backdrop-blur-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-[#089e60] text-sm font-bold uppercase tracking-widest bg-[#089e60]/10 px-3 py-1 rounded-full border border-[#089e60]/20">
               Câu hỏi {currentQIndex + 1} / {REAL_IT_QUESTIONS.length}
@@ -207,7 +207,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
         <div className="space-y-3">
           {currentQ.options.map((opt, i) => {
             const isSelected = selectedOption === i
-            let stateClass = "bg-[#11121d]/60 border-gray-800 hover:bg-gray-800/60 hover:border-gray-600"
+            let stateClass = "bg-[#ffffff]/60 border-gray-200 hover:bg-gray-100/60 hover:border-gray-300"
             
             if (isAnswered) {
               if (i === currentQ.correctIndex) {
@@ -215,7 +215,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
               } else if (isSelected) {
                 stateClass = "bg-red-500/20 border-red-500 text-red-300"
               } else {
-                stateClass = "bg-[#11121d]/40 border-gray-800/50 text-gray-500" // Làm mờ đi
+                stateClass = "bg-[#ffffff]/40 border-gray-200/50 text-gray-500" // Làm mờ đi
               }
             } else if (isSelected) {
               stateClass = "bg-[#089e60]/20 border-[#089e60] text-white shadow-[0_0_15px_rgba(8,158,96,0.2)]"
@@ -227,7 +227,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
                 onClick={() => handleSelectOption(i)}
                 className={`flex items-center gap-4 p-5 sm:p-6 border-2 rounded-2xl transition-all cursor-pointer ${stateClass}`}
               >
-                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected || (isAnswered && i === currentQ.correctIndex) ? 'border-transparent' : 'border-gray-600'}`}>
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected || (isAnswered && i === currentQ.correctIndex) ? 'border-transparent' : 'border-gray-300'}`}>
                   {isAnswered && i === currentQ.correctIndex ? (
                     <CheckCircle size={24} className="text-green-500 bg-black rounded-full" />
                   ) : isAnswered && isSelected ? (
@@ -258,7 +258,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
         )}
       </main>
 
-      <footer className="bg-[#11121d]/90 border-t border-gray-800 p-4 sm:p-6 flex justify-end items-center relative z-50 backdrop-blur-xl">
+      <footer className="bg-[#ffffff]/90 border-t border-gray-200 p-4 sm:p-6 flex justify-end items-center relative z-50 backdrop-blur-xl">
         {!isAnswered ? (
           <button 
             onClick={handleCheckAnswer}
@@ -266,7 +266,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
             className={`px-8 py-3 rounded-xl font-bold transition-all flex items-center gap-2 shadow-lg ${
               selectedOption !== null 
                 ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/25' 
-                : 'bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700'
+                : 'bg-white text-gray-500 cursor-not-allowed border border-gray-300'
             }`}
           >
             Kiểm tra đáp án
