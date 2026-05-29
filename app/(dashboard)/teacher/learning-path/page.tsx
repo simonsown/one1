@@ -143,7 +143,7 @@ export default function TeacherLearningPathPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0d0e13] text-white pt-24 flex flex-col items-center justify-center gap-2">
-        <RefreshCw size={28} className="animate-spin text-[#00d4aa]" />
+        <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500">Đang tải cấu hình lộ trình...</span>
       </div>
     )
@@ -162,7 +162,7 @@ export default function TeacherLearningPathPage() {
                 <button
                   key={p.id}
                   onClick={() => { setSelectedPath(p); loadItems(p.id); }}
-                  className={`w-full text-left px-4 py-3 rounded-xl border text-sm font-semibold transition-all ${selectedPath?.id === p.id ? 'border-[#00d4aa] bg-[#00d4aa]/10 text-white' : 'border-gray-800 text-gray-400 hover:border-gray-700'}`}
+                  className={`w-full text-left px-4 py-3 rounded-xl border text-sm font-semibold transition-all ${selectedPath?.id === p.id ? 'border-[#089e60] bg-[#089e60]/10 text-white' : 'border-gray-800 text-gray-400 hover:border-gray-700'}`}
                 >
                   {p.title}
                 </button>
@@ -179,18 +179,18 @@ export default function TeacherLearningPathPage() {
                 placeholder="Tên lộ trình..."
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
-                className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#00d4aa] transition-colors"
+                className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
               />
               <textarea
                 placeholder="Mô tả lộ trình học..."
                 value={newDesc}
                 onChange={(e) => setNewDesc(e.target.value)}
-                className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#00d4aa] transition-colors resize-none"
+                className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors resize-none"
               />
               <button
                 type="submit"
                 disabled={saving}
-                className="w-full py-2.5 bg-[#00d4aa] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
+                className="w-full py-2.5 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
               >
                 Tạo lộ trình
               </button>
@@ -214,7 +214,7 @@ export default function TeacherLearningPathPage() {
                       placeholder="VD: Lắp Ráp CPU vào Mainboard"
                       value={itemTitle}
                       onChange={(e) => setItemTitle(e.target.value)}
-                      className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#00d4aa] transition-colors"
+                      className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
                     />
                   </div>
                   <div>
@@ -222,7 +222,7 @@ export default function TeacherLearningPathPage() {
                     <select
                       value={itemType}
                       onChange={(e) => setItemType(e.target.value as any)}
-                      className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#00d4aa] transition-colors"
+                      className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#089e60] transition-colors"
                     >
                       <option value="lesson">📖 Bài học</option>
                       <option value="quiz">📝 Trắc nghiệm</option>
@@ -232,7 +232,7 @@ export default function TeacherLearningPathPage() {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="w-full py-2.5 bg-[#00d4aa] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
+                    className="w-full py-2.5 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity"
                   >
                     Thêm bài
                   </button>
@@ -252,7 +252,7 @@ export default function TeacherLearningPathPage() {
                     {items.map((item, idx) => (
                       <div key={item.id} className="p-4 bg-[#1e202f]/50 border border-gray-800 rounded-xl flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
-                          <span className="text-xs font-bold text-[#00d4aa] w-6">#{item.order}</span>
+                          <span className="text-xs font-bold text-[#089e60] w-6">#{item.order}</span>
                           <div>
                             <h4 className="font-semibold text-sm text-white">{item.title}</h4>
                             <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mt-0.5">
@@ -282,7 +282,7 @@ export default function TeacherLearningPathPage() {
                           {/* Toggle Lock */}
                           <button
                             onClick={() => toggleUnlockCondition(item)}
-                            className={`p-1.5 rounded flex items-center gap-1 text-[10px] font-bold border transition-colors ${item.unlock_condition ? 'bg-red-500/10 border-red-500/30 text-red-400' : 'bg-[#00d4aa]/10 border-[#00d4aa]/30 text-[#00d4aa]'}`}
+                            className={`p-1.5 rounded flex items-center gap-1 text-[10px] font-bold border transition-colors ${item.unlock_condition ? 'bg-red-500/10 border-red-500/30 text-red-400' : 'bg-[#089e60]/10 border-[#089e60]/30 text-[#089e60]'}`}
                           >
                             {item.unlock_condition ? <Lock size={12} /> : <Unlock size={12} />}
                             {item.unlock_condition ? 'Khóa tuần tự' : 'Mở tự do'}

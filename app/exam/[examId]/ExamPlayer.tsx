@@ -88,11 +88,11 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
   const activeQ = questions[currentIdx]
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white flex flex-col">
+    <div className="min-h-screen bg-[#f8f9fa] text-white flex flex-col">
       {/* Header / Timer Bar */}
-      <header className="h-20 bg-[#16213e] border-b border-[#1e293b] flex items-center justify-between px-6 md:px-12 sticky top-0 z-50">
+      <header className="h-20 bg-[#ffffff] border-b border-[#e7e7e7] flex items-center justify-between px-6 md:px-12 sticky top-0 z-50">
         <div className="flex items-center gap-4">
-          <div className="p-2 bg-[#00d2a0]/10 rounded-lg text-[#00d2a0]">
+          <div className="p-2 bg-[#089e60]/10 rounded-lg text-[#089e60]">
             <Timer size={24} />
           </div>
           <div>
@@ -108,7 +108,7 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
              <div 
                 key={i} 
                 className={`w-2 h-2 rounded-full transition-all 
-                  ${i === currentIdx ? 'bg-[#00d2a0] w-6' : (answers[questions[i].id] ? 'bg-[#00b4d8]' : 'bg-slate-700')}
+                  ${i === currentIdx ? 'bg-[#089e60] w-6' : (answers[questions[i].id] ? 'bg-[#289cf9]' : 'bg-slate-700')}
                 `}
              />
            ))}
@@ -117,7 +117,7 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
         <button 
           onClick={() => { if(confirm("Bạn chắc chắn muốn nộp bài?")) handleSubmit() }}
           disabled={isSubmitting}
-          className="bg-[#00d2a0] text-black px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(0,210,160,0.4)] transition-all disabled:opacity-50"
+          className="bg-[#089e60] text-black px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(0,210,160,0.4)] transition-all disabled:opacity-50"
         >
           <Send size={18} /> {isSubmitting ? 'Đang nộp...' : 'Nộp bài'}
         </button>
@@ -125,7 +125,7 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
 
       <div className="flex-1 flex overflow-hidden">
         {/* Question Navigation Sidebar */}
-        <aside className="w-20 md:w-64 bg-[#16213e]/50 border-r border-[#1e293b] overflow-y-auto p-4 hidden md:block">
+        <aside className="w-20 md:w-64 bg-[#ffffff]/50 border-r border-[#e7e7e7] overflow-y-auto p-4 hidden md:block">
            <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest mb-6 px-2">Danh sách câu hỏi</h3>
            <div className="grid grid-cols-1 gap-2">
              {questions.map((q, i) => (
@@ -133,8 +133,8 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
                   key={q.id}
                   onClick={() => setCurrentIdx(i)}
                   className={`flex items-center gap-3 p-3 rounded-xl border transition-all text-left
-                    ${currentIdx === i ? 'bg-[#00d2a0]/10 border-[#00d2a0] text-[#00d2a0]' : 
-                      (answers[q.id] ? 'bg-[#0f0f1a] border-[#1e293b] text-[#00b4d8]' : 'bg-transparent border-transparent text-slate-500 hover:bg-[#1e293b]')
+                    ${currentIdx === i ? 'bg-[#089e60]/10 border-[#089e60] text-[#089e60]' : 
+                      (answers[q.id] ? 'bg-[#f8f9fa] border-[#e7e7e7] text-[#289cf9]' : 'bg-transparent border-transparent text-slate-500 hover:bg-[#e7e7e7]')
                     }
                   `}
                >
@@ -157,7 +157,7 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
               className="max-w-3xl mx-auto"
             >
               <div className="mb-10">
-                <span className="inline-block px-3 py-1 bg-[#00b4d8]/10 text-[#00b4d8] rounded-lg text-xs font-bold uppercase tracking-wider mb-4">
+                <span className="inline-block px-3 py-1 bg-[#289cf9]/10 text-[#289cf9] rounded-lg text-xs font-bold uppercase tracking-wider mb-4">
                   {activeQ.type === 'single' ? 'Trắc nghiệm 1 đáp án' : 
                    activeQ.type === 'multiple' ? 'Trắc nghiệm nhiều đáp án' : 
                    activeQ.type === 'boolean' ? 'Đúng / Sai' : 
@@ -176,11 +176,11 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
                     key={opt.id}
                     onClick={() => handleAnswer(activeQ.id, opt.id)}
                     className={`w-full p-6 rounded-2xl border-2 text-left transition-all flex items-center gap-4
-                      ${answers[activeQ.id] === opt.id ? 'bg-[#00d2a0]/10 border-[#00d2a0]' : 'bg-[#16213e] border-[#1e293b] hover:border-slate-500'}
+                      ${answers[activeQ.id] === opt.id ? 'bg-[#089e60]/10 border-[#089e60]' : 'bg-[#ffffff] border-[#e7e7e7] hover:border-slate-500'}
                     `}
                   >
                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center font-bold text-xs
-                      ${answers[activeQ.id] === opt.id ? 'border-[#00d2a0] bg-[#00d2a0] text-black' : 'border-slate-500 text-slate-500'}
+                      ${answers[activeQ.id] === opt.id ? 'border-[#089e60] bg-[#089e60] text-black' : 'border-slate-500 text-slate-500'}
                     `}>{opt.id}</div>
                     <span className="text-lg font-medium">{opt.text}</span>
                   </button>
@@ -193,7 +193,7 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
                          key={val}
                          onClick={() => handleAnswer(activeQ.id, val)}
                          className={`flex-1 p-8 rounded-3xl border-2 font-bold text-xl transition-all
-                           ${answers[activeQ.id] === val ? 'bg-[#00d2a0] border-[#00d2a0] text-black shadow-[0_0_30px_rgba(0,210,160,0.2)]' : 'bg-[#16213e] border-[#1e293b]'}
+                           ${answers[activeQ.id] === val ? 'bg-[#089e60] border-[#089e60] text-black shadow-[0_0_30px_rgba(8,158,96,0.2)]' : 'bg-[#ffffff] border-[#e7e7e7]'}
                          `}
                        >
                          {val}
@@ -208,7 +208,7 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
                     value={answers[activeQ.id] || ''}
                     onChange={(e) => handleAnswer(activeQ.id, e.target.value)}
                     placeholder="Nhập câu trả lời của bạn..."
-                    className="w-full p-6 bg-[#16213e] border-2 border-[#1e293b] rounded-2xl focus:outline-none focus:border-[#00d2a0] text-xl font-bold transition-all"
+                    className="w-full p-6 bg-[#ffffff] border-2 border-[#e7e7e7] rounded-2xl focus:outline-none focus:border-[#089e60] text-xl font-bold transition-all"
                   />
                 )}
 
@@ -218,17 +218,17 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
                     value={answers[activeQ.id] || ''}
                     onChange={(e) => handleAnswer(activeQ.id, e.target.value)}
                     placeholder="Viết câu trả lời tự luận tại đây..."
-                    className="w-full p-6 bg-[#16213e] border-2 border-[#1e293b] rounded-2xl focus:outline-none focus:border-[#00d2a0] text-lg leading-relaxed transition-all"
+                    className="w-full p-6 bg-[#ffffff] border-2 border-[#e7e7e7] rounded-2xl focus:outline-none focus:border-[#089e60] text-lg leading-relaxed transition-all"
                   />
                 )}
               </div>
 
               {/* Bottom Nav */}
-              <div className="flex items-center justify-between pt-10 border-t border-[#1e293b]">
+              <div className="flex items-center justify-between pt-10 border-t border-[#e7e7e7]">
                 <button
                   disabled={currentIdx === 0}
                   onClick={() => setCurrentIdx(prev => prev - 1)}
-                  className="p-4 rounded-xl bg-[#16213e] border border-[#1e293b] disabled:opacity-30 hover:bg-[#1e293b] transition-all flex items-center gap-2"
+                  className="p-4 rounded-xl bg-[#ffffff] border border-[#e7e7e7] disabled:opacity-30 hover:bg-[#e7e7e7] transition-all flex items-center gap-2"
                 >
                   <ChevronLeft size={20} /> Câu trước
                 </button>
@@ -236,7 +236,7 @@ export default function ExamPlayer({ examId, attemptId, questions, timeLimit }: 
                 <button
                   disabled={currentIdx === questions.length - 1}
                   onClick={() => setCurrentIdx(prev => prev + 1)}
-                  className="p-4 rounded-xl bg-[#16213e] border border-[#1e293b] disabled:opacity-30 hover:bg-[#1e293b] transition-all flex items-center gap-2 text-[#00d2a0]"
+                  className="p-4 rounded-xl bg-[#ffffff] border border-[#e7e7e7] disabled:opacity-30 hover:bg-[#e7e7e7] transition-all flex items-center gap-2 text-[#089e60]"
                 >
                   Câu sau <ChevronRight size={20} />
                 </button>

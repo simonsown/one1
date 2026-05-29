@@ -11,7 +11,7 @@ export default async function ExamPage({ params }: { params: { examId: string } 
   // 1. Khởi tạo phiên thi (Attempt)
   const res = await startExamAttempt(params.examId)
   if (res.error) {
-    return <div className="min-h-screen flex items-center justify-center bg-[#0f0f1a] text-white">Lỗi: {res.error}</div>
+    return <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa] text-white">Lỗi: {res.error}</div>
   }
 
   // 2. Mock Questions (Dựa theo Mega Prompt)

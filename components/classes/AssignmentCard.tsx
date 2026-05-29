@@ -64,7 +64,7 @@ export default function AssignmentCard({ id, classId, title, type, deadline, req
     }}>
       {/* Header */}
       <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <div style={{ fontSize: '11px', fontWeight: 700, color: '#00f3ff', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
+        <div style={{ fontSize: '11px', fontWeight: 700, color: '#289cf9', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
           {getTypeLabel()}
         </div>
         <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: 700, color: '#fff', lineHeight: 1.4 }}>{title}</h3>

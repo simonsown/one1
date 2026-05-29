@@ -47,7 +47,7 @@ export default function StudentLessonPage({ params }) {
 
     if (loading) return (
         <div style={{ background: '#050a14', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+            <Loader2 className="animate-spin" color="#289cf9" size={48} />
         </div>
     );
 
@@ -65,10 +65,10 @@ export default function StudentLessonPage({ params }) {
                             <a key={s.id} href={`#section-${s.id}`} style={{ 
                                 display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', borderRadius: '12px', color: '#e0e6ed', textDecoration: 'none', fontSize: '14px', background: 'rgba(255,255,255,0.02)', border: '1px solid transparent'
                             }}
-                            onMouseEnter={e => e.currentTarget.style.borderColor = '#00f3ff'}
+                            onMouseEnter={e => e.currentTarget.style.borderColor = '#289cf9'}
                             onMouseLeave={e => e.currentTarget.style.borderColor = 'transparent'}
                             >
-                                <span style={{ color: '#00f3ff', fontWeight: 800, fontSize: '12px', width: '20px' }}>{idx + 1}</span>
+                                <span style={{ color: '#289cf9', fontWeight: 800, fontSize: '12px', width: '20px' }}>{idx + 1}</span>
                                 {s.title}
                             </a>
                         ))}
@@ -93,14 +93,14 @@ export default function StudentLessonPage({ params }) {
                         </div>
                     )}
 
-                    <div style={{ height: '4px', width: '80px', background: '#00f3ff', marginTop: '32px', borderRadius: '2px' }}></div>
+                    <div style={{ height: '4px', width: '80px', background: '#289cf9', marginTop: '32px', borderRadius: '2px' }}></div>
                 </header>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
                     {sections.map((s, idx) => (
                         <section key={s.id} id={`section-${s.id}`}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-                                <div style={{ padding: '8px', background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', borderRadius: '8px' }}>
+                                <div style={{ padding: '8px', background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', borderRadius: '8px' }}>
                                     {s.type === 'video' && <Video size={20}/>}
                                     {s.type === 'text' && <FileText size={20}/>}
                                     {s.type === 'image' && <ImageIcon size={20}/>}
@@ -128,10 +128,10 @@ export default function StudentLessonPage({ params }) {
                             )}
 
                             {s.type === 'pdf' && (
-                                <div style={{ background: '#0a0f1a', borderRadius: '24px', overflow: 'hidden', border: '1px solid #1e293b' }}>
+                                <div style={{ background: '#0a0f1a', borderRadius: '24px', overflow: 'hidden', border: '1px solid #e7e7e7' }}>
                                     <iframe src={getDriveEmbed(s.content)} style={{ width: '100%', height: '600px', border: 'none' }} />
                                     <div style={{ padding: '16px', display: 'flex', justifyContent: 'flex-end' }}>
-                                        <a href={s.content} target="_blank" style={{ color: '#00f3ff', textDecoration: 'none', fontSize: '14px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        <a href={s.content} target="_blank" style={{ color: '#289cf9', textDecoration: 'none', fontSize: '14px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                                             <Maximize2 size={16} /> Xem toàn màn hình
                                         </a>
                                     </div>
@@ -145,16 +145,16 @@ export default function StudentLessonPage({ params }) {
                 {books.length > 0 && (
                     <div style={{ marginTop: '120px', padding: '64px 0', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                         <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Book size={28} color="#00f3ff" /> Sách & Tài liệu liên quan
+                            <Book size={28} color="#289cf9" /> Sách & Tài liệu liên quan
                         </h3>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '24px' }}>
                             {books.map(book => (
                                 <div 
                                     key={book.id} 
                                     onClick={() => setSelectedBook(book)}
-                                    style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '16px', padding: '16px', border: '1px solid #1e293b', cursor: 'pointer', transition: 'all 0.2s' }}
-                                    onMouseOver={e => e.currentTarget.style.borderColor = '#00f3ff'}
-                                    onMouseOut={e => e.currentTarget.style.borderColor = '#1e293b'}
+                                    style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '16px', padding: '16px', border: '1px solid #e7e7e7', cursor: 'pointer', transition: 'all 0.2s' }}
+                                    onMouseOver={e => e.currentTarget.style.borderColor = '#289cf9'}
+                                    onMouseOut={e => e.currentTarget.style.borderColor = '#e7e7e7'}
                                 >
                                     <img src={book.cover_image_url} style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', borderRadius: '8px', marginBottom: '16px' }} />
                                     <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 700, textAlign: 'center' }}>{book.title}</h4>

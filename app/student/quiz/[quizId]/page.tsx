@@ -142,24 +142,24 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
       <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 flex flex-col items-center justify-center">
         {submitting ? (
           <div className="flex flex-col items-center gap-4">
-            <RefreshCw size={32} className="animate-spin text-[#00d4aa]" />
+            <RefreshCw size={32} className="animate-spin text-[#089e60]" />
             <h2 className="text-xl font-bold tracking-widest text-gray-300 uppercase">Đang nộp bài...</h2>
           </div>
         ) : (
-          <div className="bg-[#11121d]/80 border border-[#1e293b] p-8 rounded-3xl shadow-2xl max-w-lg w-full text-center relative overflow-hidden backdrop-blur-xl">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00d4aa] to-blue-500"></div>
+          <div className="bg-[#11121d]/80 border border-[#e7e7e7] p-8 rounded-3xl shadow-2xl max-w-lg w-full text-center relative overflow-hidden backdrop-blur-xl">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#089e60] to-blue-500"></div>
             <Trophy size={64} className={`mx-auto mb-6 ${score >= 80 ? 'text-yellow-400' : 'text-gray-400'}`} />
             <h2 className="text-3xl font-black mb-2 uppercase">Kết quả làm bài</h2>
             <p className="text-gray-400 text-sm mb-6">Bạn đã hoàn thành bài thi: {params.quizId}</p>
             
-            <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00d4aa] to-blue-400 mb-8 drop-shadow-[0_0_15px_rgba(0,212,170,0.4)]">
+            <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#089e60] to-blue-400 mb-8 drop-shadow-[0_0_15px_rgba(0,212,170,0.4)]">
               {score}/100
             </div>
 
             <div className="flex justify-center gap-4">
               <button 
                 onClick={() => router.push('/student/quiz')}
-                className="relative z-50 pointer-events-auto px-6 py-3 bg-[#00d4aa]/10 hover:bg-[#00d4aa]/20 border border-[#00d4aa]/30 text-[#00d4aa] rounded-xl font-bold transition-all shadow-[0_0_15px_rgba(0,212,170,0.1)] hover:shadow-[0_0_25px_rgba(0,212,170,0.3)]"
+                className="relative z-50 pointer-events-auto px-6 py-3 bg-[#089e60]/10 hover:bg-[#089e60]/20 border border-[#089e60]/30 text-[#089e60] rounded-xl font-bold transition-all shadow-[0_0_15px_rgba(0,212,170,0.1)] hover:shadow-[0_0_25px_rgba(8,158,96,0.3)]"
               >
                 Quay Lại Ngân Hàng Đề Thi
               </button>
@@ -185,7 +185,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
           </button>
           <h2 className="font-black text-white text-sm md:text-base hidden sm:block">Đang làm bài #{params.quizId}</h2>
         </div>
-        <div className={`flex items-center gap-2 font-mono text-xl font-bold px-4 py-1.5 rounded-xl border ${secondsLeft < 60 ? 'text-red-500 border-red-500/50 bg-red-500/10 animate-pulse' : 'text-[#00d4aa] border-[#00d4aa]/30 bg-[#00d4aa]/5'}`}>
+        <div className={`flex items-center gap-2 font-mono text-xl font-bold px-4 py-1.5 rounded-xl border ${secondsLeft < 60 ? 'text-red-500 border-red-500/50 bg-red-500/10 animate-pulse' : 'text-[#089e60] border-[#089e60]/30 bg-[#089e60]/5'}`}>
           <Clock size={18} />
           {formatTime(secondsLeft)}
         </div>
@@ -194,9 +194,9 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
       <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-8 relative z-10 flex flex-col justify-center">
         
         {/* Tiêu đề câu hỏi */}
-        <div className="mb-8 p-6 bg-[#11121d]/70 border border-[#1e293b] rounded-2xl shadow-xl backdrop-blur-sm">
+        <div className="mb-8 p-6 bg-[#11121d]/70 border border-[#e7e7e7] rounded-2xl shadow-xl backdrop-blur-sm">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-[#00d4aa] text-sm font-bold uppercase tracking-widest bg-[#00d4aa]/10 px-3 py-1 rounded-full border border-[#00d4aa]/20">
+            <span className="text-[#089e60] text-sm font-bold uppercase tracking-widest bg-[#089e60]/10 px-3 py-1 rounded-full border border-[#089e60]/20">
               Câu hỏi {currentQIndex + 1} / {REAL_IT_QUESTIONS.length}
             </span>
           </div>
@@ -218,7 +218,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
                 stateClass = "bg-[#11121d]/40 border-gray-800/50 text-gray-500" // Làm mờ đi
               }
             } else if (isSelected) {
-              stateClass = "bg-[#00d4aa]/20 border-[#00d4aa] text-white shadow-[0_0_15px_rgba(0,212,170,0.2)]"
+              stateClass = "bg-[#089e60]/20 border-[#089e60] text-white shadow-[0_0_15px_rgba(8,158,96,0.2)]"
             }
 
             return (
@@ -233,7 +233,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
                   ) : isAnswered && isSelected ? (
                     <XCircle size={24} className="text-red-500 bg-black rounded-full" />
                   ) : isSelected ? (
-                    <div className="w-6 h-6 rounded-full bg-[#00d4aa] flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-full bg-[#089e60] flex items-center justify-center">
                       <div className="w-2.5 h-2.5 bg-black rounded-full" />
                     </div>
                   ) : (
@@ -274,7 +274,7 @@ export default function QuizTakingPage({ params }: { params: { quizId: string } 
         ) : (
           <button 
             onClick={handleNextQuestion}
-            className="px-8 py-3 bg-[#00d4aa] hover:bg-[#00e6b8] text-black rounded-xl font-black transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(0,212,170,0.3)] animate-pulse hover:animate-none"
+            className="px-8 py-3 bg-[#089e60] hover:bg-[#00e6b8] text-black rounded-xl font-black transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(8,158,96,0.3)] animate-pulse hover:animate-none"
           >
             {currentQIndex < REAL_IT_QUESTIONS.length - 1 ? 'Câu Tiếp Theo' : 'Hoàn Thành Bài Thi'} 
           </button>

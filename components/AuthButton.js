@@ -42,8 +42,8 @@ const AuthButton = () => {
                 <Link href={`/${user.user_metadata?.role || 'student'}`} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', cursor: 'pointer' }}>
                     <div style={{ 
                         width: '32px', height: '32px', borderRadius: '50%', 
-                        background: 'rgba(0, 243, 255, 0.1)', border: '1px solid #00f3ff',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00f3ff'
+                        background: 'rgba(0, 243, 255, 0.1)', border: '1px solid #289cf9',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#289cf9'
                     }}>
                         <User size={18} />
                     </div>
@@ -69,7 +69,7 @@ const AuthButton = () => {
     return (
         <Link href="/login">
             <button style={{ 
-                background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', border: '1px solid #00f3ff', 
+                background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', border: '1px solid #289cf9', 
                 padding: '10px 20px', borderRadius: '8px', fontWeight: 700, cursor: 'pointer',
                 transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px'
             }}>

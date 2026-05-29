@@ -83,7 +83,7 @@ export default function JoinClassModal({ isOpen, onClose }: { isOpen: boolean, o
         </button>
 
         <div style={{ padding: '32px' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+          <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
             <KeySquare size={28} />
           </div>
           <h2 style={{ margin: '0 0 8px 0', fontSize: '24px', fontWeight: 800, color: '#fff' }}>Tham gia lớp học</h2>
@@ -109,7 +109,7 @@ export default function JoinClassModal({ isOpen, onClose }: { isOpen: boolean, o
                     borderRadius: '12px', color: '#fff', fontSize: '24px', fontWeight: 800, textAlign: 'center',
                     letterSpacing: '4px', textTransform: 'uppercase', outline: 'none', transition: 'border-color 0.2s'
                   }}
-                  onFocus={e => e.target.style.borderColor = '#00f3ff'}
+                  onFocus={e => e.target.style.borderColor = '#289cf9'}
                   onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
                 />
               </div>

@@ -72,7 +72,7 @@ export default function GradeTable({ data, assignmentId, classId }: GradeTablePr
     }),
     columnHelper.accessor('total_score', {
       header: 'Tổng điểm',
-      cell: info => info.getValue() !== null ? <strong style={{ color: '#00f3ff', fontSize: '16px' }}>{info.getValue()}</strong> : '-',
+      cell: info => info.getValue() !== null ? <strong style={{ color: '#289cf9', fontSize: '16px' }}>{info.getValue()}</strong> : '-',
     }),
     columnHelper.display({
       id: 'actions',
@@ -144,7 +144,7 @@ export default function GradeTable({ data, assignmentId, classId }: GradeTablePr
           }}
         />
         <button onClick={handleExportCSV} style={{
-          background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', border: '1px solid rgba(0, 243, 255, 0.2)',
+          background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', border: '1px solid rgba(0, 243, 255, 0.2)',
           padding: '10px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, cursor: 'pointer',
           display: 'flex', alignItems: 'center', gap: '8px'
         }}>

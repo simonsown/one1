@@ -68,7 +68,7 @@ export default function StudentClassDetailsPage({ params }: { params: Promise<{ 
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+        <Loader2 className="animate-spin" color="#289cf9" size={48} />
       </div>
     );
   }
@@ -85,13 +85,13 @@ export default function StudentClassDetailsPage({ params }: { params: Promise<{ 
         <h1 style={{ fontSize: '36px', fontWeight: 800, margin: '0 0 12px 0', color: '#fff' }}>{classData.name}</h1>
         <div style={{ display: 'flex', gap: '24px', color: '#8899a6', fontSize: '14px' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><User size={16} /> GV: <strong style={{ color: '#fff' }}>{classData.teacher?.full_name}</strong></span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Info size={16} /> Mã lớp: <strong style={{ color: '#00f3ff' }}>{classData.code}</strong></span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Info size={16} /> Mã lớp: <strong style={{ color: '#289cf9' }}>{classData.code}</strong></span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Calendar size={16} /> Năm học: {classData.school_year}</span>
         </div>
       </header>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
-        <ClipboardList size={24} color="#00f3ff" />
+        <ClipboardList size={24} color="#289cf9" />
         <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#fff', margin: 0 }}>Nhiệm vụ cần hoàn thành</h2>
       </div>
 

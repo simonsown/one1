@@ -27,14 +27,14 @@ export function NotificationBell({ userId }: { userId?: string }) {
       {/* Bell button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-slate-400 hover:text-white hover:bg-[#16213e] rounded-full transition-colors"
+        className="relative p-2 text-slate-400 hover:text-white hover:bg-[#ffffff] rounded-full transition-colors"
         aria-label={`Thông báo${unreadCount > 0 ? ` (${unreadCount} chưa đọc)` : ''}`}
       >
         <Bell size={20} />
         {unreadCount > 0 && (
           <span className="
             absolute top-1.5 right-1.5 w-2.5 h-2.5 
-            bg-[#e84855] border-2 border-[#0f0f1a] rounded-full
+            bg-[#e84855] border-2 border-[#f8f9fa] rounded-full
           "></span>
         )}
       </button>
@@ -46,10 +46,10 @@ export function NotificationBell({ userId }: { userId?: string }) {
           bg-[#1a1c25] border border-gray-800
           rounded-xl shadow-2xl z-50 overflow-hidden
         ">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800 bg-[#16213e]/50">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800 bg-[#ffffff]/50">
             <span className="text-sm font-bold text-[#dde0ed]">Thông báo</span>
             {unreadCount > 0 && (
-              <button onClick={markAllAsRead} className="text-xs text-[#00d4aa] font-medium hover:underline">
+              <button onClick={markAllAsRead} className="text-xs text-[#089e60] font-medium hover:underline">
                 Đọc tất cả
               </button>
             )}
@@ -71,8 +71,8 @@ export function NotificationBell({ userId }: { userId?: string }) {
             href="/notifications" 
             onClick={() => setIsOpen(false)}
             className="
-              block text-center py-3 text-xs font-medium text-[#00d4aa]
-              border-t border-gray-800 bg-[#16213e]/30 hover:bg-[#16213e] transition-colors
+              block text-center py-3 text-xs font-medium text-[#089e60]
+              border-t border-gray-800 bg-[#ffffff]/30 hover:bg-[#ffffff] transition-colors
             "
           >
             Xem tất cả thông báo →

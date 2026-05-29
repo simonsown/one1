@@ -216,14 +216,14 @@ function Home(props) {
       {isDemo && (
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999,
-          background: 'linear-gradient(90deg, #6366f1, #00d2a0)',
+          background: 'linear-gradient(90deg, #089e60, #089e60)',
           color: 'white', padding: '8px 16px', textAlign: 'center',
           fontSize: '14px', fontWeight: 600, display: 'flex', 
           alignItems: 'center', justifyCenter: 'center', gap: '12px'
         }}>
           <span>Bạn đang ở Chế độ Demo (Khách). Tiến độ học tập sẽ không được lưu lại.</span>
           <Link href="/register" style={{ 
-            background: 'white', color: '#6366f1', padding: '2px 12px', 
+            background: 'white', color: '#089e60', padding: '2px 12px', 
             borderRadius: '4px', textDecoration: 'none', fontSize: '12px'
           }}>
             Đăng ký ngay

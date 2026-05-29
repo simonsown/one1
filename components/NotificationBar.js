@@ -30,7 +30,7 @@ export default function NotificationBar() {
                     <style>{`@keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
                         <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                            <Bell size={16} color="#00f3ff" style={{ flexShrink: 0, marginTop: '2px' }} />
+                            <Bell size={16} color="#289cf9" style={{ flexShrink: 0, marginTop: '2px' }} />
                             <div>
                                 <p style={{ margin: '0 0 4px 0', fontSize: '13px', fontWeight: 700, color: 'white' }}>{n.title}</p>
                                 {n.content && <p style={{ margin: 0, fontSize: '12px', color: '#8899a6', lineHeight: 1.5 }}>{n.content}</p>}

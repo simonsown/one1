@@ -79,7 +79,7 @@ export default function AssignmentSubmissionsPage({ params }: { params: Promise<
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+        <Loader2 className="animate-spin" color="#289cf9" size={48} />
       </div>
     );
   }
@@ -93,7 +93,7 @@ export default function AssignmentSubmissionsPage({ params }: { params: Promise<
           <ArrowLeft size={20} /> Quay lại lớp học
         </Link>
         
-        <h1 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 12px 0', color: '#fff' }}>Quản lý <span style={{ color: '#00f3ff' }}>Bài nộp</span></h1>
+        <h1 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 12px 0', color: '#fff' }}>Quản lý <span style={{ color: '#289cf9' }}>Bài nộp</span></h1>
         <div style={{ display: 'flex', gap: '24px', color: '#8899a6', fontSize: '14px' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><ClipboardList size={16} /> Nhiệm vụ: <strong style={{ color: '#fff' }}>{assignment.title}</strong></span>
           {assignment.deadline && (

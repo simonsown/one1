@@ -67,7 +67,7 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
         particleCount: 50,
         spread: 40,
         origin: { y: 0.8 },
-        colors: ['#00d2a0']
+        colors: ['#089e60']
       })
     }
 
@@ -83,7 +83,7 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
         particleCount: 200,
         spread: 100,
         origin: { y: 0.5 },
-        colors: ['#00d2a0', '#00b4d8', '#ffffff']
+        colors: ['#089e60', '#289cf9', '#ffffff']
       })
     }
   }
@@ -101,12 +101,12 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-gradient-to-br from-[#00d2a0]/20 to-[#00b4d8]/20 p-8 md:p-12 rounded-3xl border border-[#00d2a0]/50 text-center shadow-[0_0_50px_rgba(0,210,160,0.15)] relative overflow-hidden"
+        className="bg-gradient-to-br from-[#089e60]/20 to-[#289cf9]/20 p-8 md:p-12 rounded-3xl border border-[#089e60]/50 text-center shadow-[0_0_50px_rgba(0,210,160,0.15)] relative overflow-hidden"
       >
-        <Award size={64} className="text-[#00d2a0] mx-auto mb-6" />
+        <Award size={64} className="text-[#089e60] mx-auto mb-6" />
         <h2 className="text-3xl font-bold mb-2">Chúc mừng bạn!</h2>
         <p className="text-slate-300 mb-6 text-lg">Bạn đã hoàn thành bài học và đạt <strong className="text-white">{score} XP</strong>.</p>
-        <div className="inline-flex items-center gap-2 px-6 py-3 bg-[#00d2a0] text-black font-bold rounded-xl shadow-[0_0_15px_rgba(0,210,160,0.4)]">
+        <div className="inline-flex items-center gap-2 px-6 py-3 bg-[#089e60] text-black font-bold rounded-xl shadow-[0_0_15px_rgba(0,210,160,0.4)]">
           <CheckCircle size={20} /> Đã lưu tiến trình
         </div>
       </motion.div>
@@ -114,13 +114,13 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
   }
 
   return (
-    <section className="bg-[#16213e] p-6 md:p-10 rounded-3xl border border-[#1e293b] shadow-xl">
+    <section className="bg-[#ffffff] p-6 md:p-10 rounded-3xl border border-[#e7e7e7] shadow-xl">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-bold flex items-center gap-3">
-          <span className="w-10 h-10 rounded-xl bg-[#00b4d8]/10 text-[#00b4d8] flex items-center justify-center text-lg">?</span>
+          <span className="w-10 h-10 rounded-xl bg-[#289cf9]/10 text-[#289cf9] flex items-center justify-center text-lg">?</span>
           Kiểm tra kiến thức
         </h2>
-        <div className="text-sm font-semibold text-slate-400 bg-[#0f0f1a] px-4 py-2 rounded-full border border-[#2a3655]">
+        <div className="text-sm font-semibold text-slate-400 bg-[#f8f9fa] px-4 py-2 rounded-full border border-[#e7e7e7]">
           Câu {currentQuestion + 1} / {QUIZ_DATA.length}
         </div>
       </div>
@@ -140,13 +140,13 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
               const isSelected = selectedAnswer === opt.id
               const isCorrect = opt.id === activeQuestion.correctAnswer
               
-              let stateClass = "border-[#2a3655] bg-[#0f0f1a] hover:border-[#00d2a0]"
-              if (isSelected) stateClass = "border-[#00d2a0] bg-[#00d2a0]/10"
+              let stateClass = "border-[#e7e7e7] bg-[#f8f9fa] hover:border-[#089e60]"
+              if (isSelected) stateClass = "border-[#089e60] bg-[#089e60]/10"
               
               if (isSubmitted) {
-                if (isCorrect) stateClass = "border-[#00d2a0] bg-[#00d2a0]/20 shadow-[0_0_15px_rgba(0,210,160,0.2)]"
+                if (isCorrect) stateClass = "border-[#089e60] bg-[#089e60]/20 shadow-[0_0_15px_rgba(8,158,96,0.2)]"
                 else if (isSelected && !isCorrect) stateClass = "border-red-500 bg-red-500/10"
-                else stateClass = "border-[#2a3655] bg-[#0f0f1a] opacity-50"
+                else stateClass = "border-[#e7e7e7] bg-[#f8f9fa] opacity-50"
               }
 
               return (
@@ -157,9 +157,9 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
                   className={`flex items-center gap-4 p-5 rounded-2xl border-2 transition-all duration-200 text-left ${stateClass}`}
                 >
                   <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold text-sm
-                    ${isSubmitted && isCorrect ? 'bg-[#00d2a0] border-[#00d2a0] text-black' : 
+                    ${isSubmitted && isCorrect ? 'bg-[#089e60] border-[#089e60] text-black' : 
                       (isSubmitted && isSelected && !isCorrect ? 'bg-red-500 border-red-500 text-white' : 
-                      (isSelected ? 'border-[#00d2a0] text-[#00d2a0]' : 'border-slate-500 text-slate-400'))}
+                      (isSelected ? 'border-[#089e60] text-[#089e60]' : 'border-slate-500 text-slate-400'))}
                   `}>
                     {isSubmitted && isCorrect ? <CheckCircle size={16} /> : (isSubmitted && isSelected && !isCorrect ? <XCircle size={16} /> : opt.id)}
                   </div>
@@ -172,9 +172,9 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
           {isSubmitted && (
             <motion.div 
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-              className={`p-6 rounded-2xl mb-8 ${selectedAnswer === activeQuestion.correctAnswer ? 'bg-[#00d2a0]/10 border border-[#00d2a0]/30' : 'bg-red-500/10 border border-red-500/30'}`}
+              className={`p-6 rounded-2xl mb-8 ${selectedAnswer === activeQuestion.correctAnswer ? 'bg-[#089e60]/10 border border-[#089e60]/30' : 'bg-red-500/10 border border-red-500/30'}`}
             >
-              <h4 className={`font-bold mb-2 flex items-center gap-2 ${selectedAnswer === activeQuestion.correctAnswer ? 'text-[#00d2a0]' : 'text-red-400'}`}>
+              <h4 className={`font-bold mb-2 flex items-center gap-2 ${selectedAnswer === activeQuestion.correctAnswer ? 'text-[#089e60]' : 'text-red-400'}`}>
                 {selectedAnswer === activeQuestion.correctAnswer ? <CheckCircle size={20} /> : <XCircle size={20} />}
                 {selectedAnswer === activeQuestion.correctAnswer ? 'Chính xác!' : 'Sai rồi!'}
               </h4>
@@ -195,14 +195,14 @@ export default function QuizInteractive({ lessonId, userId, initialProgress }: Q
               currentQuestion < QUIZ_DATA.length - 1 ? (
                 <button
                   onClick={handleNext}
-                  className="px-8 py-3.5 bg-[#00d2a0] text-black font-bold rounded-xl hover:bg-[#00e6af] transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(0,210,160,0.3)]"
+                  className="px-8 py-3.5 bg-[#089e60] text-black font-bold rounded-xl hover:bg-[#0b755b] transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(8,158,96,0.3)]"
                 >
                   Câu tiếp theo <ArrowRight size={20} />
                 </button>
               ) : (
                 <button
                   disabled={isSaving}
-                  className="px-8 py-3.5 bg-[#00d2a0] text-black font-bold rounded-xl transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(0,210,160,0.3)] disabled:opacity-50"
+                  className="px-8 py-3.5 bg-[#089e60] text-black font-bold rounded-xl transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(8,158,96,0.3)] disabled:opacity-50"
                 >
                   {isSaving ? <Loader2 className="animate-spin" size={20} /> : 'Đang hoàn tất...'}
                 </button>

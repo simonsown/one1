@@ -21,20 +21,20 @@ export default function ForgotPasswordPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center p-6 text-white">
+      <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center p-6 text-white">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md bg-[#16213e] border border-[#1e293b] p-10 rounded-2xl text-center shadow-2xl"
+          className="w-full max-w-md bg-[#ffffff] border border-[#e7e7e7] p-10 rounded-2xl text-center shadow-2xl"
         >
-          <div className="w-20 h-20 bg-[#00d2a0]/10 text-[#00d2a0] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-[#089e60]/10 text-[#089e60] rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 size={40} />
           </div>
           <h2 className="text-2xl font-bold mb-4">Kiểm tra Email</h2>
           <p className="text-slate-400 mb-8 leading-relaxed">
             Chúng tôi đã gửi link đặt lại mật khẩu đến <span className="text-white font-medium">{email}</span>. Vui lòng kiểm tra hộp thư của bạn.
           </p>
-          <Link href="/login" className="inline-flex items-center gap-2 text-[#00d2a0] font-medium hover:underline">
+          <Link href="/login" className="inline-flex items-center gap-2 text-[#089e60] font-medium hover:underline">
             <ArrowLeft size={18} /> Quay lại Đăng nhập
           </Link>
         </motion.div>
@@ -43,11 +43,11 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center p-6 text-white">
+    <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center p-6 text-white">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-[#16213e] border border-[#1e293b] p-8 md:p-10 rounded-2xl shadow-2xl"
+        className="w-full max-w-md bg-[#ffffff] border border-[#e7e7e7] p-8 md:p-10 rounded-2xl shadow-2xl"
       >
         <Link href="/login" className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-8">
           <ArrowLeft size={18} />
@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#00d2a0] transition-all"
+              className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#089e60] transition-all"
               placeholder="Email của bạn"
             />
           </div>
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-[#00d2a0] hover:bg-[#00e6af] text-black font-bold py-3.5 rounded-xl transition-all shadow-[0_0_20px_rgba(0,210,160,0.2)] flex items-center justify-center gap-2"
+            className="w-full bg-[#089e60] hover:bg-[#0b755b] text-black font-bold py-3.5 rounded-xl transition-all shadow-[0_0_20px_rgba(8,158,96,0.2)] flex items-center justify-center gap-2"
           >
             {loading ? <Loader2 className="animate-spin" size={20} /> : 'Gửi link đặt lại'}
           </button>

@@ -83,7 +83,7 @@ export default function AdminDashboard() {
       {/* Stats Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '48px' }}>
         {[
-          { label: 'Tổng người dùng', value: stats.totalUsers, icon: <Users size={20} />, color: '#6366f1' },
+          { label: 'Tổng người dùng', value: stats.totalUsers, icon: <Users size={20} />, color: '#089e60' },
           { label: 'Giáo viên', value: stats.teachers, icon: <Shield size={20} />, color: '#06b6d4' },
           { label: 'Học sinh', value: stats.students, icon: <Users size={20} />, color: '#10b981' },
           { label: 'Lớp học hoạt động', value: stats.activeClasses, icon: <Database size={20} />, color: '#f59e0b' },
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
               <tr key={user.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.2s' }}>
                 <td style={{ padding: '20px 24px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(45deg, #00f3ff, #0066ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(45deg, #289cf9, #0066ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff' }}>
                       {user.full_name?.charAt(0) || 'U'}
                     </div>
                     <div>

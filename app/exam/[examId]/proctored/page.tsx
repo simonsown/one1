@@ -123,23 +123,23 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
 
   if (step === 'check') {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center p-6 overflow-hidden relative">
+      <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center p-6 overflow-hidden relative">
          {/* Background Decoration */}
          <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00d2a0] blur-[120px]"></div>
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#089e60] blur-[120px]"></div>
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500 blur-[120px]"></div>
          </div>
 
          <motion.div 
            initial={{ opacity: 0, scale: 0.9 }} 
            animate={{ opacity: 1, scale: 1 }}
-           className="max-w-4xl w-full bg-[#16213e] rounded-[48px] border border-[#1e293b] p-10 md:p-16 shadow-2xl relative z-10"
+           className="max-w-4xl w-full bg-[#ffffff] rounded-[48px] border border-[#e7e7e7] p-10 md:p-16 shadow-2xl relative z-10"
          >
             <div className="flex flex-col md:flex-row gap-12 items-center">
                
                {/* Left: Camera Feed */}
                <div className="w-full md:w-1/2 space-y-6">
-                  <div className="aspect-video bg-[#0f0f1a] rounded-[32px] border-2 border-[#1e293b] overflow-hidden relative group">
+                  <div className="aspect-video bg-[#f8f9fa] rounded-[32px] border-2 border-[#e7e7e7] overflow-hidden relative group">
                      {!hasPermission ? (
                         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
                            <Camera size={48} className="text-slate-700" />
@@ -152,8 +152,8 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
                      )}
                      
                      {identityPhoto && (
-                       <div className="absolute inset-0 border-4 border-[#00d2a0] rounded-[32px] z-20 pointer-events-none">
-                          <div className="absolute top-4 right-4 bg-[#00d2a0] text-black px-3 py-1 rounded-full text-[10px] font-black uppercase">Đã xác minh</div>
+                       <div className="absolute inset-0 border-4 border-[#089e60] rounded-[32px] z-20 pointer-events-none">
+                          <div className="absolute top-4 right-4 bg-[#089e60] text-black px-3 py-1 rounded-full text-[10px] font-black uppercase">Đã xác minh</div>
                        </div>
                      )}
                   </div>
@@ -171,7 +171,7 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
                {/* Right: Security Info */}
                <div className="w-full md:w-1/2 space-y-8">
                   <div>
-                    <h1 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Kỳ thi <span className="text-[#00d2a0]">Giám sát</span></h1>
+                    <h1 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Kỳ thi <span className="text-[#089e60]">Giám sát</span></h1>
                     <p className="text-slate-400 font-medium">Hệ thống AI Proctoring đang bảo vệ tính minh bạch của kỳ thi này.</p>
                   </div>
 
@@ -180,9 +180,9 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
                        { icon: Monitor, text: "Bắt buộc chế độ Toàn màn hình", color: "#3b82f6" },
                        { icon: ShieldAlert, text: "Phát hiện và cảnh báo khi rời Tab", color: "#ef4444" },
                        { icon: Lock, text: "Khóa chức năng Copy, Paste, chuột phải", color: "#8b5cf6" },
-                       { icon: Video, text: "Chụp ảnh webcam ngẫu nhiên để đối soát", color: "#00d2a0" },
+                       { icon: Video, text: "Chụp ảnh webcam ngẫu nhiên để đối soát", color: "#089e60" },
                      ].map((item, i) => (
-                       <div key={i} className="flex items-center gap-4 p-4 bg-[#0f0f1a] rounded-2xl border border-[#1e293b]">
+                       <div key={i} className="flex items-center gap-4 p-4 bg-[#f8f9fa] rounded-2xl border border-[#e7e7e7]">
                           <div className="p-2 rounded-lg" style={{ backgroundColor: `${item.color}15`, color: item.color }}>
                              <item.icon size={18} />
                           </div>
@@ -193,7 +193,7 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
 
                   <button 
                     onClick={startExam}
-                    className="w-full py-6 bg-[#00d2a0] text-black font-black uppercase tracking-widest rounded-2xl flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(0,210,160,0.2)] hover:shadow-[0_20px_50px_rgba(0,210,160,0.4)] transition-all"
+                    className="w-full py-6 bg-[#089e60] text-black font-black uppercase tracking-widest rounded-2xl flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(8,158,96,0.2)] hover:shadow-[0_20px_50px_rgba(0,210,160,0.4)] transition-all"
                   >
                     Bắt đầu làm bài <ArrowRight size={20} />
                   </button>
@@ -254,7 +254,7 @@ export default function ProctoredExamPage({ params }: { params: Promise<{ examId
       </AnimatePresence>
 
       {/* Small Monitor View (Floating) */}
-      <div className="fixed bottom-6 right-6 w-40 h-30 bg-[#16213e] rounded-xl border border-[#1e293b] overflow-hidden z-[100] shadow-2xl pointer-events-none">
+      <div className="fixed bottom-6 right-6 w-40 h-30 bg-[#ffffff] rounded-xl border border-[#e7e7e7] overflow-hidden z-[100] shadow-2xl pointer-events-none">
          <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover mirror opacity-50" />
          <div className="absolute top-2 left-2 flex items-center gap-1">
             <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>

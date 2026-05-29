@@ -68,7 +68,7 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ classId
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+        <Loader2 className="animate-spin" color="#289cf9" size={48} />
       </div>
     );
   }
@@ -86,7 +86,7 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ classId
           <div>
             <h1 style={{ fontSize: '36px', fontWeight: 800, margin: '0 0 12px 0', color: '#fff' }}>{classData.name}</h1>
             <div style={{ display: 'flex', gap: '24px', color: '#8899a6', fontSize: '14px' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Info size={16} /> Mã lớp: <strong style={{ color: '#00f3ff' }}>{classData.code}</strong></span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Info size={16} /> Mã lớp: <strong style={{ color: '#289cf9' }}>{classData.code}</strong></span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Users size={16} /> {members.length}/{classData.max_students} Học sinh</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Calendar size={16} /> Năm học: {classData.school_year}</span>
             </div>
@@ -114,8 +114,8 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ classId
           onClick={() => setActiveTab('assignments')}
           style={{ 
             padding: '12px 0', background: 'none', border: 'none', 
-            borderBottom: activeTab === 'assignments' ? '2px solid #00f3ff' : '2px solid transparent',
-            color: activeTab === 'assignments' ? '#00f3ff' : '#8899a6',
+            borderBottom: activeTab === 'assignments' ? '2px solid #289cf9' : '2px solid transparent',
+            color: activeTab === 'assignments' ? '#289cf9' : '#8899a6',
             fontSize: '16px', fontWeight: 700, cursor: 'pointer',
             display: 'flex', alignItems: 'center', gap: '8px'
           }}
@@ -126,8 +126,8 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ classId
           onClick={() => setActiveTab('students')}
           style={{ 
             padding: '12px 0', background: 'none', border: 'none', 
-            borderBottom: activeTab === 'students' ? '2px solid #00f3ff' : '2px solid transparent',
-            color: activeTab === 'students' ? '#00f3ff' : '#8899a6',
+            borderBottom: activeTab === 'students' ? '2px solid #289cf9' : '2px solid transparent',
+            color: activeTab === 'students' ? '#289cf9' : '#8899a6',
             fontSize: '16px', fontWeight: 700, cursor: 'pointer',
             display: 'flex', alignItems: 'center', gap: '8px'
           }}

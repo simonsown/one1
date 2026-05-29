@@ -36,40 +36,40 @@ export default function DiscussionPanel({ lessonId, currentUserId, userRole }: D
   }
 
   return (
-    <div className="flex flex-col h-full bg-[#16213e]/20 rounded-2xl border border-gray-800 overflow-hidden">
+    <div className="flex flex-col h-full bg-[#ffffff]/20 rounded-2xl border border-gray-800 overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-gray-800 bg-[#16213e]/50 flex items-center justify-between flex-shrink-0">
+      <div className="p-4 border-b border-gray-800 bg-[#ffffff]/50 flex items-center justify-between flex-shrink-0">
         <h3 className="font-bold text-white text-sm flex items-center gap-2">
-          <MessageSquare size={16} className="text-[#00d4aa]" />
+          <MessageSquare size={16} className="text-[#089e60]" />
           <span>Thảo luận ({threads.length})</span>
         </h3>
         <button
           onClick={() => setShowNewThread(true)}
-          className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-[#00d4aa]/10 border border-[#00d4aa]/30 text-[#00d4aa] hover:bg-[#00d4aa]/20 transition-all font-semibold"
+          className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-[#089e60]/10 border border-[#089e60]/30 text-[#089e60] hover:bg-[#089e60]/20 transition-all font-semibold"
         >
           <Plus size={14} /> Hỏi đáp
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex px-4 py-2 border-b border-gray-800/50 bg-[#16213e]/10 gap-2 flex-shrink-0">
+      <div className="flex px-4 py-2 border-b border-gray-800/50 bg-[#ffffff]/10 gap-2 flex-shrink-0">
         <button 
           onClick={() => setActiveTab('all')}
-          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'all' ? 'bg-[#00d4aa] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
+          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'all' ? 'bg-[#089e60] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
         >
           Tất cả
         </button>
         {userRole === 'teacher' && (
           <button 
             onClick={() => setActiveTab('unanswered')}
-            className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'unanswered' ? 'bg-[#00d4aa] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
+            className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'unanswered' ? 'bg-[#089e60] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
           >
             Chưa trả lời
           </button>
         )}
         <button 
           onClick={() => setActiveTab('pinned')}
-          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'pinned' ? 'bg-[#00d4aa] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
+          className={`px-3 py-1 text-xs rounded-full font-medium transition-colors ${activeTab === 'pinned' ? 'bg-[#089e60] text-[#0d0e13]' : 'text-gray-400 hover:text-white'}`}
         >
           Ghim
         </button>
@@ -79,7 +79,7 @@ export default function DiscussionPanel({ lessonId, currentUserId, userRole }: D
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-12 gap-2 text-gray-500">
-            <RefreshCw size={24} className="animate-spin text-[#00d4aa]" />
+            <RefreshCw size={24} className="animate-spin text-[#089e60]" />
             <span className="text-xs">Đang tải thảo luận...</span>
           </div>
         ) : threads.length === 0 ? (

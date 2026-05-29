@@ -28,8 +28,8 @@ export function BadgeCard({ badge }: Props) {
         glow: 'shadow-[0_0_15px_rgba(59,130,246,0.15)] border-blue-500/30'
       }
       case 'uncommon': return {
-        badge: 'bg-[#00d4aa]/10 text-[#00d4aa] border-[#00d4aa]/20',
-        glow: 'shadow-[0_0_15px_rgba(0,212,170,0.15)] border-[#00d4aa]/30'
+        badge: 'bg-[#089e60]/10 text-[#089e60] border-[#089e60]/20',
+        glow: 'shadow-[0_0_15px_rgba(0,212,170,0.15)] border-[#089e60]/30'
       }
       default: return {
         badge: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
@@ -48,7 +48,7 @@ export function BadgeCard({ badge }: Props) {
       {/* Badge Icon */}
       <div className={`
         w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-4 relative z-10
-        ${badge.earned ? 'bg-[#16213e]/60 border border-white/10' : 'bg-gray-900 border border-gray-850'}
+        ${badge.earned ? 'bg-[#ffffff]/60 border border-white/10' : 'bg-gray-900 border border-gray-850'}
       `}>
         {badge.earned ? badge.icon : '🔒'}
       </div>
@@ -72,7 +72,7 @@ export function BadgeCard({ badge }: Props) {
       <div className="mt-auto w-full pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-gray-500 font-bold">
         <span>+{badge.points} PTS</span>
         {badge.earned && badge.earnedAt && (
-          <span className="text-[#00d4aa]">Đạt: {new Date(badge.earnedAt).toLocaleDateString('vi-VN')}</span>
+          <span className="text-[#089e60]">Đạt: {new Date(badge.earnedAt).toLocaleDateString('vi-VN')}</span>
         )}
       </div>
     </div>

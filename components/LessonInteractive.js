@@ -63,7 +63,7 @@ function FlashcardPanel({ lessonId, lessonTitle, sections }) {
             <div style={{ fontSize: '64px' }}>🃏</div>
             <h3 style={{ margin: 0 }}>Flashcard Ôn Tập</h3>
             <p style={{ color: '#4b5563', textAlign: 'center', maxWidth: '400px' }}>AI sẽ phân tích nội dung bài học và tạo thẻ ôn tập phù hợp với bài này.</p>
-            <button onClick={generate} disabled={loading} style={{ padding: '14px 36px', background: '#00f3ff', color: '#050a14', border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button onClick={generate} disabled={loading} style={{ padding: '14px 36px', background: '#289cf9', color: '#050a14', border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 {loading ? <><Loader2 className="animate-spin" size={18} /> Đang phân tích bài...</> : '✨ Tạo Flashcard từ bài học'}
             </button>
         </div>
@@ -73,9 +73,9 @@ function FlashcardPanel({ lessonId, lessonTitle, sections }) {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
             <p style={{ color: '#4b5563', fontSize: '13px' }}>Thẻ {idx + 1} / {cards.length}</p>
-            <div onClick={() => setFlipped(f => !f)} style={{ width: '100%', maxWidth: '520px', minHeight: '220px', background: flipped ? 'rgba(0,243,255,0.08)' : 'rgba(255,255,255,0.04)', border: `2px solid ${flipped ? '#00f3ff' : 'rgba(255,255,255,0.08)'}`, borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: '32px', textAlign: 'center', transition: 'all 0.3s' }}>
+            <div onClick={() => setFlipped(f => !f)} style={{ width: '100%', maxWidth: '520px', minHeight: '220px', background: flipped ? 'rgba(0,243,255,0.08)' : 'rgba(255,255,255,0.04)', border: `2px solid ${flipped ? '#289cf9' : 'rgba(255,255,255,0.08)'}`, borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: '32px', textAlign: 'center', transition: 'all 0.3s' }}>
                 <div>
-                    <p style={{ fontSize: '11px', color: flipped ? '#00f3ff' : '#4b5563', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>{flipped ? 'Giải thích' : 'Khái niệm'}</p>
+                    <p style={{ fontSize: '11px', color: flipped ? '#289cf9' : '#4b5563', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>{flipped ? 'Giải thích' : 'Khái niệm'}</p>
                     <p style={{ fontSize: '18px', fontWeight: 700, lineHeight: 1.5, margin: 0 }}>{flipped ? card.back : card.front}</p>
                     <p style={{ fontSize: '12px', color: '#4b5563', marginTop: '16px' }}>👆 Click để lật thẻ</p>
                 </div>
@@ -116,7 +116,7 @@ function QuizPanel({ lessonTitle, sections }) {
             <div style={{ fontSize: '64px' }}>🧠</div>
             <h3 style={{ margin: 0 }}>Quiz Kiểm Tra Hiểu Bài</h3>
             <p style={{ color: '#4b5563', textAlign: 'center', maxWidth: '400px' }}>AI sẽ tạo câu hỏi DỰA TRÊN nội dung bài học này, không bịa câu hỏi không liên quan.</p>
-            <button onClick={generate} disabled={loading} style={{ padding: '14px 36px', background: '#00f3ff', color: '#050a14', border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button onClick={generate} disabled={loading} style={{ padding: '14px 36px', background: '#289cf9', color: '#050a14', border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 {loading ? <><Loader2 className="animate-spin" size={18} /> AI đang tạo câu hỏi...</> : '🤖 Tạo Quiz từ bài học'}
             </button>
         </div>
@@ -145,7 +145,7 @@ function QuizPanel({ lessonTitle, sections }) {
                                 if (submitted) {
                                     if (oi === q.correctIndex) { bg = 'rgba(16,185,129,0.1)'; border = '#10b981'; color = '#10b981'; }
                                     else if (chosen === oi) { bg = 'rgba(239,68,68,0.1)'; border = '#ef4444'; color = '#f87171'; }
-                                } else if (chosen === oi) { bg = 'rgba(0,243,255,0.1)'; border = '#00f3ff'; color = '#00f3ff'; }
+                                } else if (chosen === oi) { bg = 'rgba(0,243,255,0.1)'; border = '#289cf9'; color = '#289cf9'; }
                                 return (
                                     <button key={oi} disabled={submitted} onClick={() => setAnswers(a => ({ ...a, [qi]: oi }))}
                                         style={{ padding: '12px 16px', background: bg, border: `1px solid ${border}`, borderRadius: '10px', color, textAlign: 'left', cursor: submitted ? 'default' : 'pointer', fontWeight: chosen === oi ? 700 : 400, display: 'flex', alignItems: 'center', gap: '8px', transition: 'all 0.2s' }}>
@@ -157,7 +157,7 @@ function QuizPanel({ lessonTitle, sections }) {
                             })}
                         </div>
                         {submitted && q.explanation && (
-                            <div style={{ marginTop: '12px', padding: '12px', background: 'rgba(0,243,255,0.05)', borderRadius: '10px', fontSize: '13px', color: '#8899a6', borderLeft: '3px solid #00f3ff' }}>
+                            <div style={{ marginTop: '12px', padding: '12px', background: 'rgba(0,243,255,0.05)', borderRadius: '10px', fontSize: '13px', color: '#8899a6', borderLeft: '3px solid #289cf9' }}>
                                 💡 {q.explanation}
                             </div>
                         )}
@@ -166,7 +166,7 @@ function QuizPanel({ lessonTitle, sections }) {
             })}
             {!submitted ? (
                 <button onClick={() => setSubmitted(true)} disabled={Object.keys(answers).length < questions.length}
-                    style={{ padding: '14px', background: '#00f3ff', color: '#050a14', border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer', fontSize: '15px' }}>
+                    style={{ padding: '14px', background: '#289cf9', color: '#050a14', border: 'none', borderRadius: '12px', fontWeight: 800, cursor: 'pointer', fontSize: '15px' }}>
                     Nộp bài ({Object.keys(answers).length}/{questions.length} câu)
                 </button>
             ) : (
@@ -191,7 +191,7 @@ export default function LessonInteractive({ lessonId, lessonTitle, sections, com
         <div>
             <div style={{ display: 'flex', gap: '4px', marginBottom: '28px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '0' }}>
                 {tabs.map(t => (
-                    <button key={t.key} onClick={() => setTab(t.key)} style={{ padding: '10px 20px', background: tab === t.key ? 'rgba(0,243,255,0.08)' : 'transparent', color: tab === t.key ? '#00f3ff' : '#4b5563', border: 'none', borderBottom: tab === t.key ? '2px solid #00f3ff' : '2px solid transparent', cursor: 'pointer', fontWeight: 700, fontSize: '13px', borderRadius: '0', transition: 'all 0.2s' }}>
+                    <button key={t.key} onClick={() => setTab(t.key)} style={{ padding: '10px 20px', background: tab === t.key ? 'rgba(0,243,255,0.08)' : 'transparent', color: tab === t.key ? '#289cf9' : '#4b5563', border: 'none', borderBottom: tab === t.key ? '2px solid #289cf9' : '2px solid transparent', cursor: 'pointer', fontWeight: 700, fontSize: '13px', borderRadius: '0', transition: 'all 0.2s' }}>
                         {t.label}
                     </button>
                 ))}

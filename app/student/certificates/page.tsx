@@ -95,7 +95,7 @@ export default function StudentCertificatesPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2">
-        <RefreshCw size={28} className="animate-spin text-[#00d4aa]" />
+        <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang tải chứng chỉ...</span>
       </div>
     )
@@ -105,14 +105,14 @@ export default function StudentCertificatesPage() {
     <div className="min-h-screen bg-[#161F38] text-white pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
       {/* High-tech overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#089e60]/5 rounded-full filter blur-[100px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto relative z-10">
         
         {/* Header Title & Exit Button */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
+            <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl">
               <Award size={24} />
             </div>
             <div>
@@ -138,22 +138,22 @@ export default function StudentCertificatesPage() {
             return (
               <div 
                 key={certType.id} 
-                className={`bg-[#11121d]/80 border rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden backdrop-blur-md transition-all ${isEarned ? 'border-[#00d4aa]/50' : 'border-[#1e293b]'}`}
+                className={`bg-[#11121d]/80 border rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden backdrop-blur-md transition-all ${isEarned ? 'border-[#089e60]/50' : 'border-[#e7e7e7]'}`}
               >
-                <div className={`absolute left-0 top-0 bottom-0 w-2 ${isEarned ? 'bg-[#00d4aa]' : 'bg-gray-800'}`}></div>
+                <div className={`absolute left-0 top-0 bottom-0 w-2 ${isEarned ? 'bg-[#089e60]' : 'bg-gray-800'}`}></div>
 
                 <div className="flex items-start gap-4 w-full md:w-auto flex-1">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1 ${isEarned ? 'bg-[#00d4aa]/20 border border-[#00d4aa]/30 text-[#00d4aa] shadow-[0_0_15px_rgba(0,212,170,0.2)]' : 'bg-gray-800/50 border border-gray-700 text-gray-500'}`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1 ${isEarned ? 'bg-[#089e60]/20 border border-[#089e60]/30 text-[#089e60] shadow-[0_0_15px_rgba(8,158,96,0.2)]' : 'bg-gray-800/50 border border-gray-700 text-gray-500'}`}>
                     {certType.icon}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className={`text-lg font-black uppercase ${isEarned ? 'text-white' : 'text-gray-400'}`}>{certType.title}</h3>
-                      {isEarned && <CheckCircle size={16} className="text-[#00d4aa]" />}
+                      {isEarned && <CheckCircle size={16} className="text-[#089e60]" />}
                     </div>
                     <p className="text-sm text-gray-400 mb-3">{certType.description}</p>
                     
-                    <div className="bg-[#161F38] p-3 rounded-xl border border-[#1e293b]">
+                    <div className="bg-[#161F38] p-3 rounded-xl border border-[#e7e7e7]">
                       <p className="text-xs font-bold text-blue-400 mb-1 flex items-center gap-1.5"><Target size={14} /> Nhiệm vụ cần đạt:</p>
                       <p className="text-xs text-gray-300">{certType.mission}</p>
                     </div>
@@ -174,7 +174,7 @@ export default function StudentCertificatesPage() {
                           href={earnedCert.pdf_url} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="flex-1 text-center md:w-44 px-4 py-2.5 bg-[#00d4aa] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(0,212,170,0.15)]"
+                          className="flex-1 text-center md:w-44 px-4 py-2.5 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(0,212,170,0.15)]"
                         >
                           <FileText size={14} /> Tải PDF
                         </a>

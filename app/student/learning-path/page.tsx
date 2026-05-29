@@ -231,7 +231,7 @@ export default function StudentLearningPathPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#161F38] text-white pt-24 flex flex-col items-center justify-center gap-2">
-        <RefreshCw size={28} className="animate-spin text-[#00d4aa]" />
+        <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang tải lộ trình học...</span>
       </div>
     )
@@ -242,14 +242,14 @@ export default function StudentLearningPathPage() {
       
       {/* Tech decorative corners & neon overlays */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#089e60]/5 rounded-full filter blur-[100px] pointer-events-none" />
 
       <div className="max-w-3xl mx-auto relative z-10">
         
         {/* Workspace Title & Exit Button */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
+            <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl">
               <Map size={24} />
             </div>
             <div>

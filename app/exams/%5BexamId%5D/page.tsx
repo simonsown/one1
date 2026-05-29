@@ -54,24 +54,24 @@ export default function ExamPlayerPage() {
   if (isSubmitted) {
     const score = questions.filter((q, idx) => answers[idx] === q.correct).length
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center p-6 text-white">
+      <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center p-6 text-white">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-lg bg-[#16213e] border border-[#1e293b] p-10 rounded-3xl text-center shadow-2xl"
+          className="w-full max-w-lg bg-[#ffffff] border border-[#e7e7e7] p-10 rounded-3xl text-center shadow-2xl"
         >
-          <div className="w-20 h-20 bg-[#00d2a0]/10 text-[#00d2a0] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-[#089e60]/10 text-[#089e60] rounded-full flex items-center justify-center mx-auto mb-6">
             <Send size={40} />
           </div>
           <h2 className="text-3xl font-bold mb-2">Hoàn thành bài thi!</h2>
           <p className="text-slate-400 mb-8">Bạn đã hoàn thành bài kiểm tra chương 1.</p>
           
-          <div className="bg-[#0f0f1a] rounded-2xl p-6 mb-8 border border-[#1e293b]">
+          <div className="bg-[#f8f9fa] rounded-2xl p-6 mb-8 border border-[#e7e7e7]">
             <p className="text-sm text-slate-500 uppercase font-bold mb-1">Điểm số của bạn</p>
-            <p className="text-5xl font-black text-[#00d2a0]">{score}/{questions.length}</p>
+            <p className="text-5xl font-black text-[#089e60]">{score}/{questions.length}</p>
           </div>
 
-          <button onClick={() => window.location.href = '/exams'} className="w-full py-4 bg-[#00d2a0] text-black font-bold rounded-xl hover:bg-[#00e6af] transition-all">
+          <button onClick={() => window.location.href = '/exams'} className="w-full py-4 bg-[#089e60] text-black font-bold rounded-xl hover:bg-[#0b755b] transition-all">
             QUAY LẠI DANH SÁCH THI
           </button>
         </motion.div>
@@ -80,11 +80,11 @@ export default function ExamPlayerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white flex flex-col">
+    <div className="min-h-screen bg-[#f8f9fa] text-white flex flex-col">
       {/* Header */}
-      <header className="h-20 bg-[#16213e] border-b border-[#1e293b] flex items-center justify-between px-6 md:px-10 sticky top-0 z-50">
+      <header className="h-20 bg-[#ffffff] border-b border-[#e7e7e7] flex items-center justify-between px-6 md:px-10 sticky top-0 z-50">
         <div className="flex items-center gap-4">
-           <div className="w-10 h-10 bg-[#00d2a0]/10 text-[#00d2a0] rounded-xl flex items-center justify-center">
+           <div className="w-10 h-10 bg-[#089e60]/10 text-[#089e60] rounded-xl flex items-center justify-center">
              <HelpCircle size={20} />
            </div>
            <div>
@@ -114,7 +114,7 @@ export default function ExamPlayerPage() {
         <div className="flex-1 overflow-y-auto p-6 md:p-12 custom-scrollbar bg-[#0a0a14]">
            <div className="max-w-3xl mx-auto">
              <div className="mb-10">
-               <span className="px-3 py-1 bg-[#1e293b] text-[#00d2a0] text-[10px] font-bold uppercase rounded-lg mb-4 inline-block">Câu hỏi {currentQuestion + 1} / {questions.length}</span>
+               <span className="px-3 py-1 bg-[#e7e7e7] text-[#089e60] text-[10px] font-bold uppercase rounded-lg mb-4 inline-block">Câu hỏi {currentQuestion + 1} / {questions.length}</span>
                <h2 className="text-2xl font-bold leading-relaxed">{questions[currentQuestion].text}</h2>
              </div>
 
@@ -125,19 +125,19 @@ export default function ExamPlayerPage() {
                    onClick={() => setAnswers({...answers, [currentQuestion]: opt})}
                    className={`p-6 rounded-2xl border text-left transition-all flex items-center justify-between group ${
                      answers[currentQuestion] === opt 
-                       ? 'bg-[#00d2a0]/10 border-[#00d2a0] text-[#00d2a0]' 
-                       : 'bg-[#16213e] border-[#1e293b] text-slate-300 hover:border-[#2a3655]'
+                       ? 'bg-[#089e60]/10 border-[#089e60] text-[#089e60]' 
+                       : 'bg-[#ffffff] border-[#e7e7e7] text-slate-300 hover:border-[#e7e7e7]'
                    }`}
                  >
                    <div className="flex items-center gap-4">
                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                       answers[currentQuestion] === opt ? 'bg-[#00d2a0] text-black' : 'bg-[#0f0f1a] text-slate-500'
+                       answers[currentQuestion] === opt ? 'bg-[#089e60] text-black' : 'bg-[#f8f9fa] text-slate-500'
                      }`}>
                        {String.fromCharCode(65 + idx)}
                      </span>
                      <span className="font-medium">{opt}</span>
                    </div>
-                   {answers[currentQuestion] === opt && <motion.div layoutId="check" className="w-6 h-6 bg-[#00d2a0] rounded-full flex items-center justify-center text-black"><Send size={12} /></motion.div>}
+                   {answers[currentQuestion] === opt && <motion.div layoutId="check" className="w-6 h-6 bg-[#089e60] rounded-full flex items-center justify-center text-black"><Send size={12} /></motion.div>}
                  </button>
                ))}
              </div>
@@ -145,8 +145,8 @@ export default function ExamPlayerPage() {
         </div>
 
         {/* Right Side: Navigation */}
-        <div className="w-full lg:w-96 border-l border-[#1e293b] bg-[#0f0f1a] flex flex-col">
-           <div className="p-6 border-b border-[#1e293b]">
+        <div className="w-full lg:w-96 border-l border-[#e7e7e7] bg-[#f8f9fa] flex flex-col">
+           <div className="p-6 border-b border-[#e7e7e7]">
              <h3 className="font-bold text-sm mb-4">Danh sách câu hỏi</h3>
              <div className="grid grid-cols-5 gap-3">
                {questions.map((_, idx) => (
@@ -154,9 +154,9 @@ export default function ExamPlayerPage() {
                    key={idx}
                    onClick={() => setCurrentQuestion(idx)}
                    className={`w-10 h-10 rounded-xl flex items-center justify-center text-xs font-bold transition-all border ${
-                     currentQuestion === idx ? 'bg-[#00d2a0] text-black border-[#00d2a0]' :
-                     answers[idx] ? 'bg-[#1e293b] text-[#00d2a0] border-[#00d2a0]/30' :
-                     'bg-[#16213e] text-slate-500 border-[#1e293b]'
+                     currentQuestion === idx ? 'bg-[#089e60] text-black border-[#089e60]' :
+                     answers[idx] ? 'bg-[#e7e7e7] text-[#089e60] border-[#089e60]/30' :
+                     'bg-[#ffffff] text-slate-500 border-[#e7e7e7]'
                    }`}
                  >
                    {idx + 1}
@@ -166,7 +166,7 @@ export default function ExamPlayerPage() {
            </div>
 
            <div className="flex-1 p-6 space-y-6">
-             <div className="bg-[#16213e] p-4 rounded-xl border border-[#1e293b] flex items-center gap-3">
+             <div className="bg-[#ffffff] p-4 rounded-xl border border-[#e7e7e7] flex items-center gap-3">
                 <AlertCircle size={18} className="text-yellow-500" />
                 <p className="text-[10px] text-slate-400 font-medium leading-relaxed">
                   Đừng thoát trình duyệt hoặc chuyển tab, hành động này sẽ bị ghi nhận là gian lận.
@@ -174,26 +174,26 @@ export default function ExamPlayerPage() {
              </div>
            </div>
 
-           <div className="p-6 bg-[#16213e]/50 border-t border-[#1e293b] space-y-3">
+           <div className="p-6 bg-[#ffffff]/50 border-t border-[#e7e7e7] space-y-3">
              <div className="flex gap-2">
                <button 
                  disabled={currentQuestion === 0}
                  onClick={() => setCurrentQuestion(prev => prev - 1)}
-                 className="flex-1 py-3 bg-[#1e293b] text-white rounded-xl font-bold text-xs disabled:opacity-30 flex items-center justify-center gap-2"
+                 className="flex-1 py-3 bg-[#e7e7e7] text-white rounded-xl font-bold text-xs disabled:opacity-30 flex items-center justify-center gap-2"
                >
                  <ChevronLeft size={16} /> TRƯỚC
                </button>
                <button 
                  disabled={currentQuestion === questions.length - 1}
                  onClick={() => setCurrentQuestion(prev => prev + 1)}
-                 className="flex-1 py-3 bg-[#1e293b] text-white rounded-xl font-bold text-xs disabled:opacity-30 flex items-center justify-center gap-2"
+                 className="flex-1 py-3 bg-[#e7e7e7] text-white rounded-xl font-bold text-xs disabled:opacity-30 flex items-center justify-center gap-2"
                >
                  SAU <ChevronRight size={16} />
                </button>
              </div>
              <button 
                onClick={handleSubmit}
-               className="w-full py-4 bg-[#00d2a0] text-black font-black rounded-xl hover:bg-[#00e6af] shadow-[0_0_20px_rgba(0,210,160,0.2)] transition-all"
+               className="w-full py-4 bg-[#089e60] text-black font-black rounded-xl hover:bg-[#0b755b] shadow-[0_0_20px_rgba(8,158,96,0.2)] transition-all"
              >
                NỘP BÀI THI
              </button>

@@ -63,7 +63,7 @@ const AIGuru = ({ message, trigger, lang = 'en' }) => {
             }}>
             <button
                 onClick={() => setIsVisible(false)}
-                style={{ position: 'absolute', top: '10px', right: '15px', background: 'transparent', border: 'none', color: '#94a3b8', fontSize: '1.2rem', cursor: 'pointer', outline: 'none' }}
+                style={{ position: 'absolute', top: '10px', right: '15px', background: 'transparent', border: 'none', color: '#6e6b7b', fontSize: '1.2rem', cursor: 'pointer', outline: 'none' }}
                 aria-label="Close"
             >✕</button>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

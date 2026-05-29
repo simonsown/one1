@@ -14,7 +14,7 @@ export function ThreadCard({ thread, onSelect }: Props) {
     switch (thread.type) {
       case 'announcement': return 'bg-red-500/10 text-red-400 border-red-500/20'
       case 'discussion': return 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-      default: return 'bg-[#00d4aa]/10 text-[#00d4aa] border-[#00d4aa]/20'
+      default: return 'bg-[#089e60]/10 text-[#089e60] border-[#089e60]/20'
     }
   }
 
@@ -55,7 +55,7 @@ export function ThreadCard({ thread, onSelect }: Props) {
           )}
           <span className="truncate max-w-[100px]">{thread.author?.full_name || 'Ẩn danh'}</span>
           {thread.author?.role === 'teacher' && (
-            <span className="text-[9px] bg-[#00d4aa]/10 text-[#00d4aa] px-1 rounded uppercase font-bold border border-[#00d4aa]/20">GV</span>
+            <span className="text-[9px] bg-[#089e60]/10 text-[#089e60] px-1 rounded uppercase font-bold border border-[#089e60]/20">GV</span>
           )}
         </div>
 

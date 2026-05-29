@@ -57,7 +57,7 @@ export function PreferencesForm({ preferences }: Props) {
             type="checkbox" 
             checked={emailNotif}
             onChange={(e) => setEmailNotif(e.target.checked)}
-            className="w-4 h-4 rounded accent-[#00d4aa]"
+            className="w-4 h-4 rounded accent-[#089e60]"
           />
         </label>
 
@@ -70,7 +70,7 @@ export function PreferencesForm({ preferences }: Props) {
             type="checkbox" 
             checked={pushNotif}
             onChange={(e) => setPushNotif(e.target.checked)}
-            className="w-4 h-4 rounded accent-[#00d4aa]"
+            className="w-4 h-4 rounded accent-[#089e60]"
           />
         </label>
 
@@ -83,7 +83,7 @@ export function PreferencesForm({ preferences }: Props) {
             type="checkbox" 
             checked={weeklyDigest}
             onChange={(e) => setWeeklyDigest(e.target.checked)}
-            className="w-4 h-4 rounded accent-[#00d4aa]"
+            className="w-4 h-4 rounded accent-[#089e60]"
           />
         </label>
       </div>
@@ -95,7 +95,7 @@ export function PreferencesForm({ preferences }: Props) {
           <select 
             value={theme}
             onChange={(e) => setTheme(e.target.value as any)}
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#00d4aa]"
+            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#089e60]"
           >
             <option value="dark">🌙 Dark Mode</option>
             <option value="light">☀️ Light Mode</option>
@@ -108,7 +108,7 @@ export function PreferencesForm({ preferences }: Props) {
           <select 
             value={language}
             onChange={(e) => setLanguage(e.target.value as any)}
-            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#00d4aa]"
+            className="w-full bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#089e60]"
           >
             <option value="vi">🇻🇳 Tiếng Việt</option>
             <option value="en">🇺🇸 English</option>
@@ -119,7 +119,7 @@ export function PreferencesForm({ preferences }: Props) {
       <button 
         type="submit" 
         disabled={saving}
-        className="w-full py-3 bg-[#00d4aa] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full py-3 bg-[#089e60] text-[#0d0e13] font-bold text-xs rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {saving ? 'Đang lưu...' : 'Lưu cấu hình'}
       </button>

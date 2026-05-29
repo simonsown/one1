@@ -179,7 +179,7 @@ const Marketplace = ({ lang = 'en', onCheckout, onCancel }) => {
 
             {errorMsg && (
                 <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-                    style={{ padding: '1rem', background: 'rgba(239, 68, 68, 0.1)', borderLeft: '4px solid #ef4444', color: '#fca5a5', fontWeight: 'bold' }}>
+                    style={{ padding: '1rem', background: 'rgba(239, 68, 68, 0.1)', borderLeft: '4px solid #ef4444', color: '#ea5455', fontWeight: 'bold' }}>
                     ⚠ {errorMsg}
                 </motion.div>
             )}
@@ -221,13 +221,13 @@ const Marketplace = ({ lang = 'en', onCheckout, onCancel }) => {
                                 >
                                     <h4 style={{ margin: 0, color: 'var(--text-light)', fontSize: '1.1rem' }}>{prod.name}</h4>
                                     <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--primary-neon)' }}>{prod.price.toLocaleString()} VNĐ</div>
-                                    <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: 0, flex: 1 }}>{prod.desc}</p>
+                                    <p style={{ fontSize: '0.85rem', color: '#6e6b7b', margin: 0, flex: 1 }}>{prod.desc}</p>
 
                                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', fontSize: '0.75rem' }}>
-                                        {prod.socket && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>Socket: {prod.socket}</span>}
-                                        {prod.ramType && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'RAM:' : 'Loại RAM:'} {prod.ramType}</span>}
-                                        {prod.power && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>TDP: {prod.power}W</span>}
-                                        {prod.wattage && <span style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'Power:' : 'Công suất:'} {prod.wattage}W</span>}
+                                        {prod.socket && <span style={{ background: '#e7e7e7', padding: '2px 6px', borderRadius: '4px' }}>Socket: {prod.socket}</span>}
+                                        {prod.ramType && <span style={{ background: '#e7e7e7', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'RAM:' : 'Loại RAM:'} {prod.ramType}</span>}
+                                        {prod.power && <span style={{ background: '#e7e7e7', padding: '2px 6px', borderRadius: '4px' }}>TDP: {prod.power}W</span>}
+                                        {prod.wattage && <span style={{ background: '#e7e7e7', padding: '2px 6px', borderRadius: '4px' }}>{lang === 'en' ? 'Power:' : 'Công suất:'} {prod.wattage}W</span>}
                                     </div>
 
                                     <button
@@ -272,7 +272,7 @@ const Marketplace = ({ lang = 'en', onCheckout, onCancel }) => {
                                     }}
                                 >
                                     <div>
-                                        <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase' }}>{item.type}</div>
+                                        <div style={{ fontSize: '0.75rem', color: '#6e6b7b', textTransform: 'uppercase' }}>{item.type}</div>
                                         <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#fff' }}>{item.name}</div>
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -292,7 +292,7 @@ const Marketplace = ({ lang = 'en', onCheckout, onCancel }) => {
                             {lang === 'en' ? 'PROCEED TO LAB ➔' : 'TỚI PHÒNG LAB ➔'}
                         </button>
                         <button onClick={onCancel} style={{
-                            padding: '1rem', background: 'transparent', color: '#94a3b8', border: '1px solid #334155', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer'
+                            padding: '1rem', background: 'transparent', color: '#6e6b7b', border: '1px solid #334155', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer'
                         }}>
                             {lang === 'en' ? 'CHANGE MISSION' : 'ĐỔI NHIỆM VỤ'}
                         </button>

@@ -101,22 +101,22 @@ export default function MiniQuizPage({ params }: { params: Promise<{ quizId: str
   }
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0f0f1a] flex flex-col items-center justify-center text-white p-10 text-center">
-       <Loader2 className="animate-spin text-[#00d2a0] mb-6" size={64} />
+    <div className="min-h-screen bg-[#f8f9fa] flex flex-col items-center justify-center text-white p-10 text-center">
+       <Loader2 className="animate-spin text-[#089e60] mb-6" size={64} />
        <h1 className="text-3xl font-black mb-2 animate-pulse">AI Guru đang đọc bài học...</h1>
        <p className="text-slate-500 font-bold uppercase tracking-widest text-sm">Đang tạo bộ câu hỏi Mini Quiz cho bạn</p>
     </div>
   )
 
   if (gameEnded) return (
-    <div className="min-h-screen bg-[#0f0f1a] flex flex-col items-center justify-center text-white p-10">
+    <div className="min-h-screen bg-[#f8f9fa] flex flex-col items-center justify-center text-white p-10">
        <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center">
           <Trophy className="text-[#f59e0b] mx-auto mb-6" size={120} />
           <h1 className="text-5xl font-black mb-4">HOÀN THÀNH!</h1>
-          <div className="text-8xl font-black text-[#00d2a0] mb-8">{score}</div>
+          <div className="text-8xl font-black text-[#089e60] mb-8">{score}</div>
           <div className="flex gap-4 justify-center">
-             <Link href="/lessons" className="px-10 py-4 bg-[#16213e] border border-[#1e293b] rounded-2xl font-black uppercase">Thoát</Link>
-             <button onClick={() => window.location.reload()} className="px-10 py-4 bg-[#00d2a0] text-black rounded-2xl font-black uppercase">Chơi lại</button>
+             <Link href="/lessons" className="px-10 py-4 bg-[#ffffff] border border-[#e7e7e7] rounded-2xl font-black uppercase">Thoát</Link>
+             <button onClick={() => window.location.reload()} className="px-10 py-4 bg-[#089e60] text-black rounded-2xl font-black uppercase">Chơi lại</button>
           </div>
        </motion.div>
     </div>
@@ -126,13 +126,13 @@ export default function MiniQuizPage({ params }: { params: Promise<{ quizId: str
   const colors = ['#ef4444', '#3b82f6', '#f59e0b', '#8b5cf6']
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white flex flex-col p-6 overflow-hidden">
+    <div className="min-h-screen bg-[#f8f9fa] text-white flex flex-col p-6 overflow-hidden">
       
       {/* HUD */}
       <header className="flex items-center justify-between mb-10">
-         <div className="bg-[#16213e] px-6 py-2 rounded-full border border-[#1e293b] flex items-center gap-4">
+         <div className="bg-[#ffffff] px-6 py-2 rounded-full border border-[#e7e7e7] flex items-center gap-4">
             <span className="text-xs font-black text-slate-500 uppercase tracking-widest">Score</span>
-            <span className="text-xl font-black text-[#00d2a0]">{score}</span>
+            <span className="text-xl font-black text-[#089e60]">{score}</span>
          </div>
          
          <div className="flex items-center gap-6">
@@ -141,16 +141,16 @@ export default function MiniQuizPage({ params }: { params: Promise<{ quizId: str
                 <Flame className="animate-bounce" /> x{streak} STREAK!
               </motion.div>
             )}
-            <div className="bg-[#16213e] px-8 py-3 rounded-2xl border border-[#1e293b] text-2xl font-mono font-bold">
+            <div className="bg-[#ffffff] px-8 py-3 rounded-2xl border border-[#e7e7e7] text-2xl font-mono font-bold">
                {timeLeft}s
             </div>
          </div>
       </header>
 
       {/* Progress Bar */}
-      <div className="w-full h-2 bg-[#16213e] rounded-full mb-12 overflow-hidden">
+      <div className="w-full h-2 bg-[#ffffff] rounded-full mb-12 overflow-hidden">
          <motion.div 
-           className="h-full bg-[#00d2a0]" 
+           className="h-full bg-[#089e60]" 
            initial={{ width: 0 }}
            animate={{ width: `${((currentIdx + 1) / questions.length) * 100}%` }}
          />
@@ -164,7 +164,7 @@ export default function MiniQuizPage({ params }: { params: Promise<{ quizId: str
               initial={{ x: 300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -300, opacity: 0 }}
-              className="bg-[#16213e] p-10 rounded-[40px] border border-[#1e293b] text-center shadow-2xl relative"
+              className="bg-[#ffffff] p-10 rounded-[40px] border border-[#e7e7e7] text-center shadow-2xl relative"
             >
                <h2 className="text-3xl md:text-5xl font-black leading-tight">
                  {q.question}
@@ -177,7 +177,7 @@ export default function MiniQuizPage({ params }: { params: Promise<{ quizId: str
                      initial={{ scale: 0, opacity: 0 }}
                      animate={{ scale: 1, opacity: 1 }}
                      className={`absolute inset-0 z-10 flex flex-col items-center justify-center rounded-[40px] backdrop-blur-md
-                       ${feedback === 'correct' ? 'bg-[#00d2a0]/80' : 'bg-[#ef4444]/80'}
+                       ${feedback === 'correct' ? 'bg-[#089e60]/80' : 'bg-[#ef4444]/80'}
                      `}
                    >
                      {feedback === 'correct' ? <CheckCircle size={100} color="black" /> : <XCircle size={100} color="white" />}

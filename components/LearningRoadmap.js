@@ -113,7 +113,7 @@ const LearningRoadmap = ({ lang, unlockedLevels = [1], completedLevels = [], onN
             height: '100%', // Take full height available
             maxHeight: '80vh', // Prevent overpowering the screen
             background: '#0f172a',
-            backgroundImage: 'linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(#e7e7e7 1px, transparent 1px), linear-gradient(90deg, #e7e7e7 1px, transparent 1px)',
             backgroundSize: '40px 40px',
             position: 'relative',
             borderRadius: '16px',

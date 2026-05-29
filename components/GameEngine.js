@@ -237,7 +237,7 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
 
             // PSU Shroud
             draw3DBox(oCtx, 240, 600, 940, 200, 10, '#0f172a', '#020617', '#000000');
-            oCtx.fillStyle = '#1e293b';
+            oCtx.fillStyle = '#e7e7e7';
             oCtx.fillRect(250, 610, 220, 180);
             oCtx.strokeStyle = '#334155'; oCtx.lineWidth = 4;
             oCtx.strokeRect(250, 610, 220, 180);
@@ -262,7 +262,7 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
             oCtx.beginPath(); oCtx.moveTo(1150, 200); oCtx.lineTo(600, 770); oCtx.lineTo(1150, 770); oCtx.fill();
 
             // Motherboard metallic mounting standoffs (9 holes)
-            oCtx.fillStyle = '#9ca3af'; // silver screw
+            oCtx.fillStyle = '#6e6b7b'; // silver screw
             oCtx.strokeStyle = '#374151'; oCtx.lineWidth = 2;
             [
                 [520, 70], [825, 70], [1130, 70],
@@ -272,7 +272,7 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
                 oCtx.beginPath(); oCtx.arc(sx, sy, 5, 0, Math.PI * 2); oCtx.fill(); oCtx.stroke();
                 // Inner screw hole
                 oCtx.fillStyle = '#030712';
-                oCtx.beginPath(); oCtx.arc(sx, sy, 2, 0, Math.PI * 2); oCtx.fill(); oCtx.fillStyle = '#9ca3af';
+                oCtx.beginPath(); oCtx.arc(sx, sy, 2, 0, Math.PI * 2); oCtx.fill(); oCtx.fillStyle = '#6e6b7b';
             });
 
             // Intense High-Density PCB Background Traces (Copper / Gold styling)
@@ -332,7 +332,7 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
 
             // CPU Socket Area Bracket (Silver Metal LGA1151 Style Match)
             // Metal Base framing the pins
-            draw3DBox(oCtx, 720, 170, 120, 120, 8, '#d1d5db', '#e5e7eb', '#9ca3af', '#6b7280');
+            draw3DBox(oCtx, 720, 170, 120, 120, 8, '#d1d5db', '#e5e7eb', '#6e6b7b', '#6e6b7b');
 
             // Inner hollow for pins
             oCtx.fillStyle = '#111827';
@@ -349,8 +349,8 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
             }
 
             // Top Hinge Bracket & Bottom Locking Clasp (Silver)
-            draw3DBox(oCtx, 730, 160, 100, 15, 6, '#cbd5e1', '#f1f5f9', '#94a3b8'); // Top hinge
-            draw3DBox(oCtx, 750, 285, 60, 12, 6, '#cbd5e1', '#f1f5f9', '#94a3b8');  // Bottom lip
+            draw3DBox(oCtx, 730, 160, 100, 15, 6, '#cbd5e1', '#333333', '#6e6b7b'); // Top hinge
+            draw3DBox(oCtx, 750, 285, 60, 12, 6, '#cbd5e1', '#333333', '#6e6b7b');  // Bottom lip
 
             // Locking Metal Lever (Right side)
             oCtx.strokeStyle = '#e2e8f0'; oCtx.lineWidth = 5;
@@ -379,7 +379,7 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
                 oCtx.fillStyle = '#000'; oCtx.fillRect(startX + 4, 125, 10, 250);
 
                 // Top/Bottom clips (grey vs dark grey based on slot)
-                oCtx.fillStyle = isOptimalSlot ? '#9ca3af' : '#4b5563';
+                oCtx.fillStyle = isOptimalSlot ? '#6e6b7b' : '#4b5563';
                 oCtx.fillRect(startX - 1, 108, 20, 12); oCtx.fillRect(startX - 1, 375, 20, 12);
 
                 // PCB Gold trace pins bordering slot
@@ -406,8 +406,8 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
             oCtx.fillRect(660, 495, 60, 2); oCtx.fillRect(660, 500, 40, 2);
 
             // 3D CMOS Battery (Moved)
-            drawCylinder(oCtx, 1000, 580, 22, 6, '#6b7280', '#e5e7eb');
-            oCtx.beginPath(); oCtx.arc(1000, 580, 18, 0, Math.PI * 2); oCtx.strokeStyle = '#9ca3af'; oCtx.stroke();
+            drawCylinder(oCtx, 1000, 580, 22, 6, '#6e6b7b', '#e5e7eb');
+            oCtx.beginPath(); oCtx.arc(1000, 580, 18, 0, Math.PI * 2); oCtx.strokeStyle = '#6e6b7b'; oCtx.stroke();
 
             // Scattered Metallic Chokes and Black Capacitors 
             // Silver blocks around CPU
@@ -531,7 +531,7 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
                 ctx.shadowBlur = 0;
 
                 // Intricate Heat Spreader Engravings (QR Code like square + alignments)
-                ctx.strokeStyle = '#6b7280'; ctx.lineWidth = 1.5;
+                ctx.strokeStyle = '#6e6b7b'; ctx.lineWidth = 1.5;
                 ctx.beginPath();
                 ctx.moveTo(15, 15); ctx.lineTo(35, 15); ctx.lineTo(35, 35); ctx.lineTo(15, 35); ctx.closePath(); ctx.stroke();
 
@@ -717,7 +717,7 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
                 }
 
                 // 24-pin Braided Cable snake protruding from side (Cable Managed!)
-                ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 14;
+                ctx.strokeStyle = '#e7e7e7'; ctx.lineWidth = 14;
                 ctx.lineCap = 'round';
                 ctx.beginPath();
                 ctx.moveTo(comp.width, comp.height - 40);
@@ -775,8 +775,8 @@ const GameEngine = forwardRef(({ landmarks, onGameEvent, purchasedItems }, ref) 
                 // Center logo
                 ctx.fillStyle = '#0f172a';
                 ctx.beginPath(); ctx.arc(comp.width / 2, comp.height / 2, 12, 0, Math.PI * 2); ctx.fill();
-                ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 2; ctx.stroke();
-                ctx.fillStyle = comp.isPlaced ? '#0ea5e9' : '#475569'; ctx.font = 'bold 8px Arial'; ctx.textAlign = 'center'; ctx.fillText('AI', comp.width / 2, comp.height / 2 + 3);
+                ctx.strokeStyle = '#e7e7e7'; ctx.lineWidth = 2; ctx.stroke();
+                ctx.fillStyle = comp.isPlaced ? '#0ea5e9' : '#6e6b7b'; ctx.font = 'bold 8px Arial'; ctx.textAlign = 'center'; ctx.fillText('AI', comp.width / 2, comp.height / 2 + 3);
 
                 // "Not installed" indicator when not placed
                 if (!comp.isPlaced) {

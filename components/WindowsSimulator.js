@@ -94,7 +94,7 @@ function NotepadApp() {
 function SpecsApp({ cart }) {
     return (
         <div style={{ width: '420px', background: '#1a1a2e', color: 'white', borderRadius: '8px', padding: '20px' }}>
-            <h3 style={{ color: '#00f3ff', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>💻 System Information</h3>
+            <h3 style={{ color: '#289cf9', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>💻 System Information</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ background: 'rgba(0,243,255,0.05)', border: '1px solid rgba(0,243,255,0.1)', borderRadius: '8px', padding: '12px' }}>
                     <div style={{ fontSize: '11px', color: '#4b5563', fontWeight: 700, textTransform: 'uppercase', marginBottom: '8px' }}>OS</div>

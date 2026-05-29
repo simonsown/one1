@@ -33,7 +33,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
     if (minutes < 15) return 'rgba(0, 212, 170, 0.4)'
     if (minutes < 30) return 'rgba(0, 212, 170, 0.6)'
     if (minutes < 60) return 'rgba(0, 212, 170, 0.8)'
-    return '#00d4aa'
+    return '#089e60'
   }
 
   return (
@@ -42,7 +42,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
       {/* Workspace Title & Exit Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl">
+          <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl">
             <BarChart2 size={24} />
           </div>
           <div>
@@ -68,15 +68,15 @@ export default function ProgressView({ data }: ProgressViewProps) {
             <p className="text-[#6b6e80] text-sm mb-1">Hoàn thành</p>
             <h2 className="text-3xl font-bold text-[#dde0ed]">{stats.completed} <span className="text-[#6b6e80] text-lg">/ {stats.total}</span></h2>
           </div>
-          <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">✅</div>
+          <div className="w-12 h-12 bg-[#089e60]/10 rounded-full flex items-center justify-center text-[#089e60] text-xl">✅</div>
         </div>
 
         <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
           <div>
             <p className="text-[#6b6e80] text-sm mb-1">Điểm TB Quiz</p>
-            <h2 className={`text-3xl font-bold ${stats.avgScore >= 70 ? 'text-[#00d4aa]' : 'text-red-500'}`}>{stats.avgScore}</h2>
+            <h2 className={`text-3xl font-bold ${stats.avgScore >= 70 ? 'text-[#089e60]' : 'text-red-500'}`}>{stats.avgScore}</h2>
           </div>
-          <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">🎯</div>
+          <div className="w-12 h-12 bg-[#089e60]/10 rounded-full flex items-center justify-center text-[#089e60] text-xl">🎯</div>
         </div>
 
         <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
@@ -84,7 +84,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
             <p className="text-[#6b6e80] text-sm mb-1">Thời gian học</p>
             <h2 className="text-3xl font-bold text-[#dde0ed]">{(stats.totalSeconds / 3600).toFixed(1)}h</h2>
           </div>
-          <div className="w-12 h-12 bg-[#00d4aa]/10 rounded-full flex items-center justify-center text-[#00d4aa] text-xl">⏱️</div>
+          <div className="w-12 h-12 bg-[#089e60]/10 rounded-full flex items-center justify-center text-[#089e60] text-xl">⏱️</div>
         </div>
 
         <div className="bg-[#11121d]/90 border border-gray-800 rounded-2xl p-6 flex items-center justify-between shadow-lg">
@@ -105,7 +105,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
               <LineChart data={dailyProgress} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="rgba(0,212,170,0.2)" stopOpacity={0.8}/>
+                    <stop offset="5%" stopColor="rgba(8,158,96,0.2)" stopOpacity={0.8}/>
                     <stop offset="95%" stopColor="rgba(0,212,170,0)" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
@@ -113,11 +113,11 @@ export default function ProgressView({ data }: ProgressViewProps) {
                 <YAxis stroke="#6b6e80" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#1a1c25', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px' }}
-                  itemStyle={{ color: '#00d4aa' }}
+                  itemStyle={{ color: '#089e60' }}
                   formatter={(value: number) => [`${value} bài hoàn thành`, '']}
                   labelStyle={{ color: '#dde0ed', marginBottom: '4px' }}
                 />
-                <Line type="monotone" dataKey="count" stroke="#00d4aa" strokeWidth={3} dot={{ fill: '#00d4aa', r: 4 }} activeDot={{ r: 6 }} />
+                <Line type="monotone" dataKey="count" stroke="#089e60" strokeWidth={3} dot={{ fill: '#089e60', r: 4 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -139,7 +139,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
                 <Bar dataKey="score" radius={[4, 4, 0, 0]}>
                   {
                     quizResults.map((entry, index) => {
-                      const color = entry.score >= 90 ? '#00d4aa' : entry.score >= 70 ? '#4a90e2' : '#e84855'
+                      const color = entry.score >= 90 ? '#089e60' : entry.score >= 70 ? '#4a90e2' : '#e84855'
                       return <Cell key={`cell-${index}`} fill={color} />
                     })
                   }
@@ -168,10 +168,10 @@ export default function ProgressView({ data }: ProgressViewProps) {
         <div className="flex items-center gap-2 mt-2 text-xs text-[#6b6e80] justify-end">
           <span>Ít</span>
           <div className="w-3 h-3 rounded-sm bg-[#11121d] border border-gray-800"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-40"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-60"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa] opacity-80"></div>
-          <div className="w-3 h-3 rounded-sm bg-[#00d4aa]"></div>
+          <div className="w-3 h-3 rounded-sm bg-[#089e60] opacity-40"></div>
+          <div className="w-3 h-3 rounded-sm bg-[#089e60] opacity-60"></div>
+          <div className="w-3 h-3 rounded-sm bg-[#089e60] opacity-80"></div>
+          <div className="w-3 h-3 rounded-sm bg-[#089e60]"></div>
           <span>Nhiều</span>
         </div>
       </div>
@@ -185,7 +185,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
               <button 
                 key={f}
                 onClick={() => setFilter(f as any)}
-                className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap transition-colors ${filter === f ? 'bg-[#1a1c25] text-[#00d4aa] shadow' : 'text-[#6b6e80] hover:text-[#dde0ed]'}`}
+                className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap transition-colors ${filter === f ? 'bg-[#1a1c25] text-[#089e60] shadow' : 'text-[#6b6e80] hover:text-[#dde0ed]'}`}
               >
                 {f === 'all' ? 'Tất cả' : f === 'completed' ? 'Đã xong' : f === 'in_progress' ? 'Đang học' : 'Chưa bắt đầu'}
               </button>
@@ -211,7 +211,7 @@ export default function ProgressView({ data }: ProgressViewProps) {
                   <td className="py-4 px-4 text-sm text-[#6b6e80]">{l.type}</td>
                   <td className="py-4 px-4">
                     {l.status === 'completed' ? (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#00d4aa]/10 text-[#00d4aa]">Hoàn thành</span>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#089e60]/10 text-[#089e60]">Hoàn thành</span>
                     ) : l.status === 'in_progress' ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400">Đang học ({l.completion_percentage}%)</span>
                     ) : (

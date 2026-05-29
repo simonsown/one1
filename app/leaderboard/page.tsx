@@ -45,16 +45,16 @@ export default function LeaderboardPage() {
     }
   }
 
-  if (loading) return <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-[#00d2a0]">Đang tải bảng xếp hạng...</div>
+  if (loading) return <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center text-[#089e60]">Đang tải bảng xếp hạng...</div>
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white">
+    <div className="min-h-screen bg-[#f8f9fa] text-white">
       <Navbar />
 
       <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">Bảng <span className="text-[#00d2a0]">Xếp hạng</span></h1>
+          <h1 className="text-4xl font-bold mb-4">Bảng <span className="text-[#089e60]">Xếp hạng</span></h1>
           <p className="text-slate-400">Những học viên xuất sắc nhất trong cộng đồng PC Master Builder.</p>
         </div>
 
@@ -65,10 +65,10 @@ export default function LeaderboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="w-full md:w-64 bg-[#16213e] border border-[#1e293b] rounded-t-[32px] p-8 text-center relative h-64 flex flex-col items-center justify-end"
+            className="w-full md:w-64 bg-[#ffffff] border border-[#e7e7e7] rounded-t-[32px] p-8 text-center relative h-64 flex flex-col items-center justify-end"
           >
              <div className="absolute -top-10 w-20 h-20 rounded-full bg-slate-400 p-1">
-                <div className="w-full h-full rounded-full bg-[#16213e] flex items-center justify-center text-2xl font-bold">
+                <div className="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center text-2xl font-bold">
                   {topPlayers[1]?.full_name?.charAt(0) || '2'}
                 </div>
              </div>
@@ -83,17 +83,17 @@ export default function LeaderboardPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="w-full md:w-72 bg-gradient-to-b from-[#16213e] to-[#00d2a0]/10 border border-[#00d2a0]/30 rounded-t-[40px] p-8 text-center relative h-80 flex flex-col items-center justify-end shadow-[0_0_50px_rgba(0,210,160,0.1)]"
+            className="w-full md:w-72 bg-gradient-to-b from-[#ffffff] to-[#089e60]/10 border border-[#089e60]/30 rounded-t-[40px] p-8 text-center relative h-80 flex flex-col items-center justify-end shadow-[0_0_50px_rgba(0,210,160,0.1)]"
           >
              <div className="absolute -top-12 w-24 h-24 rounded-full bg-yellow-500 p-1 animate-pulse shadow-[0_0_30px_rgba(234,179,8,0.3)]">
-                <div className="w-full h-full rounded-full bg-[#16213e] flex items-center justify-center text-3xl font-bold">
+                <div className="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center text-3xl font-bold">
                   {topPlayers[0]?.full_name?.charAt(0) || '1'}
                 </div>
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-yellow-500"><Trophy size={32} /></div>
              </div>
              <div className="mb-6">
                <p className="font-black text-xl text-white">{topPlayers[0]?.full_name || 'Đang chờ...'}</p>
-               <p className="text-[#00d2a0] font-bold">{topPlayers[0]?.xp || 0} XP</p>
+               <p className="text-[#089e60] font-bold">{topPlayers[0]?.xp || 0} XP</p>
              </div>
              <div className="w-full py-6 bg-yellow-500 text-black rounded-2xl font-black text-4xl shadow-xl">1</div>
           </motion.div>
@@ -103,10 +103,10 @@ export default function LeaderboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="w-full md:w-64 bg-[#16213e] border border-[#1e293b] rounded-t-[32px] p-8 text-center relative h-56 flex flex-col items-center justify-end"
+            className="w-full md:w-64 bg-[#ffffff] border border-[#e7e7e7] rounded-t-[32px] p-8 text-center relative h-56 flex flex-col items-center justify-end"
           >
              <div className="absolute -top-10 w-20 h-20 rounded-full bg-orange-700 p-1">
-                <div className="w-full h-full rounded-full bg-[#16213e] flex items-center justify-center text-2xl font-bold">
+                <div className="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center text-2xl font-bold">
                   {topPlayers[2]?.full_name?.charAt(0) || '3'}
                 </div>
              </div>
@@ -120,18 +120,18 @@ export default function LeaderboardPage() {
 
         {/* Filters */}
         <div className="flex gap-4 mb-8">
-          <button onClick={() => setActiveTab('global')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === 'global' ? 'bg-[#00d2a0] text-black' : 'bg-[#16213e] text-slate-500'}`}>TOÀN CẦU</button>
-          <button onClick={() => setActiveTab('class')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === 'class' ? 'bg-[#00d2a0] text-black' : 'bg-[#16213e] text-slate-500'}`}>LỚP HỌC</button>
+          <button onClick={() => setActiveTab('global')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === 'global' ? 'bg-[#089e60] text-black' : 'bg-[#ffffff] text-slate-500'}`}>TOÀN CẦU</button>
+          <button onClick={() => setActiveTab('class')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === 'class' ? 'bg-[#089e60] text-black' : 'bg-[#ffffff] text-slate-500'}`}>LỚP HỌC</button>
         </div>
 
         {/* List */}
-        <div className="bg-[#16213e] rounded-[32px] border border-[#1e293b] overflow-hidden">
+        <div className="bg-[#ffffff] rounded-[32px] border border-[#e7e7e7] overflow-hidden">
           {otherPlayers.map((p, i) => (
-            <div key={p.id} className="flex items-center justify-between p-6 hover:bg-[#1e293b]/50 transition-all border-b border-[#1e293b] last:border-none">
+            <div key={p.id} className="flex items-center justify-between p-6 hover:bg-[#e7e7e7]/50 transition-all border-b border-[#e7e7e7] last:border-none">
               <div className="flex items-center gap-6">
                 <span className="text-xl font-black text-slate-500 w-8">{p.rank}</span>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-[#0f0f1a] border border-[#1e293b] flex items-center justify-center font-bold text-slate-400">
+                  <div className="w-12 h-12 rounded-2xl bg-[#f8f9fa] border border-[#e7e7e7] flex items-center justify-center font-bold text-slate-400">
                     {p.full_name?.charAt(0)}
                   </div>
                   <div>
@@ -145,7 +145,7 @@ export default function LeaderboardPage() {
                   <p className="font-black text-lg">{p.xp}</p>
                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-right">XP</p>
                 </div>
-                <div className="p-3 bg-[#0f0f1a] rounded-xl text-green-400">
+                <div className="p-3 bg-[#f8f9fa] rounded-xl text-green-400">
                   <Zap size={18} />
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function LeaderboardPage() {
         </div>
 
         {/* My Rank Placeholder */}
-        <div className="mt-12 p-6 bg-[#00d2a0] rounded-3xl flex items-center justify-between text-black">
+        <div className="mt-12 p-6 bg-[#089e60] rounded-3xl flex items-center justify-between text-black">
            <div className="flex items-center gap-4">
              <span className="text-2xl font-black">#124</span>
              <div>

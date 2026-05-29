@@ -24,10 +24,10 @@ export async function GET() {
   
   return new Response(`
     <html>
-      <body style="background: #0f0f1a; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-        <h1 style="color: #00d2a0;">Thành công!</h1>
+      <body style="background: #f8f9fa; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+        <h1 style="color: #089e60;">Thành công!</h1>
         <p>Tài khoản của bạn đã được nâng cấp lên vai trò <b>Giáo viên</b>.</p>
-        <a href="/teacher" style="padding: 10px 20px; background: #00d2a0; color: black; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 20px;">Về Dashboard Giáo viên</a>
+        <a href="/teacher" style="padding: 10px 20px; background: #089e60; color: black; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 20px;">Về Dashboard Giáo viên</a>
       </body>
     </html>
   `, { headers: { 'Content-Type': 'text/html; charset=utf-8' } })

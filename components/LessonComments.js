@@ -46,12 +46,12 @@ export default function LessonComments({ lessonId }) {
         setComments(prev => prev.filter(c => c.id !== id));
     };
 
-    if (loading) return <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}><Loader2 className="animate-spin" color="#00f3ff" size={32} /></div>;
+    if (loading) return <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}><Loader2 className="animate-spin" color="#289cf9" size={32} /></div>;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                <MessageCircle size={20} color="#00f3ff" />
+                <MessageCircle size={20} color="#289cf9" />
                 <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800 }}>Thảo luận ({comments.length})</h3>
             </div>
 
@@ -62,12 +62,12 @@ export default function LessonComments({ lessonId }) {
                 )}
                 {comments.map(c => (
                     <div key={c.id} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '14px 16px', display: 'flex', gap: '12px' }}>
-                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(0,243,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00f3ff', fontWeight: 800, fontSize: '14px', flexShrink: 0 }}>
+                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(0,243,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#289cf9', fontWeight: 800, fontSize: '14px', flexShrink: 0 }}>
                             {(c.user_email || 'U')[0].toUpperCase()}
                         </div>
                         <div style={{ flex: 1 }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                                <span style={{ fontSize: '12px', fontWeight: 700, color: '#00f3ff' }}>{c.user_email?.split('@')[0] || 'Học sinh'}</span>
+                                <span style={{ fontSize: '12px', fontWeight: 700, color: '#289cf9' }}>{c.user_email?.split('@')[0] || 'Học sinh'}</span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <span style={{ fontSize: '11px', color: '#4b5563' }}>{new Date(c.created_at).toLocaleString('vi-VN')}</span>
                                     {c.user_id === userId && (
@@ -92,13 +92,13 @@ export default function LessonComments({ lessonId }) {
                         style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '12px 16px', color: 'white', fontSize: '14px', outline: 'none' }}
                     />
                     <button onClick={handleSend} disabled={sending || !text.trim()}
-                        style={{ padding: '12px 20px', background: '#00f3ff', color: '#050a14', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        style={{ padding: '12px 20px', background: '#289cf9', color: '#050a14', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                         {sending ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
                     </button>
                 </div>
             ) : (
                 <p style={{ color: '#4b5563', textAlign: 'center', padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px' }}>
-                    Vui lòng <a href="/login" style={{ color: '#00f3ff' }}>đăng nhập</a> để bình luận.
+                    Vui lòng <a href="/login" style={{ color: '#289cf9' }}>đăng nhập</a> để bình luận.
                 </p>
             )}
         </div>

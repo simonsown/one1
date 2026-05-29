@@ -29,7 +29,7 @@ export default async function VerifyCertificatePage({ params }: { params: { cert
         
         {/* Shield Header */}
         <div className="flex justify-center">
-          <div className="p-3 bg-[#00d4aa]/10 border border-[#00d4aa]/20 text-[#00d4aa] rounded-2xl">
+          <div className="p-3 bg-[#089e60]/10 border border-[#089e60]/20 text-[#089e60] rounded-2xl">
             <ShieldCheck size={36} />
           </div>
         </div>
@@ -62,10 +62,10 @@ export default async function VerifyCertificatePage({ params }: { params: { cert
             </div>
           ) : (
             <div className="space-y-4 text-left">
-              <div className="flex justify-center text-[#00d4aa] mb-2">
-                <CheckCircle size={48} className="shadow-[0_0_12px_rgba(0,212,170,0.3)] rounded-full" />
+              <div className="flex justify-center text-[#089e60] mb-2">
+                <CheckCircle size={48} className="shadow-[0_0_12px_rgba(8,158,96,0.3)] rounded-full" />
               </div>
-              <h2 className="text-md font-bold text-[#00d4aa] text-center">Chứng chỉ hợp lệ</h2>
+              <h2 className="text-md font-bold text-[#089e60] text-center">Chứng chỉ hợp lệ</h2>
 
               <div className="space-y-2 bg-[#1e202f]/50 border border-gray-800 p-4 rounded-xl text-xs">
                 <p className="text-gray-400">Học viên nhận:</p>
@@ -78,7 +78,7 @@ export default async function VerifyCertificatePage({ params }: { params: { cert
                 <p className="font-bold text-white text-sm">{cert.final_score}% điểm tối đa</p>
 
                 <p className="text-gray-400 mt-2">Ngày cấp chứng nhận:</p>
-                <p className="font-bold text-[#00d4aa]">{cert.completion_date}</p>
+                <p className="font-bold text-[#089e60]">{cert.completion_date}</p>
 
                 <p className="text-gray-400 mt-2">Mã số tra cứu:</p>
                 <p className="font-bold text-white font-mono">{cert.certificate_number}</p>
@@ -89,7 +89,7 @@ export default async function VerifyCertificatePage({ params }: { params: { cert
                   href={cert.pdf_url} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="block text-center w-full bg-[#00d4aa] text-[#0d0e13] font-bold py-2.5 rounded-xl hover:opacity-90 transition-opacity text-xs"
+                  className="block text-center w-full bg-[#089e60] text-[#0d0e13] font-bold py-2.5 rounded-xl hover:opacity-90 transition-opacity text-xs"
                 >
                   Tải xuống bản PDF gốc
                 </a>

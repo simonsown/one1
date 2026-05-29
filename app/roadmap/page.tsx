@@ -44,21 +44,21 @@ export default function RoadmapPage() {
     }
   }
 
-  if (loading) return <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-[#00d2a0]">Đang tải lộ trình...</div>
+  if (loading) return <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center text-[#089e60]">Đang tải lộ trình...</div>
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white">
+    <div className="min-h-screen bg-[#f8f9fa] text-white">
       <Navbar />
 
       <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">Lộ trình <span className="text-[#00d2a0]">Chinh phục</span></h1>
+          <h1 className="text-4xl font-bold mb-4">Lộ trình <span className="text-[#089e60]">Chinh phục</span></h1>
           <p className="text-slate-400">Theo dõi tiến trình học tập của bạn trên con đường trở thành bậc thầy PC.</p>
         </div>
 
         <div className="relative">
           {/* Vertical Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-[#1e293b] -translate-x-1/2 hidden md:block" />
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-[#e7e7e7] -translate-x-1/2 hidden md:block" />
 
           <div className="space-y-12">
             {steps.map((step, idx) => (
@@ -71,13 +71,13 @@ export default function RoadmapPage() {
                   className="flex-1 w-full"
                 >
                   <div className={`p-8 rounded-3xl border transition-all ${
-                    step.status === 'current' ? 'bg-[#16213e] border-[#00d2a0] shadow-[0_0_30px_rgba(0,210,160,0.1)]' :
-                    step.status === 'completed' ? 'bg-[#16213e] border-[#1e293b]' :
-                    'bg-[#0f0f1a] border-[#1e293b] opacity-60'
+                    step.status === 'current' ? 'bg-[#ffffff] border-[#089e60] shadow-[0_0_30px_rgba(0,210,160,0.1)]' :
+                    step.status === 'completed' ? 'bg-[#ffffff] border-[#e7e7e7]' :
+                    'bg-[#f8f9fa] border-[#e7e7e7] opacity-60'
                   }`}>
                     <div className="flex items-center justify-between mb-4">
                       <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${
-                        step.status === 'current' ? 'bg-[#00d2a0] text-black' :
+                        step.status === 'current' ? 'bg-[#089e60] text-black' :
                         step.status === 'completed' ? 'bg-blue-500/20 text-blue-400' :
                         'bg-slate-800 text-slate-500'
                       }`}>
@@ -88,7 +88,7 @@ export default function RoadmapPage() {
                     <h3 className="text-2xl font-bold mb-2">{step.title}</h3>
                     <p className="text-slate-400 leading-relaxed mb-6">{step.desc}</p>
                     <button className={`w-full py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${
-                      step.status === 'locked' ? 'bg-slate-800 text-slate-600 cursor-not-allowed' : 'bg-[#1e293b] hover:bg-[#00d2a0] hover:text-black'
+                      step.status === 'locked' ? 'bg-slate-800 text-slate-600 cursor-not-allowed' : 'bg-[#e7e7e7] hover:bg-[#089e60] hover:text-black'
                     }`}>
                       {step.status === 'locked' ? 'CHƯA MỞ KHÓA' : 'CHI TIẾT'}
                       {step.status !== 'locked' && <ArrowRight size={16} />}
@@ -97,15 +97,15 @@ export default function RoadmapPage() {
                 </motion.div>
 
                 {/* Circle Icon */}
-                <div className="relative z-10 w-16 h-16 rounded-full border-4 border-[#0f0f1a] flex items-center justify-center shrink-0 shadow-xl transition-all duration-500"
+                <div className="relative z-10 w-16 h-16 rounded-full border-4 border-[#f8f9fa] flex items-center justify-center shrink-0 shadow-xl transition-all duration-500"
                   style={{
-                    backgroundColor: step.status === 'current' ? '#00d2a0' : step.status === 'completed' ? '#16213e' : '#1e293b',
-                    color: step.status === 'current' ? '#000' : step.status === 'completed' ? '#00d2a0' : '#475569'
+                    backgroundColor: step.status === 'current' ? '#089e60' : step.status === 'completed' ? '#ffffff' : '#e7e7e7',
+                    color: step.status === 'current' ? '#000' : step.status === 'completed' ? '#089e60' : '#6e6b7b'
                   }}
                 >
                   {step.status === 'completed' ? <CheckCircle2 size={28} /> : step.icon}
                   {step.status === 'current' && (
-                    <div className="absolute inset-0 rounded-full border-2 border-[#00d2a0] animate-ping opacity-20" />
+                    <div className="absolute inset-0 rounded-full border-2 border-[#089e60] animate-ping opacity-20" />
                   )}
                 </div>
 

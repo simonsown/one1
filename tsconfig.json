@@ -41,6 +41,7 @@
     "node_modules",
     "GitNexus",
     "superpowers",
-    "supabase"
+    "supabase",
+    "one-mission-pj-main"
   ]
 }

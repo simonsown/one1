@@ -78,10 +78,10 @@ export default function Navbar() {
   return (
     <>
       <nav 
-        className={`fixed top-0 left-0 right-0 z-50 w-full border-b border-[#1e293b] transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 w-full border-b border-[#e7e7e7] transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[#0f0f1a]/90 backdrop-blur-md py-2 shadow-lg' 
-            : 'bg-[#0f0f1a] py-4'
+            ? 'bg-[#f8f9fa]/90 backdrop-blur-md py-2 shadow-lg' 
+            : 'bg-[#f8f9fa] py-4'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,7 +90,7 @@ export default function Navbar() {
             {/* LOGO — bên trái */}
             <Link href="/" className="flex flex-row items-center gap-2 flex-shrink-0 group">
               <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain transition-transform group-hover:scale-110" />
-              <span className="font-bold text-white tracking-tight hidden sm:block">PC MASTER <span className="text-[#00d2a0]">LMS</span></span>
+              <span className="font-bold text-white tracking-tight hidden sm:block">PC MASTER <span className="text-[#089e60]">LMS</span></span>
             </Link>
 
             {/* NAV LINKS — giữa, CHỈ HIỆN DESKTOP */}
@@ -102,13 +102,13 @@ export default function Navbar() {
                     key={item.path} 
                     href={item.path}
                     className={`relative px-4 py-2 rounded-full flex flex-row items-center gap-2 text-sm font-medium transition-colors ${
-                      isActive ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-[#16213e]'
+                      isActive ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-[#ffffff]'
                     }`}
                   >
                     {isActive && (
                       <motion.div 
                         layoutId="navbar-indicator"
-                        className="absolute inset-0 bg-[#1e293b] rounded-full -z-10 border border-[#2a3655]"
+                        className="absolute inset-0 bg-[#e7e7e7] rounded-full -z-10 border border-[#e7e7e7]"
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
@@ -128,15 +128,15 @@ export default function Navbar() {
               {/* User Avatar & Dropdown (Desktop) */}
               <div className="hidden md:block relative">
                 {loading ? (
-                  <div className="w-9 h-9 rounded-full bg-[#1e293b] animate-pulse"></div>
+                  <div className="w-9 h-9 rounded-full bg-[#e7e7e7] animate-pulse"></div>
                 ) : userProfile ? (
                   <>
                     <button 
                       onClick={() => setAvatarDropdownOpen(!avatarDropdownOpen)}
                       className="flex items-center gap-2 focus:outline-none"
                     >
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#00d2a0] to-[#00b4d8] p-[2px]">
-                        <div className="w-full h-full rounded-full bg-[#16213e] flex items-center justify-center overflow-hidden">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#089e60] to-[#289cf9] p-[2px]">
+                        <div className="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center overflow-hidden">
                           {userProfile.avatar_url ? (
                             <img src={userProfile.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
                           ) : (
@@ -155,24 +155,24 @@ export default function Navbar() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 10, scale: 0.95 }}
                             transition={{ duration: 0.15 }}
-                            className="absolute right-0 mt-2 w-56 bg-[#16213e] border border-[#1e293b] rounded-xl shadow-2xl py-2 z-50"
+                            className="absolute right-0 mt-2 w-56 bg-[#ffffff] border border-[#e7e7e7] rounded-xl shadow-2xl py-2 z-50"
                           >
-                            <div className="px-4 py-2 border-b border-[#1e293b] mb-2">
+                            <div className="px-4 py-2 border-b border-[#e7e7e7] mb-2">
                               <p className="text-sm font-bold text-white truncate">{userProfile.full_name}</p>
                               <p className="text-xs text-slate-400 truncate">{userProfile.email}</p>
-                              <div className="mt-1 inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#00d2a0]/10 text-[#00d2a0] border border-[#00d2a0]/20">
+                              <div className="mt-1 inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/20">
                                 {role}
                               </div>
                             </div>
                             
-                            <Link href="/profile" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#1e293b] transition-colors">
+                            <Link href="/profile" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#e7e7e7] transition-colors">
                               <UserIcon size={16} /> Hồ sơ cá nhân
                             </Link>
-                            <Link href="/settings" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#1e293b] transition-colors">
+                            <Link href="/settings" onClick={() => setAvatarDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-[#e7e7e7] transition-colors">
                               <Settings size={16} /> Cài đặt
                             </Link>
                             
-                            <div className="h-[1px] bg-[#1e293b] my-2"></div>
+                            <div className="h-[1px] bg-[#e7e7e7] my-2"></div>
                             
                             <button onClick={() => { setAvatarDropdownOpen(false); handleLogout(); }} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors">
                               <LogOut size={16} /> Đăng xuất
@@ -183,7 +183,7 @@ export default function Navbar() {
                     </AnimatePresence>
                   </>
                 ) : (
-                  <Link href="/login" className="px-4 py-2 bg-[#00d2a0] text-black text-sm font-bold rounded-lg hover:bg-[#00e6af] transition-colors">
+                  <Link href="/login" className="px-4 py-2 bg-[#089e60] text-black text-sm font-bold rounded-lg hover:bg-[#0b755b] transition-colors">
                     Đăng nhập
                   </Link>
                 )}
@@ -191,7 +191,7 @@ export default function Navbar() {
 
               {/* Hamburger — CHỈ MOBILE */}
               <button 
-                className="md:hidden p-2 text-slate-400 hover:text-white bg-[#16213e] rounded-lg border border-[#1e293b]"
+                className="md:hidden p-2 text-slate-400 hover:text-white bg-[#ffffff] rounded-lg border border-[#e7e7e7]"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <Menu size={20} />
@@ -219,14 +219,14 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="fixed top-0 left-0 bottom-0 w-[280px] bg-[#0f0f1a] border-r border-[#1e293b] z-[70] flex flex-col md:hidden shadow-2xl"
+              className="fixed top-0 left-0 bottom-0 w-[280px] bg-[#f8f9fa] border-r border-[#e7e7e7] z-[70] flex flex-col md:hidden shadow-2xl"
             >
               {/* Drawer Header */}
-              <div className="p-4 border-b border-[#1e293b] flex items-center justify-between bg-[#16213e]/50">
+              <div className="p-4 border-b border-[#e7e7e7] flex items-center justify-between bg-[#ffffff]/50">
                 <div className="flex items-center gap-3">
                   {userProfile ? (
-                    <div className="w-10 h-10 rounded-full bg-[#1e293b] flex items-center justify-center border border-[#2a3655]">
-                      <UserIcon size={20} className="text-[#00d2a0]" />
+                    <div className="w-10 h-10 rounded-full bg-[#e7e7e7] flex items-center justify-center border border-[#e7e7e7]">
+                      <UserIcon size={20} className="text-[#089e60]" />
                     </div>
                   ) : (
                     <img src="/logo.png" alt="Logo" className="w-8 h-8" />
@@ -236,11 +236,11 @@ export default function Navbar() {
                       {userProfile ? userProfile.full_name : 'PC MASTER LMS'}
                     </div>
                     {userProfile && (
-                      <div className="text-xs text-[#00d2a0] uppercase font-bold">{role}</div>
+                      <div className="text-xs text-[#089e60] uppercase font-bold">{role}</div>
                     )}
                   </div>
                 </div>
-                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-slate-400 hover:text-white bg-[#1e293b] rounded-lg">
+                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-slate-400 hover:text-white bg-[#e7e7e7] rounded-lg">
                   <X size={20} />
                 </button>
               </div>
@@ -256,8 +256,8 @@ export default function Navbar() {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${
                         isActive 
-                          ? 'bg-[#00d2a0]/10 text-[#00d2a0] border border-[#00d2a0]/20' 
-                          : 'text-slate-300 hover:bg-[#16213e] hover:text-white'
+                          ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/20' 
+                          : 'text-slate-300 hover:bg-[#ffffff] hover:text-white'
                       }`}
                     >
                       {item.icon}
@@ -268,18 +268,18 @@ export default function Navbar() {
 
                 {userProfile && (
                   <>
-                    <div className="h-[1px] bg-[#1e293b] my-3 mx-2"></div>
+                    <div className="h-[1px] bg-[#e7e7e7] my-3 mx-2"></div>
                     <Link 
                       href="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#16213e] hover:text-white transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#ffffff] hover:text-white transition-colors"
                     >
                       <UserIcon size={18} /> Hồ sơ cá nhân
                     </Link>
                     <Link 
                       href="/settings"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#16213e] hover:text-white transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-300 hover:bg-[#ffffff] hover:text-white transition-colors"
                     >
                       <Settings size={18} /> Cài đặt
                     </Link>
@@ -288,7 +288,7 @@ export default function Navbar() {
               </div>
 
               {/* Drawer Footer */}
-              <div className="p-4 border-t border-[#1e293b] bg-[#16213e]/30">
+              <div className="p-4 border-t border-[#e7e7e7] bg-[#ffffff]/30">
                 {userProfile ? (
                   <button 
                     onClick={() => { setMobileMenuOpen(false); handleLogout(); }}
@@ -300,7 +300,7 @@ export default function Navbar() {
                   <Link 
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-center py-3 rounded-xl font-bold bg-[#00d2a0] text-black hover:bg-[#00e6af] transition-colors shadow-[0_0_15px_rgba(0,210,160,0.2)]"
+                    className="w-full flex items-center justify-center py-3 rounded-xl font-bold bg-[#089e60] text-black hover:bg-[#0b755b] transition-colors shadow-[0_0_15px_rgba(8,158,96,0.2)]"
                   >
                     Đăng nhập / Đăng ký
                   </Link>

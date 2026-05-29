@@ -36,9 +36,9 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-full bg-[#16213e]/20 rounded-2xl border border-gray-800 overflow-hidden">
+    <div className="flex flex-col h-full bg-[#ffffff]/20 rounded-2xl border border-gray-800 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-800 bg-[#16213e]/50 flex-shrink-0">
+      <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-800 bg-[#ffffff]/50 flex-shrink-0">
         <button onClick={onBack} className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
           <ArrowLeft size={18} />
         </button>
@@ -61,7 +61,7 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
               <p className="font-semibold text-[#dde0ed] flex items-center gap-1">
                 {thread.author?.full_name || 'Ẩn danh'}
                 {thread.author?.role === 'teacher' && (
-                  <span className="text-[9px] bg-[#00d4aa]/10 text-[#00d4aa] px-1 rounded uppercase font-bold border border-[#00d4aa]/20">GV</span>
+                  <span className="text-[9px] bg-[#089e60]/10 text-[#089e60] px-1 rounded uppercase font-bold border border-[#089e60]/20">GV</span>
                 )}
               </p>
               <p className="text-[10px] text-gray-500">{new Date(thread.created_at).toLocaleDateString('vi-VN')}</p>
@@ -103,7 +103,7 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
                       )}
                       <span className="font-semibold text-gray-300">{reply.author?.full_name || 'Ẩn danh'}</span>
                       {reply.is_teacher_answer && (
-                        <span className="text-[8px] bg-[#00d4aa]/15 text-[#00d4aa] px-1 rounded uppercase font-bold border border-[#00d4aa]/30">Câu trả lời từ Giáo viên</span>
+                        <span className="text-[8px] bg-[#089e60]/15 text-[#089e60] px-1 rounded uppercase font-bold border border-[#089e60]/30">Câu trả lời từ Giáo viên</span>
                       )}
                     </div>
                     <span className="text-[10px] text-gray-500">{new Date(reply.created_at).toLocaleDateString('vi-VN')}</span>
@@ -125,7 +125,7 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
       </div>
 
       {/* Comment Form */}
-      <form onSubmit={handleSend} className="p-4 border-t border-gray-800 bg-[#16213e]/30 flex-shrink-0">
+      <form onSubmit={handleSend} className="p-4 border-t border-gray-800 bg-[#ffffff]/30 flex-shrink-0">
         {error && (
           <div className="p-2 mb-2 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-lg">
             {error}
@@ -139,12 +139,12 @@ export function ThreadDetail({ thread, currentUserId, onBack }: Props) {
             value={commentBody}
             onChange={(e) => setCommentBody(e.target.value)}
             placeholder="Nhập nội dung câu trả lời..."
-            className="flex-1 bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#00d4aa] transition-colors"
+            className="flex-1 bg-[#1e202f]/50 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#089e60] transition-colors"
           />
           <button 
             type="submit"
             disabled={submitting}
-            className="p-2.5 bg-[#00d4aa] text-[#0d0e13] rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center"
+            className="p-2.5 bg-[#089e60] text-[#0d0e13] rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center"
           >
             <Send size={16} />
           </button>

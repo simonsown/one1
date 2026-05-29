@@ -13,11 +13,11 @@ export default function LandingPage() {
             <nav style={{ 
                 height: '72px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', 
                 padding: '0 40px', borderBottom: '1px solid var(--border-subtle)',
-                position: 'fixed', top: 0, left: 0, right: 0, background: 'rgba(10, 10, 12, 0.98)',
+                position: 'fixed', top: 0, left: 0, right: 0, background: 'rgba(255, 255, 255, 0.98)',
                 backdropFilter: 'blur(30px)', zIndex: 10000, pointerEvents: 'auto'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '40px', pointerEvents: 'auto' }}>
-                    <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: '#fff', cursor: 'pointer' }}>
+                    <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--text-primary)', cursor: 'pointer' }}>
                         <img src="/logo.png" alt="Logo" style={{ width: '32px' }} />
                         <span style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.02em' }}>
                             PC MASTER <span style={{ color: 'var(--brand-primary)' }}>BUILDER</span>
@@ -27,21 +27,21 @@ export default function LandingPage() {
                     {/* Navigation Links (UX Fix) */}
                     <div style={{ display: 'flex', gap: '8px', fontWeight: 600, fontSize: '14px', alignItems: 'center', pointerEvents: 'auto' }}>
                         <Link href="/about" style={{ 
-                            color: 'rgba(255,255,255,0.7)', textDecoration: 'none', padding: '10px 20px', borderRadius: '12px',
+                            color: 'var(--text-muted)', textDecoration: 'none', padding: '10px 20px', borderRadius: '12px',
                             transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', cursor: 'pointer',
-                            background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)'
+                            background: 'transparent', border: '1px solid transparent'
                         }} 
-                        onMouseOver={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'rgba(0, 243, 255, 0.1)'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.3)'; }} 
-                        onMouseOut={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)'; }}>
+                        onMouseOver={e => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'rgba(8, 158, 96, 0.08)'; e.currentTarget.style.borderColor = 'rgba(8, 158, 96, 0.2)'; }} 
+                        onMouseOut={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'transparent'; }}>
                             Về chúng tôi
                         </Link>
                         <Link href="/builder" style={{ 
-                            color: 'rgba(255,255,255,0.7)', textDecoration: 'none', padding: '10px 20px', borderRadius: '12px',
+                            color: 'var(--text-muted)', textDecoration: 'none', padding: '10px 20px', borderRadius: '12px',
                             transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', cursor: 'pointer',
-                            background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)'
+                            background: 'transparent', border: '1px solid transparent'
                         }} 
-                        onMouseOver={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }} 
-                        onMouseOut={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}>
+                        onMouseOver={e => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'rgba(8, 158, 96, 0.08)'; }} 
+                        onMouseOut={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent'; }}>
                             Thực hành
                         </Link>
                     </div>
@@ -81,10 +81,10 @@ export default function LandingPage() {
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
                     <Link href="/builder">
                         <button style={{ 
-                            background: 'var(--brand-primary)', color: '#000', border: 'none', 
+                            background: 'var(--brand-primary)', color: '#fff', border: 'none', 
                             padding: '16px 36px', borderRadius: '12px', fontSize: '16px', 
                             fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s',
-                            boxShadow: '0 10px 20px rgba(0, 198, 174, 0.2)'
+                            boxShadow: '0 10px 20px rgba(8, 158, 96, 0.2)'
                         }}
                         onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
                         onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
@@ -99,7 +99,7 @@ export default function LandingPage() {
                             padding: '16px 36px', borderRadius: '12px', fontSize: '16px', 
                             fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s'
                         }}
-                        onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                        onMouseOver={e => e.currentTarget.style.background = 'var(--bg-elevated)'}
                         onMouseOut={e => e.currentTarget.style.background = 'transparent'}
                         >
                             Tôi là Giáo viên
@@ -178,7 +178,7 @@ export default function LandingPage() {
                             <img 
                                 src="/showcase.png" 
                                 alt="Giao diện phần mềm mô phỏng lắp ráp PC Master Builder" 
-                                style={{ width: '100%', borderRadius: '20px', border: '1px solid var(--border-default)', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }} 
+                                style={{ width: '100%', borderRadius: '20px', border: '1px solid var(--border-default)',                     boxShadow: '0 20px 50px rgba(0,0,0,0.1)'  }} 
                             />
                             {/* Showcase Caption / Annotation */}
                             <div style={{ position: 'absolute', bottom: '-20px', right: '-20px', background: 'var(--bg-elevated)', padding: '12px 20px', borderRadius: '12px', border: '1px solid var(--brand-primary)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', gap: '10px' }}>

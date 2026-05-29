@@ -32,12 +32,12 @@ export default function SkillTreePage() {
       
       // Dynamic calculation logic (simplified for real feel)
       const baseSkills = [
-        { id: 'cpu', name: 'Master CPU', level: Math.min(100, completedCount * 15), icon: <Cpu size={24} />, color: '#00d2a0' },
-        { id: 'main', name: 'Mainboard Expert', level: Math.min(100, completedCount * 12), icon: <Layout size={24} />, color: '#00b4d8' },
+        { id: 'cpu', name: 'Master CPU', level: Math.min(100, completedCount * 15), icon: <Cpu size={24} />, color: '#089e60' },
+        { id: 'main', name: 'Mainboard Expert', level: Math.min(100, completedCount * 12), icon: <Layout size={24} />, color: '#289cf9' },
         { id: 'ram', name: 'Memory Specialist', level: Math.min(100, completedCount * 20), icon: <Zap size={24} />, color: '#fbbf24' },
         { id: 'gpu', name: 'Graphics Guru', level: Math.min(100, completedCount * 8), icon: <Microscope size={24} />, color: '#a855f7' },
         { id: 'storage', name: 'Storage Pro', level: Math.min(100, completedCount * 10), icon: <HardDrive size={24} />, color: '#f87171' },
-        { id: 'security', name: 'System Security', level: Math.min(100, completedCount * 5), icon: <Shield size={24} />, color: '#6366f1' },
+        { id: 'security', name: 'System Security', level: Math.min(100, completedCount * 5), icon: <Shield size={24} />, color: '#089e60' },
       ]
       setSkills(baseSkills)
     } catch (err) {
@@ -47,18 +47,18 @@ export default function SkillTreePage() {
     }
   }
 
-  if (loading) return <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-[#00d2a0]">Đang tải cây kỹ năng...</div>
+  if (loading) return <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center text-[#089e60]">Đang tải cây kỹ năng...</div>
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white">
+    <div className="min-h-screen bg-[#f8f9fa] text-white">
       <Navbar />
 
       <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         <div className="flex items-center gap-4 mb-12">
-          <Link href="/profile" className="p-2 hover:bg-[#16213e] rounded-xl transition-colors">
+          <Link href="/profile" className="p-2 hover:bg-[#ffffff] rounded-xl transition-colors">
             <ArrowLeft size={20} />
           </Link>
-          <h1 className="text-3xl font-bold">Cây kỹ năng <span className="text-[#00d2a0]">Chuyên môn</span></h1>
+          <h1 className="text-3xl font-bold">Cây kỹ năng <span className="text-[#089e60]">Chuyên môn</span></h1>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 relative py-10">
@@ -76,7 +76,7 @@ export default function SkillTreePage() {
               transition={{ delay: idx * 0.1 }}
               className="relative group"
             >
-              <div className="bg-[#16213e] border border-[#1e293b] p-8 rounded-[40px] text-center relative z-10 hover:border-[#00d2a0]/50 transition-all shadow-xl hover:shadow-[0_0_30px_rgba(0,210,160,0.1)]">
+              <div className="bg-[#ffffff] border border-[#e7e7e7] p-8 rounded-[40px] text-center relative z-10 hover:border-[#089e60]/50 transition-all shadow-xl hover:shadow-[0_0_30px_rgba(0,210,160,0.1)]">
                 <div 
                   className="w-20 h-20 rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform"
                   style={{ backgroundColor: `${skill.color}20`, color: skill.color, border: `2px solid ${skill.color}40` }}
@@ -85,7 +85,7 @@ export default function SkillTreePage() {
                 </div>
                 <h3 className="text-xl font-black mb-2">{skill.name}</h3>
                 <div className="flex items-center justify-center gap-2 mb-6">
-                   <div className="h-1.5 w-full bg-[#0f0f1a] rounded-full overflow-hidden">
+                   <div className="h-1.5 w-full bg-[#f8f9fa] rounded-full overflow-hidden">
                       <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${skill.level}%` }}
@@ -104,21 +104,21 @@ export default function SkillTreePage() {
               </div>
               
               {/* Connector dots */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-[#00d2a0]/10 rounded-full flex items-center justify-center border border-[#00d2a0]/20 group-hover:bg-[#00d2a0]/30 transition-all">
-                <div className="w-2 h-2 bg-[#00d2a0] rounded-full animate-pulse" />
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-[#089e60]/10 rounded-full flex items-center justify-center border border-[#089e60]/20 group-hover:bg-[#089e60]/30 transition-all">
+                <div className="w-2 h-2 bg-[#089e60] rounded-full animate-pulse" />
               </div>
             </motion.div>
           ))}
         </div>
 
-        <div className="mt-20 p-10 bg-gradient-to-r from-[#16213e] to-[#0f0f1a] border border-[#1e293b] rounded-[40px] flex flex-col md:flex-row items-center gap-10">
+        <div className="mt-20 p-10 bg-gradient-to-r from-[#ffffff] to-[#f8f9fa] border border-[#e7e7e7] rounded-[40px] flex flex-col md:flex-row items-center gap-10">
            <div className="flex-1">
              <h4 className="text-2xl font-bold mb-4">Mở khóa chứng chỉ Master</h4>
              <p className="text-slate-400 leading-relaxed">
                Hoàn thành tất cả các kỹ năng phần cứng ở mức trên 80% để mở khóa bài thi cuối khóa và nhận chứng chỉ PC Master Academy được công nhận toàn cầu.
              </p>
            </div>
-           <button className="px-10 py-5 bg-[#00d2a0] text-black font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+           <button className="px-10 py-5 bg-[#089e60] text-black font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
              BẮT ĐẦU THI NGAY
            </button>
         </div>

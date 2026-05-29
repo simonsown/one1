@@ -49,13 +49,13 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-tr from-[#00d2a0] to-[#00b4d8] text-black shadow-[0_0_25px_rgba(0,210,160,0.5)] rounded-full flex items-center justify-center z-[1000] hover:scale-110 transition-all duration-300 group hover:shadow-[0_0_35px_rgba(0,210,160,0.8)]"
+        className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-tr from-[#089e60] to-[#289cf9] text-black shadow-[0_0_25px_rgba(8,158,96,0.5)] rounded-full flex items-center justify-center z-[1000] hover:scale-110 transition-all duration-300 group hover:shadow-[0_0_35px_rgba(8,158,96,0.8)]"
         style={{
           border: '1px solid rgba(255, 255, 255, 0.2)'
         }}
       >
         {/* Glow pulsing ring */}
-        <div className="absolute -inset-1 bg-gradient-to-tr from-[#00d2a0] to-[#00b4d8] rounded-full blur opacity-40 group-hover:opacity-75 group-hover:duration-200 animate-pulse" />
+        <div className="absolute -inset-1 bg-gradient-to-tr from-[#089e60] to-[#289cf9] rounded-full blur opacity-40 group-hover:opacity-75 group-hover:duration-200 animate-pulse" />
         
         {/* Glowing aura */}
         <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300" />
@@ -64,8 +64,8 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
         <Cpu size={22} className="text-black relative z-10 animate-pulse" />
 
         {/* Floating tech badge */}
-        <div className="absolute -top-1 -right-1 w-5 h-5 bg-black border border-[#00d2a0] rounded-full flex items-center justify-center shadow-md animate-bounce relative z-20">
-          <Sparkles size={10} className="text-[#00d2a0] animate-spin" />
+        <div className="absolute -top-1 -right-1 w-5 h-5 bg-black border border-[#089e60] rounded-full flex items-center justify-center shadow-md animate-bounce relative z-20">
+          <Sparkles size={10} className="text-[#089e60] animate-spin" />
         </div>
       </button>
 
@@ -78,14 +78,14 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
             className="fixed bottom-24 right-8 w-[calc(100vw-40px)] max-w-[340px] bg-[#161F38] border border-gray-800 rounded-3xl shadow-2xl z-[1000] overflow-hidden flex flex-col h-[420px]"
           >
             {/* Header */}
-            <div className="p-4 bg-[#1e293b] flex items-center justify-between border-b border-gray-800">
+            <div className="p-4 bg-[#e7e7e7] flex items-center justify-between border-b border-gray-800">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#00d2a0] text-black rounded-xl flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#089e60] text-black rounded-xl flex items-center justify-center">
                   <Bot size={24} />
                 </div>
                 <div>
                   <p className="font-bold text-sm">AI Guru Assistant</p>
-                  <p className="text-[10px] text-[#00d2a0] font-bold uppercase tracking-widest">Đang trực tuyến</p>
+                  <p className="text-[10px] text-[#089e60] font-bold uppercase tracking-widest">Đang trực tuyến</p>
                 </div>
               </div>
               <button onClick={() => setIsOpen(false)} className="p-2 text-slate-400 hover:text-white transition-colors">
@@ -94,11 +94,11 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-[#0f0f1a]/50">
+            <div className="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-[#f8f9fa]/50">
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed ${
-                    m.role === 'user' ? 'bg-[#00d2a0] text-black font-medium rounded-tr-none' : 'bg-[#1e293b] text-slate-200 rounded-tl-none border border-[#1e293b]'
+                    m.role === 'user' ? 'bg-[#089e60] text-black font-medium rounded-tr-none' : 'bg-[#e7e7e7] text-slate-200 rounded-tl-none border border-[#e7e7e7]'
                   }`}>
                     {m.content}
                   </div>
@@ -106,7 +106,7 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
               ))}
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-[#1e293b] p-4 rounded-2xl rounded-tl-none border border-[#1e293b] flex gap-1">
+                  <div className="bg-[#e7e7e7] p-4 rounded-2xl rounded-tl-none border border-[#e7e7e7] flex gap-1">
                     <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 bg-slate-500 rounded-full" />
                     <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 bg-slate-500 rounded-full" />
                     <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 bg-slate-500 rounded-full" />
@@ -116,8 +116,8 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
             </div>
 
             {/* Input */}
-            <div className="p-4 bg-[#1e293b]/50 border-t border-[#1e293b]">
-              <div className="flex items-center gap-2 bg-[#0f0f1a] border border-[#1e293b] rounded-2xl p-2 pl-4">
+            <div className="p-4 bg-[#e7e7e7]/50 border-t border-[#e7e7e7]">
+              <div className="flex items-center gap-2 bg-[#f8f9fa] border border-[#e7e7e7] rounded-2xl p-2 pl-4">
                 <input 
                   type="text" 
                   value={input}
@@ -128,7 +128,7 @@ export default function AIGuru({ message, trigger, lang = 'vn' }: { message?: st
                 />
                 <button 
                   onClick={handleSend}
-                  className="p-2.5 bg-[#00d2a0] text-black rounded-xl hover:scale-105 transition-transform"
+                  className="p-2.5 bg-[#089e60] text-black rounded-xl hover:scale-105 transition-transform"
                 >
                   <Send size={18} />
                 </button>

@@ -34,10 +34,10 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
   const isPassed = result.score >= result.passScore;
   
   const getGrade = (score: number) => {
-    if (score >= 90) return { label: "Xuất sắc", color: "#00d2a0" };
-    if (score >= 80) return { label: "Giỏi", color: "#00b4d8" };
+    if (score >= 90) return { label: "Xuất sắc", color: "#089e60" };
+    if (score >= 80) return { label: "Giỏi", color: "#289cf9" };
     if (score >= 65) return { label: "Khá", color: "#f59e0b" };
-    if (score >= 50) return { label: "Trung bình", color: "#94a3b8" };
+    if (score >= 50) return { label: "Trung bình", color: "#6e6b7b" };
     return { label: "Yếu", color: "#ef4444" };
   };
 
@@ -66,7 +66,7 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
   }, [isPassed]);
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white p-6 md:p-12">
+    <div className="min-h-screen bg-[#f8f9fa] text-white p-6 md:p-12">
       <div className="max-w-5xl mx-auto space-y-10">
         
         {/* HERO SECTION */}
@@ -74,7 +74,7 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className={`relative overflow-hidden rounded-[40px] p-10 text-center border-2 transition-colors duration-1000
-            ${isPassed ? 'bg-[#00d2a0]/5 border-[#00d2a0]/30 shadow-[0_0_50px_rgba(0,210,160,0.1)]' : 'bg-red-500/5 border-red-500/30'}
+            ${isPassed ? 'bg-[#089e60]/5 border-[#089e60]/30 shadow-[0_0_50px_rgba(0,210,160,0.1)]' : 'bg-red-500/5 border-red-500/30'}
           `}
         >
           <div className="relative z-10">
@@ -83,7 +83,7 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
               className={`w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-2xl
-                ${isPassed ? 'bg-[#00d2a0] text-black' : 'bg-red-500 text-white'}
+                ${isPassed ? 'bg-[#089e60] text-black' : 'bg-red-500 text-white'}
               `}
             >
               {isPassed ? <Trophy size={40} /> : <AlertCircle size={40} />}
@@ -98,7 +98,7 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
               <svg className="w-full h-full -rotate-90">
                 <circle
                   cx="96" cy="96" r="88"
-                  className="stroke-[#1e293b]"
+                  className="stroke-[#e7e7e7]"
                   strokeWidth="12"
                   fill="transparent"
                 />
@@ -122,14 +122,14 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
 
             <div className="flex flex-wrap items-center justify-center gap-6">
               <Badge icon={<CheckCircle2 size={16} />} label="Xếp loại" value={grade.label} color={grade.color} />
-              <Badge icon={<Clock size={16} />} label="Thời gian" value={result.timeSpent} color="#94a3b8" />
+              <Badge icon={<Clock size={16} />} label="Thời gian" value={result.timeSpent} color="#6e6b7b" />
               <Badge icon={<Trophy size={16} />} label="Xếp hạng" value={`Top ${result.rank} lớp 🏆`} color="#f59e0b" />
             </div>
           </div>
 
           {/* Background Decorative Circles */}
           <div className={`absolute top-0 right-0 w-64 h-64 blur-[100px] -translate-y-1/2 translate-x-1/2 opacity-20
-            ${isPassed ? 'bg-[#00d2a0]' : 'bg-red-500'}
+            ${isPassed ? 'bg-[#089e60]' : 'bg-red-500'}
           `}></div>
         </motion.section>
 
@@ -140,10 +140,10 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-[#16213e] p-8 rounded-[32px] border border-[#1e293b]"
+            className="bg-[#ffffff] p-8 rounded-[32px] border border-[#e7e7e7]"
           >
             <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
-              <PieChart size={20} className="text-[#00d2a0]" /> Thống kê chi tiết
+              <PieChart size={20} className="text-[#089e60]" /> Thống kê chi tiết
             </h2>
             
             <div className="flex items-center justify-around gap-4">
@@ -151,18 +151,18 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
                <div className="relative w-40 h-40">
                  <svg className="w-full h-full -rotate-90">
                     {/* Correct */}
-                    <circle cx="80" cy="80" r="70" stroke="#00d2a0" strokeWidth="20" fill="transparent" strokeDasharray="440" strokeDashoffset="0" />
+                    <circle cx="80" cy="80" r="70" stroke="#089e60" strokeWidth="20" fill="transparent" strokeDasharray="440" strokeDashoffset="0" />
                     {/* Wrong - Mocking offset */}
                     <circle cx="80" cy="80" r="70" stroke="#ef4444" strokeWidth="20" fill="transparent" strokeDasharray="440" strokeDashoffset="360" />
                     {/* Blank */}
-                    <circle cx="80" cy="80" r="70" stroke="#475569" strokeWidth="20" fill="transparent" strokeDasharray="440" strokeDashoffset="420" />
+                    <circle cx="80" cy="80" r="70" stroke="#6e6b7b" strokeWidth="20" fill="transparent" strokeDasharray="440" strokeDashoffset="420" />
                  </svg>
                </div>
 
                <div className="space-y-4">
-                 <LegendItem color="#00d2a0" label="Đúng" value={result.correctCount} />
+                 <LegendItem color="#089e60" label="Đúng" value={result.correctCount} />
                  <LegendItem color="#ef4444" label="Sai" value={result.wrongCount} />
-                 <LegendItem color="#475569" label="Bỏ trống" value={result.blankCount} />
+                 <LegendItem color="#6e6b7b" label="Bỏ trống" value={result.blankCount} />
                </div>
             </div>
           </motion.section>
@@ -172,24 +172,24 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-[#16213e] p-8 rounded-[32px] border border-[#1e293b]"
+            className="bg-[#ffffff] p-8 rounded-[32px] border border-[#e7e7e7]"
           >
             <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
-              <BarChart3 size={20} className="text-[#00b4d8]" /> Điểm theo chủ đề
+              <BarChart3 size={20} className="text-[#289cf9]" /> Điểm theo chủ đề
             </h2>
             <div className="space-y-6">
               {result.topics.map((topic, i) => (
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between text-sm font-bold">
                     <span>{topic.name}</span>
-                    <span className="text-[#00d2a0]">{topic.score}/{topic.total}</span>
+                    <span className="text-[#089e60]">{topic.score}/{topic.total}</span>
                   </div>
-                  <div className="h-3 w-full bg-[#0f0f1a] rounded-full overflow-hidden">
+                  <div className="h-3 w-full bg-[#f8f9fa] rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${(topic.score / topic.total) * 100}%` }}
                       transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
-                      className="h-full bg-gradient-to-r from-[#00b4d8] to-[#00d2a0]"
+                      className="h-full bg-gradient-to-r from-[#289cf9] to-[#089e60]"
                     ></motion.div>
                   </div>
                 </div>
@@ -206,13 +206,13 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
           transition={{ delay: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-10"
         >
-          <Link href={`/exam/${examId}`} className="w-full sm:w-auto px-8 py-4 bg-[#16213e] border border-[#1e293b] text-white font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-[#1e293b] transition-colors">
+          <Link href={`/exam/${examId}`} className="w-full sm:w-auto px-8 py-4 bg-[#ffffff] border border-[#e7e7e7] text-white font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-[#e7e7e7] transition-colors">
             <RotateCcw size={20} /> Làm lại bài thi
           </Link>
-          <Link href="/lessons" className="w-full sm:w-auto px-8 py-4 bg-[#00d2a0] text-black font-bold rounded-2xl flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(0,210,160,0.3)] transition-all">
+          <Link href="/lessons" className="w-full sm:w-auto px-8 py-4 bg-[#089e60] text-black font-bold rounded-2xl flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(8,158,96,0.3)] transition-all">
             Học bài tiếp theo <ArrowRight size={20} />
           </Link>
-          <button className="w-full sm:w-auto px-8 py-4 bg-[#0f0f1a] border border-[#1e293b] text-slate-400 font-bold rounded-2xl flex items-center justify-center gap-2 hover:text-white transition-colors">
+          <button className="w-full sm:w-auto px-8 py-4 bg-[#f8f9fa] border border-[#e7e7e7] text-slate-400 font-bold rounded-2xl flex items-center justify-center gap-2 hover:text-white transition-colors">
             <Share2 size={20} /> Chia sẻ kết quả
           </button>
         </motion.div>
@@ -224,7 +224,7 @@ export default function ExamResultPage({ params }: { params: Promise<{ examId: s
 
 function Badge({ icon, label, value, color }: { icon: any, label: string, value: string, color: string }) {
   return (
-    <div className="flex items-center gap-3 bg-[#0f0f1a] px-5 py-3 rounded-2xl border border-[#1e293b]">
+    <div className="flex items-center gap-3 bg-[#f8f9fa] px-5 py-3 rounded-2xl border border-[#e7e7e7]">
       <div style={{ color: color }}>{icon}</div>
       <div className="text-left">
         <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{label}</div>

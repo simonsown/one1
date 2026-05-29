@@ -47,17 +47,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#0f0f1a] overflow-hidden text-white">
+    <div className="min-h-screen flex flex-col md:flex-row bg-[#f8f9fa] overflow-hidden text-white">
       
       {/* CỘT TRÁI - BRANDING PANEL (Chỉ hiện trên desktop) */}
-      <div className="hidden md:flex md:w-[40%] relative flex-col justify-between p-12 lg:p-16 border-r border-[#1e293b] overflow-hidden bg-gradient-to-br from-[#0f0f1a] to-[#1a1a2e]">
+      <div className="hidden md:flex md:w-[40%] relative flex-col justify-between p-12 lg:p-16 border-r border-[#e7e7e7] overflow-hidden bg-gradient-to-br from-[#f8f9fa] to-[#1a1a2e]">
         
         {/* Animated Particles */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
            {mounted && [...Array(15)].map((_, i) => (
              <motion.div
                key={i}
-               className="absolute w-2 h-2 rounded-full bg-[#00d2a0]/20"
+               className="absolute w-2 h-2 rounded-full bg-[#089e60]/20"
                initial={{ 
                  x: Math.random() * 100 + "%", 
                  y: "110%", 
@@ -86,7 +86,7 @@ export default function LoginPage() {
           <div className="flex items-center gap-3 mb-6">
             <img src="/logo.png" alt="Logo" className="w-12 h-12 object-contain" />
             <h1 className="text-3xl font-bold tracking-tight">
-              PC MASTER <span className="text-[#00d2a0]">BUILDER</span>
+              PC MASTER <span className="text-[#089e60]">BUILDER</span>
             </h1>
           </div>
           
@@ -97,7 +97,7 @@ export default function LoginPage() {
 
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#16213e] border border-[#1e293b] flex items-center justify-center text-[#00d2a0] shadow-[0_0_15px_rgba(0,210,160,0.1)]">
+              <div className="w-12 h-12 rounded-xl bg-[#ffffff] border border-[#e7e7e7] flex items-center justify-center text-[#089e60] shadow-[0_0_15px_rgba(0,210,160,0.1)]">
                 <Cpu size={24} />
               </div>
               <div>
@@ -107,7 +107,7 @@ export default function LoginPage() {
             </div>
             
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#16213e] border border-[#1e293b] flex items-center justify-center text-[#00b4d8] shadow-[0_0_15px_rgba(0,180,216,0.1)]">
+              <div className="w-12 h-12 rounded-xl bg-[#ffffff] border border-[#e7e7e7] flex items-center justify-center text-[#289cf9] shadow-[0_0_15px_rgba(0,180,216,0.1)]">
                 <Bot size={24} />
               </div>
               <div>
@@ -117,7 +117,7 @@ export default function LoginPage() {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#16213e] border border-[#1e293b] flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+              <div className="w-12 h-12 rounded-xl bg-[#ffffff] border border-[#e7e7e7] flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
                 <Globe size={24} />
               </div>
               <div>
@@ -148,7 +148,7 @@ export default function LoginPage() {
                 setLoading(false)
               }
             }}
-            className="text-slate-700 hover:text-[#00d2a0] transition-colors"
+            className="text-slate-700 hover:text-[#089e60] transition-colors"
             title="Khu vực Quản trị"
           >
             <Lock size={14} />
@@ -170,7 +170,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="w-full max-w-[440px] bg-[#16213e]/50 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-6 md:p-0 rounded-2xl border border-[#1e293b]/50 md:border-none shadow-2xl md:shadow-none">
+        <div className="w-full max-w-[440px] bg-[#ffffff]/50 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-6 md:p-0 rounded-2xl border border-[#e7e7e7]/50 md:border-none shadow-2xl md:shadow-none">
           
           <div className="text-center md:text-left mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Chào mừng trở lại! 👋</h2>
@@ -178,14 +178,14 @@ export default function LoginPage() {
           </div>
 
           {/* Tab Switcher */}
-          <div className="relative flex w-full bg-[#0f0f1a] rounded-xl p-1 mb-8 border border-[#1e293b]">
+          <div className="relative flex w-full bg-[#f8f9fa] rounded-xl p-1 mb-8 border border-[#e7e7e7]">
             <button 
               type="button"
               onClick={() => setIsLogin(true)}
               className={`relative z-10 flex-1 py-2.5 text-sm font-medium transition-colors ${isLogin ? 'text-white' : 'text-slate-400 hover:text-white'}`}
             >
               Đăng Nhập
-              {isLogin && <motion.div layoutId="tab" className="absolute inset-0 bg-[#16213e] rounded-lg border border-[#2a3655] -z-10" />}
+              {isLogin && <motion.div layoutId="tab" className="absolute inset-0 bg-[#ffffff] rounded-lg border border-[#e7e7e7] -z-10" />}
             </button>
             <button 
               type="button"
@@ -220,9 +220,9 @@ export default function LoginPage() {
           </div>
 
           <div className="flex items-center gap-4 mb-6">
-            <div className="h-[1px] flex-1 bg-[#1e293b]"></div>
+            <div className="h-[1px] flex-1 bg-[#e7e7e7]"></div>
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Hoặc qua email</span>
-            <div className="h-[1px] flex-1 bg-[#1e293b]"></div>
+            <div className="h-[1px] flex-1 bg-[#e7e7e7]"></div>
           </div>
 
 
@@ -230,20 +230,20 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             {/* Input Email với Floating Label */}
             <div className="relative">
-              <Mail size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${focusedInput === 'email' ? 'text-[#00d2a0]' : 'text-slate-500'}`} />
+              <Mail size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${focusedInput === 'email' ? 'text-[#089e60]' : 'text-slate-500'}`} />
               <input 
                 type="email" 
                 name="email"
                 id="email"
                 required
-                className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#00d2a0] focus:ring-1 focus:ring-[#00d2a0] transition-all peer text-white text-base"
+                className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#089e60] focus:ring-1 focus:ring-[#089e60] transition-all peer text-white text-base"
                 placeholder=" "
                 onFocus={() => setFocusedInput('email')}
                 onBlur={() => setFocusedInput(null)}
               />
               <label 
                 htmlFor="email" 
-                className="absolute left-11 top-1/2 -translate-y-1/2 text-slate-500 text-sm cursor-text transition-all duration-200 peer-focus:-top-2.5 peer-focus:left-4 peer-focus:text-xs peer-focus:text-[#00d2a0] peer-focus:bg-[#0f0f1a] peer-focus:px-1 peer-valid:-top-2.5 peer-valid:left-4 peer-valid:text-xs peer-valid:px-1 peer-valid:bg-[#0f0f1a] rounded-sm pointer-events-none"
+                className="absolute left-11 top-1/2 -translate-y-1/2 text-slate-500 text-sm cursor-text transition-all duration-200 peer-focus:-top-2.5 peer-focus:left-4 peer-focus:text-xs peer-focus:text-[#089e60] peer-focus:bg-[#f8f9fa] peer-focus:px-1 peer-valid:-top-2.5 peer-valid:left-4 peer-valid:text-xs peer-valid:px-1 peer-valid:bg-[#f8f9fa] rounded-sm pointer-events-none"
               >
                 Địa chỉ Email
               </label>
@@ -251,27 +251,27 @@ export default function LoginPage() {
 
             {/* Input Password với Floating Label */}
             <div className="relative">
-              <Lock size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${focusedInput === 'password' ? 'text-[#00d2a0]' : 'text-slate-500'}`} />
+              <Lock size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${focusedInput === 'password' ? 'text-[#089e60]' : 'text-slate-500'}`} />
               <input 
                 type={showPassword ? "text" : "password"} 
                 name="password"
                 id="password"
                 required
-                className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-12 py-3.5 outline-none focus:border-[#00d2a0] focus:ring-1 focus:ring-[#00d2a0] transition-all peer text-white text-base"
+                className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-12 py-3.5 outline-none focus:border-[#089e60] focus:ring-1 focus:ring-[#089e60] transition-all peer text-white text-base"
                 placeholder=" "
                 onFocus={() => setFocusedInput('password')}
                 onBlur={() => setFocusedInput(null)}
               />
               <label 
                 htmlFor="password" 
-                className="absolute left-11 top-1/2 -translate-y-1/2 text-slate-500 text-sm cursor-text transition-all duration-200 peer-focus:-top-2.5 peer-focus:left-4 peer-focus:text-xs peer-focus:text-[#00d2a0] peer-focus:bg-[#0f0f1a] peer-focus:px-1 peer-valid:-top-2.5 peer-valid:left-4 peer-valid:text-xs peer-valid:px-1 peer-valid:bg-[#0f0f1a] rounded-sm pointer-events-none"
+                className="absolute left-11 top-1/2 -translate-y-1/2 text-slate-500 text-sm cursor-text transition-all duration-200 peer-focus:-top-2.5 peer-focus:left-4 peer-focus:text-xs peer-focus:text-[#089e60] peer-focus:bg-[#f8f9fa] peer-focus:px-1 peer-valid:-top-2.5 peer-valid:left-4 peer-valid:text-xs peer-valid:px-1 peer-valid:bg-[#f8f9fa] rounded-sm pointer-events-none"
               >
                 Mật khẩu
               </label>
               <button 
                 type="button" 
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 focus:outline-none p-1 rounded-md hover:bg-[#1e293b]/50 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 focus:outline-none p-1 rounded-md hover:bg-[#e7e7e7]/50 transition-colors"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -279,10 +279,10 @@ export default function LoginPage() {
 
             <div className="flex items-center justify-between mt-1 mb-2">
               <label className="flex items-center gap-2 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-[#1e293b] bg-[#0f0f1a] text-[#00d2a0] focus:ring-[#00d2a0] focus:ring-offset-[#0f0f1a] transition-colors" />
+                <input type="checkbox" className="w-4 h-4 rounded border-[#e7e7e7] bg-[#f8f9fa] text-[#089e60] focus:ring-[#089e60] focus:ring-offset-[#f8f9fa] transition-colors" />
                 <span className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">Nhớ đăng nhập</span>
               </label>
-              <Link href="/forgot-password" className="text-sm font-medium text-[#00b4d8] hover:text-[#00d2a0] transition-colors">
+              <Link href="/forgot-password" className="text-sm font-medium text-[#289cf9] hover:text-[#089e60] transition-colors">
                 Quên mật khẩu?
               </Link>
             </div>
@@ -305,7 +305,7 @@ export default function LoginPage() {
             <button 
               type="submit" 
               disabled={loading} 
-              className="w-full bg-[#00d2a0] hover:bg-[#00e6af] text-black font-bold py-3.5 px-4 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(0,210,160,0.15)] hover:shadow-[0_0_25px_rgba(0,210,160,0.3)] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-[0_0_20px_rgba(0,210,160,0.15)] mt-2 flex items-center justify-center gap-2"
+              className="w-full bg-[#089e60] hover:bg-[#0b755b] text-black font-bold py-3.5 px-4 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(0,210,160,0.15)] hover:shadow-[0_0_25px_rgba(8,158,96,0.3)] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-[0_0_20px_rgba(0,210,160,0.15)] mt-2 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

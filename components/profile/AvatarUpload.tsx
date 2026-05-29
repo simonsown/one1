@@ -83,7 +83,7 @@ export function AvatarUpload({ userId, currentAvatarUrl, onUploadSuccess }: Prop
 
         {/* Floating Upload Trigger */}
         <label className="
-          absolute bottom-0 right-0 p-2 bg-[#00d4aa] text-[#0d0e13] rounded-full cursor-pointer
+          absolute bottom-0 right-0 p-2 bg-[#089e60] text-[#0d0e13] rounded-full cursor-pointer
           hover:opacity-90 transition-opacity shadow-lg flex items-center justify-center
         ">
           {uploading ? <Loader size={14} className="animate-spin" /> : <Camera size={14} />}

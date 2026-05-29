@@ -110,7 +110,7 @@ export async function issueCertificate(userId: string, pathId: string) {
     // Glowing border
     page.drawRectangle({
       x: 20, y: 20, width: 802, height: 555,
-      borderColor: rgb(0, 0.83, 0.67), // #00d4aa
+      borderColor: rgb(0, 0.83, 0.67), // #089e60
       borderWidth: 2
     })
 

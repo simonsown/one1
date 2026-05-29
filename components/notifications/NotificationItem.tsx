@@ -13,7 +13,7 @@ interface Props {
 export function NotificationItem({ notification, onRead }: Props) {
   const getIcon = () => {
     switch (notification.type) {
-      case 'quiz_graded': return <CheckCircle size={16} className="text-[#00d4aa]" />
+      case 'quiz_graded': return <CheckCircle size={16} className="text-[#089e60]" />
       case 'lesson_unlocked': return <BookOpen size={16} className="text-blue-400" />
       case 'deadline_reminder': return <Clock size={16} className="text-orange-400" />
       case 'teacher_message': return <MessageSquare size={16} className="text-purple-400" />
@@ -37,7 +37,7 @@ export function NotificationItem({ notification, onRead }: Props) {
       onClick={() => {
         if (!notification.is_read) onRead(notification.id)
       }}
-      className={`block px-4 py-3 border-b border-white/5 hover:bg-white/5 transition-colors ${!notification.is_read ? 'bg-[#00d4aa]/5' : ''}`}
+      className={`block px-4 py-3 border-b border-white/5 hover:bg-white/5 transition-colors ${!notification.is_read ? 'bg-[#089e60]/5' : ''}`}
     >
       <div className="flex gap-3">
         <div className="mt-1 flex-shrink-0">

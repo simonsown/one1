@@ -39,14 +39,14 @@ const classComparison = [
 
 export default function StudentAnalyticsPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-10 bg-[#0f0f1a] min-h-screen text-white">
+    <div className="max-w-7xl mx-auto px-6 py-12 space-y-10 bg-[#f8f9fa] min-h-screen text-white">
       {/* Header */}
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black mb-2">Phân tích <span className="text-[#00d2a0]">Năng lực</span></h1>
+          <h1 className="text-4xl font-black mb-2">Phân tích <span className="text-[#089e60]">Năng lực</span></h1>
           <p className="text-slate-400 font-medium italic">"Theo dõi sự tiến bộ và tối ưu hóa lộ trình học tập của bạn."</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-3 bg-[#16213e] border border-[#1e293b] rounded-xl text-sm font-bold hover:bg-[#1e293b] transition-all">
+        <button className="flex items-center gap-2 px-6 py-3 bg-[#ffffff] border border-[#e7e7e7] rounded-xl text-sm font-bold hover:bg-[#e7e7e7] transition-all">
           <Download size={18} /> Xuất báo cáo (PDF)
         </button>
       </header>
@@ -57,17 +57,17 @@ export default function StudentAnalyticsPage() {
           { label: 'Bài thi đã làm', value: '12', icon: BookOpen, color: '#3b82f6' },
           { label: 'Điểm trung bình', value: '78.5', icon: Target, color: '#8b5cf6' },
           { label: 'Điểm cao nhất', value: '96', icon: Trophy, color: '#f59e0b' },
-          { label: 'Tỷ lệ qua môn', value: '85%', icon: Zap, color: '#00d2a0' },
+          { label: 'Tỷ lệ qua môn', value: '85%', icon: Zap, color: '#089e60' },
         ].map((card, i) => (
           <motion.div 
             key={i}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="p-8 rounded-[32px] bg-[#16213e] border border-[#1e293b] relative overflow-hidden group"
+            className="p-8 rounded-[32px] bg-[#ffffff] border border-[#e7e7e7] relative overflow-hidden group"
           >
             <div className="relative z-10">
-              <div className="p-3 w-fit rounded-2xl bg-[#0f0f1a] mb-4 group-hover:scale-110 transition-transform">
+              <div className="p-3 w-fit rounded-2xl bg-[#f8f9fa] mb-4 group-hover:scale-110 transition-transform">
                 <card.icon size={24} style={{ color: card.color }} />
               </div>
               <div className="text-3xl font-black mb-1">{card.value}</div>
@@ -82,35 +82,35 @@ export default function StudentAnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* Line Chart: Score Progress */}
-        <div className="p-8 rounded-[40px] bg-[#16213e] border border-[#1e293b]">
+        <div className="p-8 rounded-[40px] bg-[#ffffff] border border-[#e7e7e7]">
           <h3 className="text-xl font-bold mb-8 flex items-center gap-3">
-             <ArrowUpRight className="text-[#00d2a0]" /> Tiến độ học tập
+             <ArrowUpRight className="text-[#089e60]" /> Tiến độ học tập
           </h3>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={scoreHistory}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e7e7e7" vertical={false} />
                 <XAxis dataKey="date" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
                 <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} />
                 <Tooltip 
-                  contentStyle={{ background: '#0f0f1a', border: '1px solid #1e293b', borderRadius: '12px' }}
-                  itemStyle={{ color: '#00d2a0', fontWeight: 'bold' }}
+                  contentStyle={{ background: '#f8f9fa', border: '1px solid #e7e7e7', borderRadius: '12px' }}
+                  itemStyle={{ color: '#089e60', fontWeight: 'bold' }}
                 />
-                <Line type="monotone" dataKey="score" stroke="#00d2a0" strokeWidth={4} dot={{ r: 6, fill: '#00d2a0', strokeWidth: 2, stroke: '#0f0f1a' }} activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey="score" stroke="#089e60" strokeWidth={4} dot={{ r: 6, fill: '#089e60', strokeWidth: 2, stroke: '#f8f9fa' }} activeDot={{ r: 8 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Radar Chart: Competency Map */}
-        <div className="p-8 rounded-[40px] bg-[#16213e] border border-[#1e293b]">
+        <div className="p-8 rounded-[40px] bg-[#ffffff] border border-[#e7e7e7]">
           <h3 className="text-xl font-bold mb-8 flex items-center gap-3">
              <Zap className="text-[#f59e0b]" /> Bản đồ Năng lực (Radar)
           </h3>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="80%" data={competencyData}>
-                <PolarGrid stroke="#1e293b" />
+                <PolarGrid stroke="#e7e7e7" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12 }} />
                 <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                 <Radar
@@ -129,16 +129,16 @@ export default function StudentAnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Exam History Table */}
-        <div className="lg:col-span-2 p-8 rounded-[40px] bg-[#16213e] border border-[#1e293b] overflow-hidden">
+        <div className="lg:col-span-2 p-8 rounded-[40px] bg-[#ffffff] border border-[#e7e7e7] overflow-hidden">
           <div className="flex items-center justify-between mb-8">
              <h3 className="text-xl font-bold">Lịch sử bài thi</h3>
              <div className="flex gap-2">
-                <button className="p-2 bg-[#0f0f1a] rounded-lg text-slate-500 hover:text-white transition-all"><Filter size={18} /></button>
+                <button className="p-2 bg-[#f8f9fa] rounded-lg text-slate-500 hover:text-white transition-all"><Filter size={18} /></button>
              </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="text-slate-500 uppercase font-black text-[10px] tracking-widest border-b border-[#1e293b]">
+              <thead className="text-slate-500 uppercase font-black text-[10px] tracking-widest border-b border-[#e7e7e7]">
                 <tr>
                   <th className="px-4 py-4">Tên bài thi</th>
                   <th className="px-4 py-4">Ngày làm</th>
@@ -159,7 +159,7 @@ export default function StudentAnalyticsPage() {
                     <td className="px-4 py-6 text-center font-black text-lg">{item.score}</td>
                     <td className="px-4 py-6 text-center">
                        <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider
-                        ${item.grade === 'Xuất sắc' ? 'bg-[#00d2a0]/10 text-[#00d2a0]' : 
+                        ${item.grade === 'Xuất sắc' ? 'bg-[#089e60]/10 text-[#089e60]' : 
                           item.grade === 'Giỏi' ? 'bg-blue-500/10 text-blue-500' : 'bg-slate-500/10 text-slate-500'}
                        `}>
                          {item.grade}
@@ -179,7 +179,7 @@ export default function StudentAnalyticsPage() {
 
         {/* Weak Point Analysis (AI Suggestion) */}
         <div className="space-y-6">
-          <div className="p-8 rounded-[40px] bg-[#16213e] border border-red-500/30 relative overflow-hidden">
+          <div className="p-8 rounded-[40px] bg-[#ffffff] border border-red-500/30 relative overflow-hidden">
              <div className="relative z-10">
                 <div className="flex items-center gap-2 text-red-500 font-black uppercase text-xs tracking-widest mb-4">
                    <AlertTriangle size={16} /> Cảnh báo lỗ hổng kiến thức
@@ -196,9 +196,9 @@ export default function StudentAnalyticsPage() {
              <div className="absolute top-0 right-0 w-24 h-24 bg-red-500 blur-3xl opacity-5"></div>
           </div>
 
-          <div className="p-8 rounded-[40px] bg-[#00d2a0]/5 border border-[#00d2a0]/20">
+          <div className="p-8 rounded-[40px] bg-[#089e60]/5 border border-[#089e60]/20">
              <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
-                <Sparkles size={18} className="text-[#00d2a0]" /> Gợi ý từ AI Guru
+                <Sparkles size={18} className="text-[#089e60]" /> Gợi ý từ AI Guru
              </h4>
              <ul className="space-y-3 text-sm text-slate-400">
                 <li className="flex items-start gap-2 italic">

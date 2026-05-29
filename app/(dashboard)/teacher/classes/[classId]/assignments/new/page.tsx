@@ -90,7 +90,7 @@ export default function NewAssignmentPage({ params }: { params: Promise<{ classI
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           {/* Thông tin chung */}
           <section style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <h3 style={{ color: '#00f3ff', fontSize: '18px', fontWeight: 700, margin: 0 }}>1. Thông tin chung</h3>
+            <h3 style={{ color: '#289cf9', fontSize: '18px', fontWeight: 700, margin: 0 }}>1. Thông tin chung</h3>
             
             <div>
               <label style={labelStyle}>Tiêu đề nhiệm vụ</label>
@@ -134,7 +134,7 @@ export default function NewAssignmentPage({ params }: { params: Promise<{ classI
 
           {/* Yêu cầu kỹ thuật */}
           <section style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '24px', background: 'rgba(0, 243, 255, 0.03)', borderRadius: '16px', border: '1px solid rgba(0, 243, 255, 0.1)' }}>
-            <h3 style={{ color: '#00f3ff', fontSize: '18px', fontWeight: 700, margin: 0 }}>2. Yêu cầu kỹ thuật (Auto-grading)</h3>
+            <h3 style={{ color: '#289cf9', fontSize: '18px', fontWeight: 700, margin: 0 }}>2. Yêu cầu kỹ thuật (Auto-grading)</h3>
             <p style={{ color: '#4b5563', fontSize: '13px', margin: '-10px 0 10px 0' }}>Hệ thống sẽ dựa vào các thông số này để tự động chấm điểm bài nộp của học sinh.</p>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>

@@ -63,7 +63,7 @@ export default function TeacherDashboard() {
   }
 
   const quickActions = [
-    { title: 'Quản lý Lớp học', desc: 'Tạo mã lớp, quản lý thành viên', icon: <Users size={24} />, color: '#00f3ff', href: '/teacher/classes' },
+    { title: 'Quản lý Lớp học', desc: 'Tạo mã lớp, quản lý thành viên', icon: <Users size={24} />, color: '#289cf9', href: '/teacher/classes' },
     { title: 'Quản lý Bài giảng', desc: 'Soạn thảo nội dung học tập, bài giảng lý thuyết', icon: <FileText size={24} />, color: '#10b981', href: '/teacher/lessons' },
     { title: 'Sách giáo khoa', desc: 'Nội dung số theo chương trình GDPT', icon: <BookOpen size={24} />, color: '#8b5cf6', href: '/teacher/lessons' },
     { title: 'Kiến thức mở rộng', desc: 'Thư viện phần cứng và công nghệ mới', icon: <TrendingUp size={24} />, color: '#ec4899', href: '/teacher/lessons' },
@@ -80,7 +80,7 @@ export default function TeacherDashboard() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', marginBottom: '48px' }}>
         <div style={{ background: 'rgba(12, 20, 36, 0.8)', padding: '24px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
-            <div style={{ padding: '10px', borderRadius: '12px', background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff' }}><GraduationCap size={20} /></div>
+            <div style={{ padding: '10px', borderRadius: '12px', background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9' }}><GraduationCap size={20} /></div>
             <TrendingUp size={16} color="#10b981" />
           </div>
           <div style={{ fontSize: '13px', color: '#8899a6', fontWeight: 600, marginBottom: '4px' }}>Số lớp đang quản lý</div>
@@ -139,7 +139,7 @@ export default function TeacherDashboard() {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
             <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#fff', margin: 0 }}>Lớp của tôi</h2>
-            <Link href="/teacher/classes/new" style={{ color: '#00f3ff', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>+ Tạo mới</Link>
+            <Link href="/teacher/classes/new" style={{ color: '#289cf9', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>+ Tạo mới</Link>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -150,7 +150,7 @@ export default function TeacherDashboard() {
                   <div style={{ fontSize: '12px', color: '#8899a6' }}>{cls.subject} • Khối {cls.grade}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '11px', color: '#00f3ff', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase' }}>Mã lớp</div>
+                  <div style={{ fontSize: '11px', color: '#289cf9', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase' }}>Mã lớp</div>
                   <div style={{ fontSize: '18px', fontWeight: 900, color: '#fff', fontFamily: 'monospace' }}>{cls.code}</div>
                 </div>
               </div>

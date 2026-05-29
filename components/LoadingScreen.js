@@ -143,7 +143,7 @@ const LoadingScreen = ({ onComplete }) => {
                         margin: 0,
                         textShadow: '0 0 10px rgba(255, 255, 255, 0.2)'
                     }}>
-                        PC MASTER <span style={{ color: '#00d4aa', textShadow: '0 0 15px rgba(0, 212, 170, 0.4)' }}>BUILDER</span>
+                        PC MASTER <span style={{ color: '#089e60', textShadow: '0 0 15px rgba(0, 212, 170, 0.4)' }}>BUILDER</span>
                     </h1>
                     <p style={{
                         fontSize: '10px',
@@ -170,7 +170,7 @@ const LoadingScreen = ({ onComplete }) => {
                     backdropFilter: 'blur(10px)'
                 }}>
                     <p style={{
-                        color: '#00d4aa',
+                        color: '#089e60',
                         fontSize: '13px',
                         fontWeight: 600,
                         margin: 0,
@@ -192,7 +192,7 @@ const LoadingScreen = ({ onComplete }) => {
                     <div style={{
                         width: `${progress}%`,
                         height: '100%',
-                        background: 'linear-gradient(90deg, #00d4aa, #00b4d8)',
+                        background: 'linear-gradient(90deg, #089e60, #289cf9)',
                         transition: 'width 0.15s cubic-bezier(0.1, 0.8, 0.2, 1)',
                         boxShadow: '0 0 12px rgba(0, 212, 170, 0.6)'
                     }} />

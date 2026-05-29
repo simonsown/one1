@@ -47,13 +47,13 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f0f1a] p-4 text-white">
-      <div className="w-full max-w-lg bg-[#16213e] rounded-2xl border border-[#1e293b] p-8 shadow-2xl relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-[#f8f9fa] p-4 text-white">
+      <div className="w-full max-w-lg bg-[#ffffff] rounded-2xl border border-[#e7e7e7] p-8 shadow-2xl relative overflow-hidden">
         {/* Background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-[#00d2a0]/10 blur-[100px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-[#089e60]/10 blur-[100px] pointer-events-none" />
 
         <div className="relative z-10 text-center mb-8">
-          <div className="w-16 h-16 bg-[#00d2a0]/20 rounded-full flex items-center justify-center mx-auto mb-4 text-[#00d2a0]">
+          <div className="w-16 h-16 bg-[#089e60]/20 rounded-full flex items-center justify-center mx-auto mb-4 text-[#089e60]">
             <GraduationCap size={32} />
           </div>
           <h1 className="text-2xl font-bold mb-2">Hoàn thiện hồ sơ</h1>
@@ -68,7 +68,7 @@ export default function OnboardingPage() {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Ví dụ: Nguyễn Văn A"
-              className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl px-4 py-3 outline-none focus:border-[#00d2a0] text-white transition-colors"
+              className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl px-4 py-3 outline-none focus:border-[#089e60] text-white transition-colors"
             />
           </div>
 
@@ -79,11 +79,11 @@ export default function OnboardingPage() {
                 onClick={() => setRole('student')}
                 className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 ${
                   role === 'student' 
-                  ? 'border-[#00d2a0] bg-[#00d2a0]/10' 
-                  : 'border-[#1e293b] bg-[#0f0f1a] hover:border-slate-600'
+                  ? 'border-[#089e60] bg-[#089e60]/10' 
+                  : 'border-[#e7e7e7] bg-[#f8f9fa] hover:border-slate-600'
                 }`}
               >
-                <User size={32} className={`mb-2 ${role === 'student' ? 'text-[#00d2a0]' : 'text-slate-500'}`} />
+                <User size={32} className={`mb-2 ${role === 'student' ? 'text-[#089e60]' : 'text-slate-500'}`} />
                 <span className={`font-semibold ${role === 'student' ? 'text-white' : 'text-slate-400'}`}>Học viên</span>
               </button>
 
@@ -92,7 +92,7 @@ export default function OnboardingPage() {
                 className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 ${
                   role === 'teacher' 
                   ? 'border-purple-500 bg-purple-500/10' 
-                  : 'border-[#1e293b] bg-[#0f0f1a] hover:border-slate-600'
+                  : 'border-[#e7e7e7] bg-[#f8f9fa] hover:border-slate-600'
                 }`}
               >
                 <Users size={32} className={`mb-2 ${role === 'teacher' ? 'text-purple-500' : 'text-slate-500'}`} />
@@ -104,7 +104,7 @@ export default function OnboardingPage() {
           <button 
             onClick={handleComplete}
             disabled={!role || !fullName.trim() || loading}
-            className="w-full mt-4 bg-[#00d2a0] hover:bg-[#00e6af] disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-black font-bold py-3.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2"
+            className="w-full mt-4 bg-[#089e60] hover:bg-[#0b755b] disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-black font-bold py-3.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2"
           >
             {loading ? <Loader2 className="animate-spin" size={20} /> : (
               <>Hoàn tất <ArrowRight size={18} /></>

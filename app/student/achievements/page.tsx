@@ -53,7 +53,7 @@ export default function StudentAchievementsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0d0e13] text-white pt-24 flex flex-col items-center justify-center gap-2">
-        <RefreshCw size={28} className="animate-spin text-[#00d4aa]" />
+        <RefreshCw size={28} className="animate-spin text-[#089e60]" />
         <span className="text-xs text-gray-500">Đang tải bảng huy hiệu...</span>
       </div>
     )
@@ -78,7 +78,7 @@ export default function StudentAchievementsPage() {
           <div className="flex gap-6 border-l border-white/5 pl-6">
             <div className="text-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Tổng điểm</p>
-              <p className="text-2xl font-black text-[#00d4aa]">{totalPoints} PTS</p>
+              <p className="text-2xl font-black text-[#089e60]">{totalPoints} PTS</p>
             </div>
             <div className="text-center">
               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Đã mở khóa</p>

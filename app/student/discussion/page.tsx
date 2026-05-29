@@ -196,7 +196,7 @@ export default function DiscussionDashboardPage() {
     return (
       <div className="min-h-screen bg-[#161F38] text-white pt-24 flex justify-center items-center">
         <div className="flex flex-col items-center gap-2">
-          <Loader2 className="animate-spin text-[#00d4aa]" size={32} />
+          <Loader2 className="animate-spin text-[#089e60]" size={32} />
           <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Đang kết nối diễn đàn...</span>
         </div>
       </div>
@@ -208,8 +208,8 @@ export default function DiscussionDashboardPage() {
       
       {/* Decorative High-Tech Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#00d4aa]/5 rounded-full filter blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#00b4d8]/5 rounded-full filter blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#089e60]/5 rounded-full filter blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#289cf9]/5 rounded-full filter blur-[120px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -217,13 +217,13 @@ export default function DiscussionDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10 relative">
           
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-2xl shadow-[0_0_15px_rgba(0,212,170,0.1)]">
+            <div className="p-2.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-2xl shadow-[0_0_15px_rgba(0,212,170,0.1)]">
               <MessageSquare size={24} />
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-black tracking-tight text-white uppercase flex items-center gap-2">
                 KHÔNG GIAN THẢO LUẬN 3D
-                <span className="text-[9px] bg-[#00d4aa]/15 text-[#00d4aa] font-black border border-[#00d4aa]/25 px-2 py-0.5 rounded-full uppercase">REAL-TIME</span>
+                <span className="text-[9px] bg-[#089e60]/15 text-[#089e60] font-black border border-[#089e60]/25 px-2 py-0.5 rounded-full uppercase">REAL-TIME</span>
               </h1>
               <p className="text-xs text-gray-400 mt-0.5">Nơi trao đổi kiến thức phần cứng máy tính thời gian thực giữa thầy và trò</p>
             </div>
@@ -231,7 +231,7 @@ export default function DiscussionDashboardPage() {
 
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-2 bg-black/40 border border-gray-800 rounded-full px-4 py-1.5 text-xs text-slate-400 font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#00d4aa] animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-[#089e60] animate-ping" />
               Lớp {userProfile?.grade || 'PC Master'}
             </div>
 
@@ -253,8 +253,8 @@ export default function DiscussionDashboardPage() {
           <div className="lg:col-span-7 space-y-6 relative">
             
             {/* Tech decorative corners */}
-            <div className="absolute -top-1 -left-1 w-3.5 h-3.5 border-t-2 border-l-2 border-[#00d4aa]/30 pointer-events-none" />
-            <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-[#00d4aa]/30 pointer-events-none" />
+            <div className="absolute -top-1 -left-1 w-3.5 h-3.5 border-t-2 border-l-2 border-[#089e60]/30 pointer-events-none" />
+            <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-[#089e60]/30 pointer-events-none" />
 
             {selectedThread ? (
               <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative min-h-[500px]">
@@ -268,10 +268,10 @@ export default function DiscussionDashboardPage() {
               <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative space-y-4 min-h-[500px]">
                 <div className="flex items-center justify-between border-b border-white/5 pb-4">
                   <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-                    <Globe size={18} className="text-[#00d4aa]" />
+                    <Globe size={18} className="text-[#089e60]" />
                     Chủ đề thảo luận sôi nổi
                   </h2>
-                  <span className="text-[10px] bg-[#00d4aa]/15 text-[#00d4aa] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  <span className="text-[10px] bg-[#089e60]/15 text-[#089e60] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                     {threads.length} chủ đề
                   </span>
                 </div>
@@ -298,8 +298,8 @@ export default function DiscussionDashboardPage() {
           <div className="lg:col-span-5 flex flex-col gap-6 relative">
             
             {/* Tech decorative corners */}
-            <div className="absolute -top-1 -right-1 w-3.5 h-3.5 border-t-2 border-r-2 border-[#00b4d8]/30 pointer-events-none" />
-            <div className="absolute -bottom-1 -left-1 w-3.5 h-3.5 border-b-2 border-l-2 border-[#00b4d8]/30 pointer-events-none" />
+            <div className="absolute -top-1 -right-1 w-3.5 h-3.5 border-t-2 border-r-2 border-[#289cf9]/30 pointer-events-none" />
+            <div className="absolute -bottom-1 -left-1 w-3.5 h-3.5 border-b-2 border-l-2 border-[#289cf9]/30 pointer-events-none" />
 
             {/* Realtime Chat Card */}
             <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl shadow-xl overflow-hidden flex flex-col h-[400px]">
@@ -309,20 +309,20 @@ export default function DiscussionDashboardPage() {
                 <div className="flex gap-2">
                   <button 
                     onClick={() => setChatChannel('global')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'global' ? 'bg-[#00d4aa]/10 text-[#00d4aa] border border-[#00d4aa]/25' : 'text-gray-400 hover:text-white'}`}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'global' ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/25' : 'text-gray-400 hover:text-white'}`}
                   >
                     <Globe size={14} /> Kênh Chung
                   </button>
                   <button 
                     onClick={() => setChatChannel('class')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'class' ? 'bg-[#00d4aa]/10 text-[#00d4aa] border border-[#00d4aa]/25' : 'text-gray-400 hover:text-white'}`}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${chatChannel === 'class' ? 'bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/25' : 'text-gray-400 hover:text-white'}`}
                   >
                     <School size={14} /> Kênh Lớp Học
                   </button>
                 </div>
                 <div className="text-[10px] text-gray-400 flex flex-col items-end hidden sm:flex">
                   <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" /> Trực tuyến</div>
-                  <div className="text-[#00d4aa] font-bold mt-0.5" title="Chủ đề đang hot">Trending: {trendingTopic}</div>
+                  <div className="text-[#089e60] font-bold mt-0.5" title="Chủ đề đang hot">Trending: {trendingTopic}</div>
                 </div>
               </div>
 
@@ -335,11 +335,11 @@ export default function DiscussionDashboardPage() {
                     </span>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className={`font-bold ${m.role === 'teacher' ? 'text-[#00d4aa]' : 'text-slate-200'}`}>
+                        <span className={`font-bold ${m.role === 'teacher' ? 'text-[#089e60]' : 'text-slate-200'}`}>
                           {m.sender}
                         </span>
                         {m.role === 'teacher' && (
-                          <span className="text-[8px] bg-[#00d4aa]/10 text-[#00d4aa] border border-[#00d4aa]/20 px-1.5 py-0.5 rounded font-black uppercase tracking-widest">
+                          <span className="text-[8px] bg-[#089e60]/10 text-[#089e60] border border-[#089e60]/20 px-1.5 py-0.5 rounded font-black uppercase tracking-widest">
                             GV
                           </span>
                         )}
@@ -356,7 +356,7 @@ export default function DiscussionDashboardPage() {
 
               {/* Chat Input */}
               <div className="p-3 border-t border-gray-800 bg-[#11121d] shrink-0">
-                <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#00d4aa] rounded-2xl p-1.5 pl-3 transition-colors">
+                <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#089e60] rounded-2xl p-1.5 pl-3 transition-colors">
                   <input 
                     type="text" 
                     placeholder={chatChannel === 'global' ? "Chat chung với học viên toàn quốc..." : "Nhắn tin cho bạn bè trong lớp..."}
@@ -367,7 +367,7 @@ export default function DiscussionDashboardPage() {
                   />
                   <button 
                     onClick={handleSendChat}
-                    className="p-2 bg-[#00d4aa] text-black rounded-xl hover:scale-105 transition-transform"
+                    className="p-2 bg-[#089e60] text-black rounded-xl hover:scale-105 transition-transform"
                   >
                     <Send size={12} fill="currentColor" />
                   </button>
@@ -379,13 +379,13 @@ export default function DiscussionDashboardPage() {
             <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-5 shadow-xl relative overflow-hidden flex flex-col justify-between h-[230px] group">
               
               {/* Tech Corner Pins */}
-              <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#00d4aa]/30 group-hover:border-[#00d4aa]/80 transition-colors" />
-              <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#00d4aa]/30 group-hover:border-[#00d4aa]/80 transition-colors" />
+              <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#089e60]/30 group-hover:border-[#089e60]/80 transition-colors" />
+              <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#089e60]/30 group-hover:border-[#089e60]/80 transition-colors" />
               
               {/* Header Info */}
               <div className="flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-[#00d4aa]/10 border border-[#00d4aa]/25 text-[#00d4aa] rounded-lg animate-pulse">
+                  <div className="p-1.5 bg-[#089e60]/10 border border-[#089e60]/25 text-[#089e60] rounded-lg animate-pulse">
                     <Cpu size={14} />
                   </div>
                   <div>
@@ -393,28 +393,28 @@ export default function DiscussionDashboardPage() {
                       MICRO AI GURU
                       <Sparkles size={10} className="text-yellow-400" />
                     </h4>
-                    <p className="text-[9px] text-[#00d4aa] uppercase font-bold tracking-widest">Đang khóa song song</p>
+                    <p className="text-[9px] text-[#089e60] uppercase font-bold tracking-widest">Đang khóa song song</p>
                   </div>
                 </div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#00d4aa] animate-ping" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#089e60] animate-ping" />
               </div>
 
               {/* Quick AI Response Window */}
               <div className="flex-1 overflow-y-auto my-3 p-3 bg-[#0c0c16]/50 rounded-xl border border-white/5 space-y-2 text-[11px] leading-relaxed">
                 {aiReplies.map((r, i) => (
-                  <div key={i} className={`p-2 rounded-lg ${r.startsWith('AI Guru:') ? 'bg-[#00d4aa]/5 text-slate-300 border-l-2 border-[#00d4aa]' : 'bg-[#181926] text-slate-200 border-l-2 border-slate-600'}`}>
+                  <div key={i} className={`p-2 rounded-lg ${r.startsWith('AI Guru:') ? 'bg-[#089e60]/5 text-slate-300 border-l-2 border-[#089e60]' : 'bg-[#181926] text-slate-200 border-l-2 border-slate-600'}`}>
                     {r}
                   </div>
                 ))}
                 {aiLoading && (
                   <div className="flex items-center gap-1 text-slate-400 italic text-[10px]">
-                    <Loader2 className="animate-spin text-[#00d4aa]" size={10} /> AI Guru đang tính toán cấu hình...
+                    <Loader2 className="animate-spin text-[#089e60]" size={10} /> AI Guru đang tính toán cấu hình...
                   </div>
                 )}
               </div>
 
               {/* Mini AI Input */}
-              <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#00d4aa] rounded-xl p-1.5 pl-3 transition-colors shrink-0">
+              <div className="flex items-center gap-2 bg-[#0c0c16] border border-gray-800 focus-within:border-[#089e60] rounded-xl p-1.5 pl-3 transition-colors shrink-0">
                 <input 
                   type="text" 
                   placeholder="Hỏi nhanh AI về socket, vga, psu..."
@@ -425,7 +425,7 @@ export default function DiscussionDashboardPage() {
                 />
                 <button 
                   onClick={handleSendAi}
-                  className="p-1.5 bg-[#00d4aa] text-black rounded-lg hover:scale-105 transition-transform"
+                  className="p-1.5 bg-[#089e60] text-black rounded-lg hover:scale-105 transition-transform"
                 >
                   <Bot size={10} />
                 </button>

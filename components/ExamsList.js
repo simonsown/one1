@@ -41,7 +41,7 @@ const ExamsList = ({ lang, onBack }) => {
     return (
         <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', color: 'var(--text-primary)' }}>
             <div style={{ marginBottom: '32px' }}>
-                <h2 style={{ fontSize: '28px', fontWeight: 800, margin: '0 0 8px 0', color: '#00f3ff' }}>
+                <h2 style={{ fontSize: '28px', fontWeight: 800, margin: '0 0 8px 0', color: '#289cf9' }}>
                     {lang === 'en' ? 'Examination Center' : 'Trung tâm Khảo thí'}
                 </h2>
                 <p style={{ color: 'var(--text-secondary)', margin: 0 }}>
@@ -87,7 +87,7 @@ const ExamsList = ({ lang, onBack }) => {
                             onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-subtle)'; e.currentTarget.style.transform = 'translateY(0)'; }}
                         >
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-                                <div style={{ padding: '10px', background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', borderRadius: '12px' }}>
+                                <div style={{ padding: '10px', background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', borderRadius: '12px' }}>
                                     <FileText size={20} />
                                 </div>
                                 <div style={{ textAlign: 'right' }}>
@@ -113,7 +113,7 @@ const ExamsList = ({ lang, onBack }) => {
                                     <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-muted)' }}>100 XP</span>
                                 </div>
                                 <button style={{
-                                    padding: '8px 16px', background: '#00f3ff', color: '#000',
+                                    padding: '8px 16px', background: '#289cf9', color: '#000',
                                     fontSize: '11px', fontWeight: 800, borderRadius: '8px', border: 'none',
                                     cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px',
                                     transition: 'all 0.2s'

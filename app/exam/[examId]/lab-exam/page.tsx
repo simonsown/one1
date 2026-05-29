@@ -92,16 +92,16 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-[#f8f9fa] text-white flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="h-20 bg-[#16213e] border-b border-[#1e293b] flex items-center justify-between px-8 z-50">
+      <header className="h-20 bg-[#ffffff] border-b border-[#e7e7e7] flex items-center justify-between px-8 z-50">
         <div className="flex items-center gap-6">
           <button onClick={() => router.back()} className="p-2 hover:bg-white/5 rounded-lg transition-colors">
             <ChevronLeft size={24} />
           </button>
           <div>
             <h1 className="text-xl font-black uppercase tracking-wider">{missionData.missionId}</h1>
-            <div className="flex items-center gap-2 text-xs text-[#00d2a0] font-bold">
+            <div className="flex items-center gap-2 text-xs text-[#089e60] font-bold">
                <Timer size={14} /> Thời gian còn lại: {formatTime(timeLeft)}
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
            <button 
              onClick={() => setIsCameraActive(!isCameraActive)}
              className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all
-               ${isCameraActive ? 'bg-[#00d2a0]/10 border-[#00d2a0] text-[#00d2a0]' : 'bg-slate-800 border-slate-700 text-slate-400'}
+               ${isCameraActive ? 'bg-[#089e60]/10 border-[#089e60] text-[#089e60]' : 'bg-slate-800 border-slate-700 text-slate-400'}
              `}
            >
              {isCameraActive ? 'Tắt Webcam Tracking' : 'Bật Webcam Tracking'}
@@ -119,7 +119,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
            <button 
              onClick={handleSubmit}
              disabled={isSubmitting}
-             className="px-8 py-2.5 bg-[#00d2a0] text-black font-black rounded-xl hover:shadow-[0_0_20px_rgba(0,210,160,0.4)] transition-all disabled:opacity-50"
+             className="px-8 py-2.5 bg-[#089e60] text-black font-black rounded-xl hover:shadow-[0_0_20px_rgba(0,210,160,0.4)] transition-all disabled:opacity-50"
            >
              {isSubmitting ? 'Đang nộp...' : 'Nộp bài thi'}
            </button>
@@ -132,9 +132,9 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
           <motion.div 
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="bg-[#16213e]/80 backdrop-blur-md p-6 rounded-3xl border border-[#1e293b] shadow-2xl"
+            className="bg-[#ffffff]/80 backdrop-blur-md p-6 rounded-3xl border border-[#e7e7e7] shadow-2xl"
           >
-            <h3 className="text-sm font-black text-[#00d2a0] uppercase tracking-widest mb-3 flex items-center gap-2">
+            <h3 className="text-sm font-black text-[#089e60] uppercase tracking-widest mb-3 flex items-center gap-2">
               <Info size={16} /> Yêu cầu đề bài
             </h3>
             <p className="text-sm text-slate-300 leading-relaxed italic">
@@ -147,7 +147,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
                </div>
                <div className="text-right">
                   <div className="text-[10px] text-slate-500 font-bold uppercase">Linh kiện</div>
-                  <div className="text-lg font-black text-[#00d2a0]">{missionData.purchasedItems.length}</div>
+                  <div className="text-lg font-black text-[#089e60]">{missionData.purchasedItems.length}</div>
                </div>
             </div>
           </motion.div>
@@ -164,7 +164,7 @@ export default function LabExamPage({ params }: { params: Promise<{ examId: stri
               
               {/* Camera Feed Integrated */}
               {isCameraActive && (
-                <div className="absolute bottom-6 right-6 w-64 p-2 bg-[#16213e] rounded-2xl border border-white/10 shadow-2xl">
+                <div className="absolute bottom-6 right-6 w-64 p-2 bg-[#ffffff] rounded-2xl border border-white/10 shadow-2xl">
                    <div className="aspect-video bg-black rounded-lg overflow-hidden">
                       <HandTracker onLandmarks={setLandmarks} />
                    </div>

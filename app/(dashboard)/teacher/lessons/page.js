@@ -58,7 +58,7 @@ export default function TeacherLessonsPage() {
     if (loading) {
         return (
             <div style={{ background: '#050a14', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+                <Loader2 className="animate-spin" color="#289cf9" size={48} />
             </div>
         );
     }
@@ -81,14 +81,14 @@ export default function TeacherLessonsPage() {
                         <ArrowLeft size={20} />
                     </Link>
                     <h1 style={{ fontSize: '28px', fontWeight: 800, margin: 0 }}>
-                        Quản lý <span style={{ color: '#00f3ff' }}>Bài Giảng</span>
+                        Quản lý <span style={{ color: '#289cf9' }}>Bài Giảng</span>
                     </h1>
                 </div>
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                     <button 
                         onClick={createNewLesson}
                         style={{
-                            background: '#00f3ff', color: '#050a14', border: 'none',
+                            background: '#289cf9', color: '#050a14', border: 'none',
                             padding: '12px 24px', borderRadius: '12px', fontWeight: 700,
                             display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer'
                         }}
@@ -106,7 +106,7 @@ export default function TeacherLessonsPage() {
                         background: 'rgba(12, 20, 36, 0.5)', borderRadius: '24px',
                         border: '2px dashed rgba(255,255,255,0.05)'
                     }}>
-                        <BookOpen size={64} color="#1e293b" style={{ marginBottom: '24px' }} />
+                        <BookOpen size={64} color="#e7e7e7" style={{ marginBottom: '24px' }} />
                         <h3 style={{ color: '#8899a6' }}>Bạn chưa có bài giảng nào. Hãy tạo bài đầu tiên!</h3>
                     </div>
                 ) : (
@@ -123,14 +123,14 @@ export default function TeacherLessonsPage() {
                                 transition: 'all 0.3s ease',
                                 position: 'relative'
                             }}
-                            onMouseOver={e => e.currentTarget.style.borderColor = '#00f3ff'}
+                            onMouseOver={e => e.currentTarget.style.borderColor = '#289cf9'}
                             onMouseOut={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)'}
                             >
                                 <div style={{ height: '200px', background: '#0a0f1a', position: 'relative' }}>
                                     {lesson.thumbnail_url ? (
                                         <img src={lesson.thumbnail_url} alt={lesson.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#1e293b' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#e7e7e7' }}>
                                             <BookOpen size={48} />
                                         </div>
                                     )}
@@ -158,7 +158,7 @@ export default function TeacherLessonsPage() {
                                         <div style={{ display: 'flex', gap: '8px' }}>
                                             <Link href={`/teacher/lessons/${lesson.id}`}>
                                                 <button style={{ 
-                                                    background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', border: 'none',
+                                                    background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', border: 'none',
                                                     padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600,
                                                     display: 'flex', alignItems: 'center', gap: '6px'
                                                 }}>

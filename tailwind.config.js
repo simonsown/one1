@@ -8,12 +8,12 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          primary: '#00d2a0',
-          secondary: '#00b4d8',
+          primary: '#089e60',
+          secondary: '#289cf9',
         },
         bg: {
-          base: '#0f0f1a',
-          surface: '#16213e',
+          base: '#f8f9fa',
+          surface: '#ffffff',
         }
       }
     },

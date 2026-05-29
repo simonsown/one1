@@ -36,13 +36,13 @@ export default function CoursesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white">
+    <div className="min-h-screen bg-[#f8f9fa] text-white">
       <Navbar />
 
       <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* HEADER SECTION */}
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">Danh mục <span className="text-[#00d2a0]">Khóa học</span></h1>
+          <h1 className="text-4xl font-bold mb-4">Danh mục <span className="text-[#089e60]">Khóa học</span></h1>
           <p className="text-slate-400 max-w-2xl">
             Hệ thống bài giảng được thiết kế lộ trình bài bản, từ cơ bản đến nâng cao dành cho mọi đối tượng.
           </p>
@@ -55,27 +55,27 @@ export default function CoursesPage() {
             <input 
               type="text" 
               placeholder="Tìm kiếm bài học, chủ đề..."
-              className="w-full bg-[#16213e] border border-[#1e293b] rounded-2xl pl-12 pr-4 py-3.5 outline-none focus:border-[#00d2a0] transition-all"
+              className="w-full bg-[#ffffff] border border-[#e7e7e7] rounded-2xl pl-12 pr-4 py-3.5 outline-none focus:border-[#089e60] transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-5 py-3.5 bg-[#16213e] border border-[#1e293b] rounded-2xl hover:bg-[#1e293b] transition-all text-sm font-medium">
+            <button className="flex items-center gap-2 px-5 py-3.5 bg-[#ffffff] border border-[#e7e7e7] rounded-2xl hover:bg-[#e7e7e7] transition-all text-sm font-medium">
               <Filter size={18} /> Lọc bài học
             </button>
-            <div className="h-10 w-[1px] bg-[#1e293b] mx-1"></div>
-            <div className="bg-[#16213e] border border-[#1e293b] rounded-xl p-1 flex gap-1">
+            <div className="h-10 w-[1px] bg-[#e7e7e7] mx-1"></div>
+            <div className="bg-[#ffffff] border border-[#e7e7e7] rounded-xl p-1 flex gap-1">
               <button 
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-[#00d2a0] text-black' : 'text-slate-400 hover:text-white'}`}
+                className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-[#089e60] text-black' : 'text-slate-400 hover:text-white'}`}
               >
                 <LayoutGrid size={18} />
               </button>
               <button 
                 onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-[#00d2a0] text-black' : 'text-slate-400 hover:text-white'}`}
+                className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-[#089e60] text-black' : 'text-slate-400 hover:text-white'}`}
               >
                 <List size={18} />
               </button>
@@ -84,7 +84,7 @@ export default function CoursesPage() {
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#00d2a0]" size={48} /></div>
+          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#089e60]" size={48} /></div>
         ) : courses.length > 0 ? (
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
@@ -99,7 +99,7 @@ export default function CoursesPage() {
             </div>
           </div>
         ) : (
-          <div className="text-center py-20 bg-[#16213e]/30 border border-dashed border-[#1e293b] rounded-[40px]">
+          <div className="text-center py-20 bg-[#ffffff]/30 border border-dashed border-[#e7e7e7] rounded-[40px]">
              <BookOpen size={48} className="mx-auto text-slate-600 mb-4" />
              <p className="text-slate-500 font-medium italic">Hiện tại chưa có khóa học nào được xuất bản.</p>
           </div>
@@ -115,7 +115,7 @@ function CourseCard({ course, idx, viewMode }: any) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: idx * 0.1 }}
-      className={`group bg-[#16213e] border border-[#1e293b] rounded-2xl overflow-hidden hover:border-[#00d2a0]/50 transition-all shadow-xl hover:shadow-[#00d2a0]/5 ${
+      className={`group bg-[#ffffff] border border-[#e7e7e7] rounded-2xl overflow-hidden hover:border-[#089e60]/50 transition-all shadow-xl hover:shadow-[#089e60]/5 ${
         viewMode === 'list' ? 'flex flex-col md:flex-row' : ''
       }`}
     >
@@ -132,13 +132,13 @@ function CourseCard({ course, idx, viewMode }: any) {
         </div>
         {(course.progress || 0) > 0 && (
           <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-black/40">
-            <div className="h-full bg-[#00d2a0]" style={{ width: `${course.progress}%` }}></div>
+            <div className="h-full bg-[#089e60]" style={{ width: `${course.progress}%` }}></div>
           </div>
         )}
       </div>
 
       <div className="p-6 flex flex-col flex-1">
-        <h3 className="text-lg font-bold mb-2 group-hover:text-[#00d2a0] transition-colors">{course.title}</h3>
+        <h3 className="text-lg font-bold mb-2 group-hover:text-[#089e60] transition-colors">{course.title}</h3>
         <p className="text-slate-400 text-sm mb-6 line-clamp-2 leading-relaxed">{course.description}</p>
         
         <div className="mt-auto flex items-center justify-between">
@@ -147,7 +147,7 @@ function CourseCard({ course, idx, viewMode }: any) {
             <span className="flex items-center gap-1.5"><Layers size={14} /> {course.lessons} bài</span>
           </div>
           
-          <Link href={`/courses/${course.id}`} className="p-2.5 bg-[#1e293b] hover:bg-[#00d2a0] hover:text-black rounded-xl transition-all group/btn">
+          <Link href={`/courses/${course.id}`} className="p-2.5 bg-[#e7e7e7] hover:bg-[#089e60] hover:text-black rounded-xl transition-all group/btn">
             <ChevronRight size={20} className="transition-transform group-hover/btn:translate-x-0.5" />
           </Link>
         </div>

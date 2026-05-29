@@ -142,7 +142,7 @@ function RegisterForm() {
         particleCount: 150,
         spread: 80,
         origin: { y: 0.6 },
-        colors: ['#00d2a0', '#00b4d8', '#ffffff']
+        colors: ['#089e60', '#289cf9', '#ffffff']
       })
       setTimeout(() => {
         if (isOauth) {
@@ -158,13 +158,13 @@ function RegisterForm() {
     switch (passwordStrength) {
       case 1: return 'bg-red-500'
       case 2: return 'bg-yellow-500'
-      case 3: return 'bg-[#00d2a0]'
-      default: return 'bg-[#1e293b]'
+      case 3: return 'bg-[#089e60]'
+      default: return 'bg-[#e7e7e7]'
     }
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#0f0f1a] to-[#1a1a2e] text-white p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#f8f9fa] to-[#1a1a2e] text-white p-4">
       
       {/* Back button */}
       <div className="absolute top-8 left-8 hidden md:block">
@@ -174,13 +174,13 @@ function RegisterForm() {
         </Link>
       </div>
 
-      <div className="w-full max-w-xl bg-[#16213e] rounded-2xl border border-[#1e293b] shadow-2xl p-6 md:p-10 relative overflow-hidden">
+      <div className="w-full max-w-xl bg-[#ffffff] rounded-2xl border border-[#e7e7e7] shadow-2xl p-6 md:p-10 relative overflow-hidden">
         
         {/* Progress Bar */}
         <div className="flex items-center justify-between mb-8 relative">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-[#1e293b] rounded-full z-0">
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-[#e7e7e7] rounded-full z-0">
             <motion.div 
-              className="h-full bg-[#00d2a0] rounded-full"
+              className="h-full bg-[#089e60] rounded-full"
               initial={{ width: '0%' }}
               animate={{ width: isOauth ? `${((step - 2) / 1) * 100}%` : `${((step - 1) / 2) * 100}%` }}
               transition={{ duration: 0.3 }}
@@ -188,7 +188,7 @@ function RegisterForm() {
           </div>
           
           {(isOauth ? [2, 3] : [1, 2, 3]).map((i, index) => (
-            <div key={i} className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-300 ${step >= i ? 'bg-[#00d2a0] text-black' : 'bg-[#1e293b] text-slate-400 border border-[#2a3655]'}`}>
+            <div key={i} className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-300 ${step >= i ? 'bg-[#089e60] text-black' : 'bg-[#e7e7e7] text-slate-400 border border-[#e7e7e7]'}`}>
               {step > i ? <Check size={14} /> : (isOauth ? index + 1 : i)}
             </div>
           ))}
@@ -207,10 +207,10 @@ function RegisterForm() {
 
         {/* Tab Switcher (Chỉ ở bước 1) */}
         {step === 1 && !isOauth && (
-          <div className="relative flex w-full bg-[#0f0f1a] rounded-lg p-1 mb-8 border border-[#1e293b]">
+          <div className="relative flex w-full bg-[#f8f9fa] rounded-lg p-1 mb-8 border border-[#e7e7e7]">
             <div className="absolute inset-0 flex p-1">
                <motion.div 
-                 className="w-1/2 bg-[#16213e] rounded-md border border-[#2a3655] shadow-sm"
+                 className="w-1/2 bg-[#ffffff] rounded-md border border-[#e7e7e7] shadow-sm"
                  layoutId="activeTabReg"
                  initial={false}
                  animate={{ x: isLogin ? 0 : "100%" }}
@@ -251,7 +251,7 @@ function RegisterForm() {
                   <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input 
                     type="text" name="fullName" placeholder="Họ và tên" value={formData.fullName} onChange={handleInputChange} required
-                    className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#00d2a0] text-white"
+                    className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#089e60] text-white"
                   />
                 </div>
 
@@ -259,7 +259,7 @@ function RegisterForm() {
                   <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input 
                     type="email" name="email" placeholder="Địa chỉ Email" value={formData.email} onChange={handleInputChange} required
-                    className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#00d2a0] text-white"
+                    className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#089e60] text-white"
                   />
                 </div>
 
@@ -267,21 +267,21 @@ function RegisterForm() {
                   <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input 
                     type="password" name="password" placeholder="Mật khẩu (tối thiểu 6 ký tự)" value={formData.password} onChange={handleInputChange} required
-                    className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#00d2a0] text-white"
+                    className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#089e60] text-white"
                   />
                 </div>
                 {/* Strength Meter */}
                 <div className="flex gap-1 h-1.5 mt-[-8px] px-1">
-                  <div className={`flex-1 rounded-full transition-colors duration-300 ${passwordStrength >= 1 ? getStrengthColor() : 'bg-[#1e293b]'}`}></div>
-                  <div className={`flex-1 rounded-full transition-colors duration-300 ${passwordStrength >= 2 ? getStrengthColor() : 'bg-[#1e293b]'}`}></div>
-                  <div className={`flex-1 rounded-full transition-colors duration-300 ${passwordStrength >= 3 ? getStrengthColor() : 'bg-[#1e293b]'}`}></div>
+                  <div className={`flex-1 rounded-full transition-colors duration-300 ${passwordStrength >= 1 ? getStrengthColor() : 'bg-[#e7e7e7]'}`}></div>
+                  <div className={`flex-1 rounded-full transition-colors duration-300 ${passwordStrength >= 2 ? getStrengthColor() : 'bg-[#e7e7e7]'}`}></div>
+                  <div className={`flex-1 rounded-full transition-colors duration-300 ${passwordStrength >= 3 ? getStrengthColor() : 'bg-[#e7e7e7]'}`}></div>
                 </div>
 
                 <div className="relative mt-2">
                   <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input 
                     type="password" name="confirmPassword" placeholder="Xác nhận mật khẩu" value={formData.confirmPassword} onChange={handleInputChange} required
-                    className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#00d2a0] text-white"
+                    className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#089e60] text-white"
                   />
                 </div>
               </motion.div>
@@ -301,10 +301,10 @@ function RegisterForm() {
                   {/* Student option */}
                   <label 
                     onClick={() => setFormData(prev => ({ ...prev, role: 'student' }))}
-                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'student' ? 'border-[#00d2a0] bg-[#00d2a0]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}
+                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'student' ? 'border-[#089e60] bg-[#089e60]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#e7e7e7] bg-[#f8f9fa] hover:border-[#e7e7e7]'}`}
                   >
                     <input type="radio" name="role" value="student" checked={formData.role === 'student'} onChange={handleInputChange} className="hidden" />
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'student' ? 'bg-[#00d2a0] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'student' ? 'bg-[#089e60] text-black' : 'bg-[#e7e7e7] text-slate-400'}`}>
                       <GraduationCap size={20} />
                     </div>
                     <div className="text-center">
@@ -316,10 +316,10 @@ function RegisterForm() {
                   {/* Teacher option */}
                   <label 
                     onClick={() => setFormData(prev => ({ ...prev, role: 'teacher' }))}
-                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'teacher' ? 'border-[#00b4d8] bg-[#00b4d8]/10 shadow-[0_0_15px_rgba(0,180,216,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}
+                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'teacher' ? 'border-[#289cf9] bg-[#289cf9]/10 shadow-[0_0_15px_rgba(0,180,216,0.15)]' : 'border-[#e7e7e7] bg-[#f8f9fa] hover:border-[#e7e7e7]'}`}
                   >
                     <input type="radio" name="role" value="teacher" checked={formData.role === 'teacher'} onChange={handleInputChange} className="hidden" />
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'teacher' ? 'bg-[#00b4d8] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'teacher' ? 'bg-[#289cf9] text-black' : 'bg-[#e7e7e7] text-slate-400'}`}>
                       <User size={20} />
                     </div>
                     <div className="text-center">
@@ -331,10 +331,10 @@ function RegisterForm() {
                   {/* Parent option */}
                   <label 
                     onClick={() => setFormData(prev => ({ ...prev, role: 'parent' }))}
-                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'parent' ? 'border-[#00d2a0] bg-[#00d2a0]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#1e293b] bg-[#0f0f1a] hover:border-[#2a3655]'}`}
+                    className={`cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center gap-3 transition-all duration-200 ${formData.role === 'parent' ? 'border-[#089e60] bg-[#089e60]/10 shadow-[0_0_15px_rgba(0,210,160,0.15)]' : 'border-[#e7e7e7] bg-[#f8f9fa] hover:border-[#e7e7e7]'}`}
                   >
                     <input type="radio" name="role" value="parent" checked={formData.role === 'parent'} onChange={handleInputChange} className="hidden" />
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'parent' ? 'bg-[#00d2a0] text-black' : 'bg-[#1e293b] text-slate-400'}`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.role === 'parent' ? 'bg-[#089e60] text-black' : 'bg-[#e7e7e7] text-slate-400'}`}>
                       <Users size={20} />
                     </div>
                     <div className="text-center">
@@ -349,33 +349,33 @@ function RegisterForm() {
                     <motion.div key="student-fields" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col gap-4 mt-2">
                       <div className="relative">
                         <Building size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="schoolName" placeholder="Tên trường học của bạn *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white text-sm" />
+                        <input type="text" name="schoolName" placeholder="Tên trường học của bạn *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#089e60] text-white text-sm" />
                       </div>
                       <div className="relative">
                         <Users size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="classCode" placeholder="Mã lớp (Nếu có)" value={formData.classCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white text-sm" />
+                        <input type="text" name="classCode" placeholder="Mã lớp (Nếu có)" value={formData.classCode} onChange={handleInputChange} className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#089e60] text-white text-sm" />
                       </div>
                     </motion.div>
                   ) : formData.role === 'teacher' ? (
                     <motion.div key="teacher-fields" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col gap-4 mt-2">
                       <div className="relative">
                         <Building size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="schoolCode" placeholder="Mã trường / Tổ chức (Tùy chọn)" value={formData.schoolCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00b4d8] text-white text-sm" />
+                        <input type="text" name="schoolCode" placeholder="Mã trường / Tổ chức (Tùy chọn)" value={formData.schoolCode} onChange={handleInputChange} className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#289cf9] text-white text-sm" />
                       </div>
                       <div className="relative">
                         <ShieldCheck size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="teacherCode" placeholder="Mã xác thực giáo viên (Tùy chọn)" value={formData.teacherCode} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00b4d8] text-white text-sm" />
+                        <input type="text" name="teacherCode" placeholder="Mã xác thực giáo viên (Tùy chọn)" value={formData.teacherCode} onChange={handleInputChange} className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#289cf9] text-white text-sm" />
                       </div>
                     </motion.div>
                   ) : (
                     <motion.div key="parent-fields" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col gap-4 mt-2">
                       <div className="relative">
                         <Building size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="schoolName" placeholder="Tên trường học của con *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white text-sm" />
+                        <input type="text" name="schoolName" placeholder="Tên trường học của con *" value={formData.schoolName} onChange={handleInputChange} required className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#089e60] text-white text-sm" />
                       </div>
                       <div className="relative">
                         <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                        <input type="text" name="classCode" placeholder="Mã học sinh của con (Để liên kết tài khoản) *" value={formData.classCode} onChange={handleInputChange} required className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white text-sm" />
+                        <input type="text" name="classCode" placeholder="Mã học sinh của con (Để liên kết tài khoản) *" value={formData.classCode} onChange={handleInputChange} required className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#089e60] text-white text-sm" />
                       </div>
                     </motion.div>
                   )}
@@ -394,7 +394,7 @@ function RegisterForm() {
                 className="flex flex-col gap-4"
               >
                 <div className="flex justify-center mb-2">
-                  <div className="w-24 h-24 rounded-full bg-[#0f0f1a] border-2 border-dashed border-[#2a3655] flex flex-col items-center justify-center text-slate-500 hover:text-[#00d2a0] hover:border-[#00d2a0] cursor-pointer transition-colors relative group">
+                  <div className="w-24 h-24 rounded-full bg-[#f8f9fa] border-2 border-dashed border-[#e7e7e7] flex flex-col items-center justify-center text-slate-500 hover:text-[#089e60] hover:border-[#089e60] cursor-pointer transition-colors relative group">
                     <ImageIcon size={24} className="mb-1" />
                     <span className="text-xs">Tải ảnh lên</span>
                     <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
@@ -403,12 +403,12 @@ function RegisterForm() {
 
                 <div className="relative">
                   <Calendar size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                  <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-white [color-scheme:dark]" />
+                  <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#089e60] text-white [color-scheme:dark]" />
                 </div>
 
                 <div className="relative">
                   <MapPin size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                  <select name="province" value={formData.province} onChange={handleInputChange} className="w-full bg-[#0f0f1a] border border-[#1e293b] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#00d2a0] text-slate-300 appearance-none">
+                  <select name="province" value={formData.province} onChange={handleInputChange} className="w-full bg-[#f8f9fa] border border-[#e7e7e7] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#089e60] text-slate-300 appearance-none">
                     <option value="" disabled>Chọn Tỉnh / Thành phố</option>
                     <option value="HN">Hà Nội</option>
                     <option value="HCM">TP. Hồ Chí Minh</option>
@@ -419,11 +419,11 @@ function RegisterForm() {
 
                 <label className="flex items-start gap-3 mt-2 cursor-pointer group">
                   <div className="relative flex items-center justify-center mt-0.5">
-                    <input type="checkbox" name="termsAccepted" checked={formData.termsAccepted} onChange={handleInputChange} className="peer w-5 h-5 appearance-none border border-[#2a3655] rounded bg-[#0f0f1a] checked:bg-[#00d2a0] checked:border-[#00d2a0] transition-colors" />
+                    <input type="checkbox" name="termsAccepted" checked={formData.termsAccepted} onChange={handleInputChange} className="peer w-5 h-5 appearance-none border border-[#e7e7e7] rounded bg-[#f8f9fa] checked:bg-[#089e60] checked:border-[#089e60] transition-colors" />
                     <Check size={14} className="absolute text-black opacity-0 peer-checked:opacity-100 pointer-events-none" />
                   </div>
                   <span className="text-sm text-slate-400 leading-snug">
-                    Tôi đồng ý với <Link href="#" className="text-[#00d2a0] hover:underline">Điều khoản dịch vụ</Link> và <Link href="#" className="text-[#00d2a0] hover:underline">Chính sách bảo mật</Link> của PC Master Builder LMS.
+                    Tôi đồng ý với <Link href="#" className="text-[#089e60] hover:underline">Điều khoản dịch vụ</Link> và <Link href="#" className="text-[#089e60] hover:underline">Chính sách bảo mật</Link> của PC Master Builder LMS.
                   </span>
                 </label>
               </motion.div>
@@ -444,7 +444,7 @@ function RegisterForm() {
               type="button" 
               onClick={handlePrev}
               disabled={loading}
-              className="flex-1 py-3.5 rounded-xl font-bold bg-[#0f0f1a] border border-[#1e293b] hover:bg-[#1e293b] text-white transition-colors"
+              className="flex-1 py-3.5 rounded-xl font-bold bg-[#f8f9fa] border border-[#e7e7e7] hover:bg-[#e7e7e7] text-white transition-colors"
             >
               Quay lại
             </button>
@@ -454,7 +454,7 @@ function RegisterForm() {
             <button 
               type="button" 
               onClick={handleNext}
-              className={`flex-[2] py-3.5 rounded-xl font-bold text-black flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(0,210,160,0.2)] hover:shadow-[0_0_20px_rgba(0,210,160,0.3)] ${formData.role === 'teacher' && step === 2 ? 'bg-[#00b4d8] hover:bg-[#00c5eb] shadow-[0_0_15px_rgba(0,180,216,0.2)]' : 'bg-[#00d2a0] hover:bg-[#00e6af]'}`}
+              className={`flex-[2] py-3.5 rounded-xl font-bold text-black flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(8,158,96,0.2)] hover:shadow-[0_0_20px_rgba(8,158,96,0.3)] ${formData.role === 'teacher' && step === 2 ? 'bg-[#289cf9] hover:bg-[#00c5eb] shadow-[0_0_15px_rgba(0,180,216,0.2)]' : 'bg-[#089e60] hover:bg-[#0b755b]'}`}
             >
               <span>Tiếp tục</span>
               <ChevronRight size={18} />
@@ -464,7 +464,7 @@ function RegisterForm() {
               type="button" 
               onClick={handleSubmit}
               disabled={loading || !formData.termsAccepted}
-              className="flex-[2] py-3.5 rounded-xl font-bold bg-[#00d2a0] hover:bg-[#00e6af] text-black flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(0,210,160,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-[2] py-3.5 rounded-xl font-bold bg-[#089e60] hover:bg-[#0b755b] text-black flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(8,158,96,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? <Loader2 className="animate-spin" size={20} /> : 'Hoàn tất Đăng ký'}
             </button>
@@ -479,8 +479,8 @@ function RegisterForm() {
 export default function RegisterPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center">
-        <Loader2 className="animate-spin text-[#00d2a0]" size={48} />
+      <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center">
+        <Loader2 className="animate-spin text-[#089e60]" size={48} />
       </div>
     }>
       <RegisterForm />

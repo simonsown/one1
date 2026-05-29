@@ -42,7 +42,7 @@ export default function DailyQuests() {
   if (quests.length === 0) return null // "Nếu không có thì không có"
 
   return (
-    <div className="bg-[#16213e] border border-[#1e293b] rounded-[32px] p-8">
+    <div className="bg-[#ffffff] border border-[#e7e7e7] rounded-[32px] p-8">
       <div className="flex items-center justify-between mb-8">
         <h3 className="text-xl font-bold flex items-center gap-2">
           <Zap size={20} className="text-yellow-500" /> Nhiệm vụ ngày
@@ -55,16 +55,16 @@ export default function DailyQuests() {
           const isDone = q.user_quests && q.user_quests.length > 0 && q.user_quests[0].is_completed;
           return (
             <div key={q.id} className={`p-5 rounded-2xl border transition-all ${
-              isDone ? 'bg-[#0f0f1a]/50 border-[#00d2a0]/20 opacity-60' : 'bg-[#0f0f1a] border-[#1e293b] hover:border-[#2a3655]'
+              isDone ? 'bg-[#f8f9fa]/50 border-[#089e60]/20 opacity-60' : 'bg-[#f8f9fa] border-[#e7e7e7] hover:border-[#e7e7e7]'
             }`}>
               <div className="flex items-start gap-4">
-                <div className={`mt-1 ${isDone ? 'text-[#00d2a0]' : 'text-slate-600'}`}>
+                <div className={`mt-1 ${isDone ? 'text-[#089e60]' : 'text-slate-600'}`}>
                   {isDone ? <CheckCircle2 size={20} /> : <Circle size={20} />}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <p className={`text-sm font-bold ${isDone ? 'text-slate-500 line-through' : 'text-white'}`}>{q.title}</p>
-                    <span className="text-xs font-bold text-[#00d2a0]">+{q.xp_reward} XP</span>
+                    <span className="text-xs font-bold text-[#089e60]">+{q.xp_reward} XP</span>
                   </div>
                   <p className="text-xs text-slate-500">{q.description}</p>
                 </div>
@@ -74,13 +74,13 @@ export default function DailyQuests() {
         })}
       </div>
 
-      <div className="mt-8 pt-8 border-t border-[#1e293b]">
+      <div className="mt-8 pt-8 border-t border-[#e7e7e7]">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs font-bold text-slate-400">Tiến độ hôm nay</p>
-          <p className="text-xs font-bold text-[#00d2a0]">1/3</p>
+          <p className="text-xs font-bold text-[#089e60]">1/3</p>
         </div>
-        <div className="h-2 bg-[#0f0f1a] rounded-full overflow-hidden">
-           <div className="h-full bg-[#00d2a0]" style={{ width: '33.33%' }} />
+        <div className="h-2 bg-[#f8f9fa] rounded-full overflow-hidden">
+           <div className="h-full bg-[#089e60]" style={{ width: '33.33%' }} />
         </div>
         <p className="text-[10px] text-center text-slate-500 mt-4 font-medium italic">Hoàn thành tất cả để nhận Rương May Mắn 🎁</p>
       </div>

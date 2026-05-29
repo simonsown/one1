@@ -30,13 +30,13 @@ export default function ClassCard({ id, name, code, teacherName, memberCount, ma
     }}>
       {/* Header */}
       <div style={{ padding: '20px', background: 'rgba(0, 243, 255, 0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-        <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+        <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           <Monitor size={20} />
         </div>
         <div style={{ flex: 1 }}>
           <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', fontWeight: 700, color: '#fff' }}>{name}</h3>
           <p style={{ margin: 0, fontSize: '13px', color: '#8899a6', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span>Mã: <strong style={{ color: '#00f3ff', letterSpacing: '1px' }}>{code}</strong></span>
+            <span>Mã: <strong style={{ color: '#289cf9', letterSpacing: '1px' }}>{code}</strong></span>
             <span>•</span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Users size={12} /> {memberCount}/{maxStudents}</span>
           </p>
@@ -72,7 +72,7 @@ export default function ClassCard({ id, name, code, teacherName, memberCount, ma
             gap: '8px',
             transition: 'all 0.2s'
           }}
-          onMouseOver={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.1)'; e.currentTarget.style.color = '#00f3ff'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.3)'; }}
+          onMouseOver={e => { e.currentTarget.style.background = 'rgba(0, 243, 255, 0.1)'; e.currentTarget.style.color = '#289cf9'; e.currentTarget.style.borderColor = 'rgba(0, 243, 255, 0.3)'; }}
           onMouseOut={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
           >
             Vào lớp <ChevronRight size={16} />

@@ -51,8 +51,8 @@ export default function Onboarding() {
       id: 2,
       title: 'Phòng Lab 3D thực tế 💻',
       desc: 'Lắp ráp hơn 50+ linh kiện thật với thông số vật lý chính xác 100%.',
-      icon: <Cpu className="text-[#00d2a0]" size={48} />,
-      color: 'bg-[#00d2a0]/10'
+      icon: <Cpu className="text-[#089e60]" size={48} />,
+      color: 'bg-[#089e60]/10'
     },
     {
       id: 3,
@@ -87,7 +87,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative w-full max-w-lg bg-[#16213e] border border-[#1e293b] rounded-[32px] overflow-hidden shadow-2xl"
+          className="relative w-full max-w-lg bg-[#ffffff] border border-[#e7e7e7] rounded-[32px] overflow-hidden shadow-2xl"
         >
           <button 
             onClick={handleClose}
@@ -119,7 +119,7 @@ export default function Onboarding() {
             <div className="flex flex-col gap-4">
               <button 
                 onClick={handleNext}
-                className="w-full py-4 bg-[#00d2a0] hover:bg-[#00e6af] text-black font-black rounded-2xl transition-all shadow-[0_0_20px_rgba(0,210,160,0.3)] flex items-center justify-center gap-2 group"
+                className="w-full py-4 bg-[#089e60] hover:bg-[#0b755b] text-black font-black rounded-2xl transition-all shadow-[0_0_20px_rgba(8,158,96,0.3)] flex items-center justify-center gap-2 group"
               >
                 {step === 4 ? 'BẮT ĐẦU NGAY' : 'TIẾP TỤC'}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -130,7 +130,7 @@ export default function Onboarding() {
                   <div 
                     key={i} 
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i + 1 === step ? 'w-8 bg-[#00d2a0]' : 'w-2 bg-[#1e293b]'
+                      i + 1 === step ? 'w-8 bg-[#089e60]' : 'w-2 bg-[#e7e7e7]'
                     }`}
                   />
                 ))}

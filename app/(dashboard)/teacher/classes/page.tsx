@@ -42,7 +42,7 @@ export default function TeacherClassesPage() {
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+        <Loader2 className="animate-spin" color="#289cf9" size={48} />
       </div>
     );
   }
@@ -51,7 +51,7 @@ export default function TeacherClassesPage() {
     <div style={{ padding: '32px' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
         <div>
-          <h1 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 8px 0', color: '#fff' }}>Quản lý <span style={{ color: '#00f3ff' }}>Lớp học</span></h1>
+          <h1 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 8px 0', color: '#fff' }}>Quản lý <span style={{ color: '#289cf9' }}>Lớp học</span></h1>
           <p style={{ color: '#8899a6', margin: 0 }}>Tạo lớp, quản lý học sinh và giao nhiệm vụ lắp ráp PC.</p>
         </div>
         <Link href="/teacher/classes/new" style={{ textDecoration: 'none' }}>
@@ -75,11 +75,11 @@ export default function TeacherClassesPage() {
           background: 'rgba(12, 20, 36, 0.5)', borderRadius: '24px',
           border: '2px dashed rgba(255,255,255,0.05)'
         }}>
-          <BookOpen size={64} color="#1e293b" style={{ marginBottom: '24px' }} />
+          <BookOpen size={64} color="#e7e7e7" style={{ marginBottom: '24px' }} />
           <h3 style={{ color: '#8899a6', margin: '0 0 24px 0' }}>Bạn chưa tạo lớp học nào.</h3>
           <Link href="/teacher/classes/new" style={{ textDecoration: 'none' }}>
             <button style={{
-              background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', border: '1px solid #00f3ff',
+              background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', border: '1px solid #289cf9',
               padding: '12px 32px', borderRadius: '12px', fontWeight: 700, cursor: 'pointer'
             }}>
               Tạo lớp ngay

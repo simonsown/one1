@@ -10,9 +10,9 @@ import { QUICK_ACTIONS, WELCOME_MESSAGE } from '../utils/aiConstants';
 function TypingDots() {
   return (
     <div className="flex gap-1.5 items-center px-1 py-2">
-      <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} className="w-1.5 h-1.5 rounded-full bg-[#00d2a0] block" />
-      <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-[#00d2a0] block" />
-      <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-[#00d2a0] block" />
+      <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} className="w-1.5 h-1.5 rounded-full bg-[#089e60] block" />
+      <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-[#089e60] block" />
+      <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-[#089e60] block" />
     </div>
   );
 }
@@ -20,11 +20,11 @@ function TypingDots() {
 // Markdown Custom Components
 const mdComponents = {
   p: ({ children }) => <p className="mb-2 leading-relaxed text-[15px]">{children}</p>,
-  strong: ({ children }) => <strong className="font-bold text-[#00d2a0]">{children}</strong>,
+  strong: ({ children }) => <strong className="font-bold text-[#089e60]">{children}</strong>,
   li: ({ children }) => <li className="ml-4 list-disc mb-1">{children}</li>,
   ul: ({ children }) => <ul className="my-2">{children}</ul>,
-  code: ({ children }) => <code className="bg-black/30 px-1.5 py-0.5 rounded text-[#00b4d8] text-[13px] font-mono">{children}</code>,
-  pre: ({ children }) => <pre className="bg-[#0f0f1a] p-3 rounded-lg overflow-x-auto my-2 border border-[#2a3655]">{children}</pre>
+  code: ({ children }) => <code className="bg-black/30 px-1.5 py-0.5 rounded text-[#289cf9] text-[13px] font-mono">{children}</code>,
+  pre: ({ children }) => <pre className="bg-[#f8f9fa] p-3 rounded-lg overflow-x-auto my-2 border border-[#e7e7e7]">{children}</pre>
 };
 
 const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudget, missionTitle, isOpen, setIsOpen }) => {
@@ -108,7 +108,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
           animate={{ y: 0, opacity: 1, scale: 1 }}
           exit={{ y: 20, opacity: 0, scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-          className={`fixed bottom-4 right-4 z-[9999] bg-[#16213e]/95 backdrop-blur-xl border border-[#1e293b] flex flex-col shadow-2xl transition-all duration-300 origin-bottom-right ${
+          className={`fixed bottom-4 right-4 z-[9999] bg-[#ffffff]/95 backdrop-blur-xl border border-[#e7e7e7] flex flex-col shadow-2xl transition-all duration-300 origin-bottom-right ${
             isMinimized ? 'w-[320px] h-[60px] rounded-2xl' : 'w-[380px] h-[650px] max-h-[85vh] rounded-2xl sm:w-[420px]'
           }`}
         >
@@ -116,15 +116,15 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
           <div 
             onClick={() => setIsMinimized(m => !m)}
             className={`flex items-center justify-between px-5 py-3.5 cursor-pointer shrink-0 transition-colors ${
-              isMinimized ? '' : 'border-b border-[#1e293b] bg-gradient-to-r from-[#00d2a0]/10 to-transparent rounded-t-2xl'
+              isMinimized ? '' : 'border-b border-[#e7e7e7] bg-gradient-to-r from-[#089e60]/10 to-transparent rounded-t-2xl'
             }`}
           >
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full bg-[#00d2a0]/20 flex items-center justify-center text-[#00d2a0]">
+                <div className="w-10 h-10 rounded-full bg-[#089e60]/20 flex items-center justify-center text-[#089e60]">
                   <Bot size={22} />
                 </div>
-                <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#16213e] rounded-full"></div>
+                <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#ffffff] rounded-full"></div>
               </div>
               <div>
                 <h3 className="font-bold text-white leading-tight">AI Guru <span className="text-xl leading-none">🤖</span></h3>
@@ -136,7 +136,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
             <div className="flex items-center gap-2">
               <button 
                 onClick={(e) => { e.stopPropagation(); setIsMinimized(!isMinimized); }}
-                className="p-1.5 text-slate-400 hover:text-white hover:bg-[#2a3655] rounded-md transition-colors"
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-[#e7e7e7] rounded-md transition-colors"
               >
                 {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
               </button>
@@ -154,7 +154,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
             <>
               {/* Context Alert */}
               {appMode && (
-                <div className="bg-[#00d2a0]/10 border-b border-[#00d2a0]/20 px-4 py-2 flex items-center gap-2 text-[12px] text-[#00d2a0] shrink-0">
+                <div className="bg-[#089e60]/10 border-b border-[#089e60]/20 px-4 py-2 flex items-center gap-2 text-[12px] text-[#089e60] shrink-0">
                   <Sparkles size={14} />
                   <span>AI đang theo dõi: {missionTitle || 'Thực hành tự do'}</span>
                 </div>
@@ -166,15 +166,15 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
                   <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} group`}>
                     
                     {msg.role === 'assistant' && (
-                      <div className="w-8 h-8 rounded-full bg-[#1e293b] flex items-center justify-center mr-2 shrink-0 mt-1">
-                        <Bot size={16} className="text-[#00d2a0]" />
+                      <div className="w-8 h-8 rounded-full bg-[#e7e7e7] flex items-center justify-center mr-2 shrink-0 mt-1">
+                        <Bot size={16} className="text-[#089e60]" />
                       </div>
                     )}
 
                     <div className={`relative max-w-[85%] rounded-2xl px-4 py-3 ${
                       msg.role === 'user' 
-                        ? 'bg-[#00d2a0] text-black rounded-tr-sm shadow-[0_4px_15px_rgba(0,210,160,0.2)]' 
-                        : 'bg-[#1e293b] text-slate-200 rounded-tl-sm border border-[#2a3655]'
+                        ? 'bg-[#089e60] text-black rounded-tr-sm shadow-[0_4px_15px_rgba(8,158,96,0.2)]' 
+                        : 'bg-[#e7e7e7] text-slate-200 rounded-tl-sm border border-[#e7e7e7]'
                     }`}>
                       {msg.role === 'assistant' ? (
                         <div className="markdown-body">
@@ -188,10 +188,10 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
                       {msg.role === 'assistant' && (
                         <button 
                           onClick={() => copyToClipboard(msg.content, i)}
-                          className="absolute -right-10 top-2 p-1.5 text-slate-500 hover:text-[#00d2a0] bg-[#16213e] rounded-md border border-[#2a3655] opacity-0 group-hover:opacity-100 transition-all"
+                          className="absolute -right-10 top-2 p-1.5 text-slate-500 hover:text-[#089e60] bg-[#ffffff] rounded-md border border-[#e7e7e7] opacity-0 group-hover:opacity-100 transition-all"
                           title="Copy"
                         >
-                          {copiedIndex === i ? <CheckCheck size={14} className="text-[#00d2a0]" /> : <Copy size={14} />}
+                          {copiedIndex === i ? <CheckCheck size={14} className="text-[#089e60]" /> : <Copy size={14} />}
                         </button>
                       )}
                     </div>
@@ -200,10 +200,10 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
 
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="w-8 h-8 rounded-full bg-[#1e293b] flex items-center justify-center mr-2 shrink-0">
-                      <Bot size={16} className="text-[#00d2a0]" />
+                    <div className="w-8 h-8 rounded-full bg-[#e7e7e7] flex items-center justify-center mr-2 shrink-0">
+                      <Bot size={16} className="text-[#089e60]" />
                     </div>
-                    <div className="bg-[#1e293b] rounded-2xl rounded-tl-sm px-4 py-2 border border-[#2a3655]">
+                    <div className="bg-[#e7e7e7] rounded-2xl rounded-tl-sm px-4 py-2 border border-[#e7e7e7]">
                       <TypingDots />
                     </div>
                   </div>
@@ -218,7 +218,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
                     key={i}
                     onClick={() => sendMessage(qa.prompt)}
                     disabled={isLoading}
-                    className="shrink-0 px-3 py-1.5 bg-[#1e293b] hover:bg-[#2a3655] text-[#00b4d8] text-[12px] font-medium rounded-full border border-[#2a3655] transition-colors whitespace-nowrap disabled:opacity-50"
+                    className="shrink-0 px-3 py-1.5 bg-[#e7e7e7] hover:bg-[#e7e7e7] text-[#289cf9] text-[12px] font-medium rounded-full border border-[#e7e7e7] transition-colors whitespace-nowrap disabled:opacity-50"
                   >
                     {qa.label}
                   </button>
@@ -226,8 +226,8 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
               </div>
 
               {/* Input Area */}
-              <div className="p-3 border-t border-[#1e293b] bg-[#16213e] rounded-b-2xl shrink-0">
-                <div className="relative flex items-end gap-2 bg-[#0f0f1a] rounded-xl border border-[#2a3655] p-1 focus-within:border-[#00d2a0] focus-within:ring-1 focus-within:ring-[#00d2a0]/50 transition-all">
+              <div className="p-3 border-t border-[#e7e7e7] bg-[#ffffff] rounded-b-2xl shrink-0">
+                <div className="relative flex items-end gap-2 bg-[#f8f9fa] rounded-xl border border-[#e7e7e7] p-1 focus-within:border-[#089e60] focus-within:ring-1 focus-within:ring-[#089e60]/50 transition-all">
                   <textarea
                     ref={inputRef}
                     value={input}
@@ -245,7 +245,7 @@ const VirtualAssistant = ({ lang = 'vi', appMode, cartItems = [], remainingBudge
                   <button
                     onClick={() => sendMessage()}
                     disabled={isLoading || !input.trim()}
-                    className="shrink-0 w-10 h-10 mb-0.5 mr-0.5 rounded-lg bg-[#00d2a0] text-black flex items-center justify-center hover:bg-[#00e6af] disabled:opacity-50 disabled:bg-[#1e293b] disabled:text-slate-500 transition-colors"
+                    className="shrink-0 w-10 h-10 mb-0.5 mr-0.5 rounded-lg bg-[#089e60] text-black flex items-center justify-center hover:bg-[#0b755b] disabled:opacity-50 disabled:bg-[#e7e7e7] disabled:text-slate-500 transition-colors"
                   >
                     <Send size={18} className={input.trim() && !isLoading ? "ml-1" : ""} />
                   </button>

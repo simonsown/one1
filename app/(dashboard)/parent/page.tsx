@@ -177,7 +177,7 @@ export default function ParentDashboard() {
     return (
       <div className="min-h-screen bg-[#161F38] text-white flex justify-center items-center">
         <div className="text-center space-y-3">
-          <div className="w-10 h-10 border-4 border-[#00d4aa] border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-10 h-10 border-4 border-[#089e60] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Đang đồng bộ cổng giám sát phụ huynh...</p>
         </div>
       </div>
@@ -189,25 +189,25 @@ export default function ParentDashboard() {
       
       {/* Neon Cyber Background Elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-[#00d4aa]/5 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#089e60]/5 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-[#089e60]/5 rounded-full filter blur-[100px] pointer-events-none" />
       
       {/* Cyber corners decorations for the page layout */}
-      <div className="absolute top-24 left-6 w-4.5 h-4.5 border-t-2 border-l-2 border-[#00d4aa]/30 pointer-events-none" />
-      <div className="absolute top-24 right-6 w-4.5 h-4.5 border-t-2 border-r-2 border-[#00d4aa]/30 pointer-events-none" />
+      <div className="absolute top-24 left-6 w-4.5 h-4.5 border-t-2 border-l-2 border-[#089e60]/30 pointer-events-none" />
+      <div className="absolute top-24 right-6 w-4.5 h-4.5 border-t-2 border-r-2 border-[#089e60]/30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-8">
         
         {/* Header Summary */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/5">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-[#00d4aa]/10 border border-[#00d4aa]/35 text-[#00d4aa] rounded-2xl shadow-[0_0_15px_rgba(0,212,170,0.15)]">
+            <div className="p-3 bg-[#089e60]/10 border border-[#089e60]/35 text-[#089e60] rounded-2xl shadow-[0_0_15px_rgba(0,212,170,0.15)]">
               <Users size={28} />
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight uppercase flex items-center gap-2">
                 CỔNG GIÁM SÁT PHỤ HUYNH
-                <span className="text-[10px] bg-[#00d4aa]/15 text-[#00d4aa] font-black border border-[#00d4aa]/25 px-2 py-0.5 rounded-full">PARENT PORTAL</span>
+                <span className="text-[10px] bg-[#089e60]/15 text-[#089e60] font-black border border-[#089e60]/25 px-2 py-0.5 rounded-full">PARENT PORTAL</span>
               </h1>
               <p className="text-xs text-gray-400 mt-1">
                 Kính chào <strong>{parentName}</strong> · Theo dõi tiến độ học tập và đồng hành cùng con trẻ
@@ -240,13 +240,13 @@ export default function ParentDashboard() {
             
             {/* Child Profile Box */}
             <div className="relative bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl overflow-hidden group">
-              <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t-2 border-l-2 border-[#00d4aa]/30 group-hover:border-[#00d4aa] transition-colors" />
-              <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t-2 border-r-2 border-[#00d4aa]/30 group-hover:border-[#00d4aa] transition-colors" />
+              <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t-2 border-l-2 border-[#089e60]/30 group-hover:border-[#089e60] transition-colors" />
+              <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t-2 border-r-2 border-[#089e60]/30 group-hover:border-[#089e60] transition-colors" />
               
               <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Tài khoản con đang theo dõi</h3>
               
               <div className="flex items-center gap-4 pb-4 border-b border-white/5">
-                <span className="w-12 h-12 bg-[#00d4aa]/10 border border-[#00d4aa]/20 text-2xl rounded-2xl flex items-center justify-center">
+                <span className="w-12 h-12 bg-[#089e60]/10 border border-[#089e60]/20 text-2xl rounded-2xl flex items-center justify-center">
                   {child.avatar_url}
                 </span>
                 <div>
@@ -262,7 +262,7 @@ export default function ParentDashboard() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-500">Lớp học hiện tại:</span>
-                  <span className="bg-gray-800 px-2 py-0.5 rounded text-[#00d4aa] font-bold border border-[#00d4aa]/10">Lớp {child.grade}</span>
+                  <span className="bg-gray-800 px-2 py-0.5 rounded text-[#089e60] font-bold border border-[#089e60]/10">Lớp {child.grade}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-500">Trạng thái học tập:</span>
@@ -278,19 +278,19 @@ export default function ParentDashboard() {
             <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl space-y-4">
               <div className="flex items-center justify-between border-b border-white/5 pb-3">
                 <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                  <Bell size={14} className="text-[#00d4aa] animate-swing" />
+                  <Bell size={14} className="text-[#089e60] animate-swing" />
                   Thông báo từ giáo viên
                 </h3>
-                <span className="text-[10px] bg-[#00d4aa]/10 border border-[#00d4aa]/20 px-2 py-0.5 rounded-full text-[#00d4aa] font-bold">
+                <span className="text-[10px] bg-[#089e60]/10 border border-[#089e60]/20 px-2 py-0.5 rounded-full text-[#089e60] font-bold">
                   {announcements.length} mới
                 </span>
               </div>
 
               <div className="space-y-4 max-h-[300px] overflow-y-auto pr-1">
                 {announcements.map(ann => (
-                  <div key={ann.id} className="bg-black/30 border border-gray-850 p-4 rounded-2xl hover:border-[#00d4aa]/20 transition-colors space-y-2">
+                  <div key={ann.id} className="bg-black/30 border border-gray-850 p-4 rounded-2xl hover:border-[#089e60]/20 transition-colors space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] text-[#00d4aa] font-bold">{ann.teacher_name}</span>
+                      <span className="text-[10px] text-[#089e60] font-bold">{ann.teacher_name}</span>
                       <span className="text-[9px] text-gray-500">{ann.date}</span>
                     </div>
                     <h4 className="font-bold text-xs text-white leading-snug">{ann.title}</h4>
@@ -309,10 +309,10 @@ export default function ParentDashboard() {
             <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl relative overflow-hidden">
               <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
                 <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
-                  <Activity className="text-[#00d4aa] animate-pulse" size={18} />
+                  <Activity className="text-[#089e60] animate-pulse" size={18} />
                   Nhật ký hoạt động của con (Real-time Activity Log)
                 </h3>
-                <span className="w-2 h-2 rounded-full bg-[#00d4aa] animate-ping" />
+                <span className="w-2 h-2 rounded-full bg-[#089e60] animate-ping" />
               </div>
 
               <div className="relative border-l border-gray-800 ml-3 pl-6 space-y-6">
@@ -322,7 +322,7 @@ export default function ParentDashboard() {
                     {/* Timeline circle icon */}
                     <span className={`absolute left-[-33px] top-1.5 w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                       act.type === 'badge' ? 'bg-amber-500/20 border-amber-500 text-amber-400' :
-                      act.type === 'quiz' ? 'bg-[#00d4aa]/20 border-[#00d4aa] text-[#00d4aa]' :
+                      act.type === 'quiz' ? 'bg-[#089e60]/20 border-[#089e60] text-[#089e60]' :
                       'bg-green-500/20 border-green-500 text-green-400'
                     }`}>
                       <span className="w-1.5 h-1.5 rounded-full bg-current" />
@@ -330,7 +330,7 @@ export default function ParentDashboard() {
 
                     <div className="space-y-1">
                       <div className="flex items-center gap-3">
-                        <h4 className="text-xs font-bold text-white group-hover:text-[#00d4aa] transition-colors">{act.title}</h4>
+                        <h4 className="text-xs font-bold text-white group-hover:text-[#089e60] transition-colors">{act.title}</h4>
                         <span className="text-[9px] text-gray-500 ml-auto font-medium">{act.time}</span>
                       </div>
                       <p className="text-[11px] text-gray-400">{act.detail}</p>
@@ -355,10 +355,10 @@ export default function ParentDashboard() {
             <div className="bg-[#11121d]/90 border border-gray-800 rounded-3xl p-6 shadow-xl">
               <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
                 <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
-                  <BarChart2 className="text-[#00d4aa]" size={18} />
+                  <BarChart2 className="text-[#089e60]" size={18} />
                   Kết quả kiểm tra & thi cử của con
                 </h3>
-                <span className="text-xs text-[#00d4aa] font-bold uppercase">Bảng điểm tự động</span>
+                <span className="text-xs text-[#089e60] font-bold uppercase">Bảng điểm tự động</span>
               </div>
 
               <div className="space-y-4">

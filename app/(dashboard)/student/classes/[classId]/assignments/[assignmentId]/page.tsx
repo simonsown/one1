@@ -94,7 +94,7 @@ export default function DoAssignmentPage({ params }: { params: Promise<{ classId
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-        <Loader2 className="animate-spin" color="#00f3ff" size={48} />
+        <Loader2 className="animate-spin" color="#289cf9" size={48} />
       </div>
     );
   }
@@ -131,7 +131,7 @@ export default function DoAssignmentPage({ params }: { params: Promise<{ classId
             border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px'
           }}>
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(0, 243, 255, 0.1)', color: '#00f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(0, 243, 255, 0.1)', color: '#289cf9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Cpu size={40} />
             </div>
             <div>
@@ -186,7 +186,7 @@ export default function DoAssignmentPage({ params }: { params: Promise<{ classId
         <aside style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div style={{ background: 'rgba(12, 20, 36, 0.8)', padding: '24px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 style={{ color: '#fff', fontSize: '16px', fontWeight: 700, margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Target size={18} color="#00f3ff" /> Yêu cầu nhiệm vụ
+              <Target size={18} color="#289cf9" /> Yêu cầu nhiệm vụ
             </h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
